@@ -1,4 +1,4 @@
-package util;
+package ir.maktab.homeServiceProvider.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

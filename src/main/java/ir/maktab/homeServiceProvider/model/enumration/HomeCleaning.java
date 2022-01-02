@@ -1,4 +1,4 @@
-package model.enumration;
+package ir.maktab.homeServiceProvider.model.enumration;
 
 public enum HomeCleaning {
     CLEANING,//نظافت

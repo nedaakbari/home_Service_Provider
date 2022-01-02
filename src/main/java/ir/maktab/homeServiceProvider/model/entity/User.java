@@ -1,8 +1,8 @@
-package model.entity;
+package ir.maktab.homeServiceProvider.model.entity;
 
 import lombok.*;
-import model.enumration.Role;
-import model.enumration.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.model.enumration.Role;
+import ir.maktab.homeServiceProvider.model.enumration.UserRegistrationStatus;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;

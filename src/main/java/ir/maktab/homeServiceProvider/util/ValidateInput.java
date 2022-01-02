@@ -1,4 +1,4 @@
-package util;
+package ir.maktab.homeServiceProvider.util;
 
 public class ValidateInput {
 
