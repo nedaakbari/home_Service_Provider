@@ -46,27 +46,4 @@ public class ValidateInput {
         return false;
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(ValidateInput.validUserName("neda"));
-        System.out.println(ValidateInput.validUserName("neda_1325"));
-    /*    System.out.println(ValidateInput.validPhone("9370730398"));
-        System.out.println(ValidateInput.validPhone("937 0730398"));
-        System.out.println(ValidateInput.validPhone("09370730398"));
-        System.out.println(ValidateInput.validPhone("93707303988"));
-        System.out.println(ValidateInput.validPhone("9370730398b"));
-        System.out.println(ValidateInput.validPhone("937073039"));*/
-
-       /* System.out.println(ValidateInput.validEmail("neda@gmail.com"));
-        System.out.println(ValidateInput.validEmail("neda@yahoo.com"));
-        System.out.println(ValidateInput.validEmail("neda@y.com"));
-        System.out.println(ValidateInput.validEmail("neda@"));
-        System.out.println(ValidateInput.validEmail("neda  1234@gmail.com"));
-        System.out.println(ValidateInput.validEmail("neda1234@gmail.com"));
-        System.out.println(ValidateInput.validEmail("neda_1234@gmail.com"));
-        System.out.println(ValidateInput.validEmail("neda.1234@gmail.com"));*/
-
-    }
-
-
 }
