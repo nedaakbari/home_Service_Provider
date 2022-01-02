@@ -13,41 +13,6 @@ import java.util.List;
 public class CustomerDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
-    public void save(Customer customer) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(customer);
-        transaction.commit();
-        session.close();
-    }
-
-    public void update(Customer customer) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(customer);
-        transaction.commit();
-        session.close();
-    }
-
-    public void delete(Customer customer) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.delete(customer);
-        transaction.commit();
-        session.close();
-    }
-
-    public List<User> findAll() {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from Customer ");
-        List<User> users = query.list();
-        //users = session.createQuery("from User ").list();
-        transaction.commit();
-        session.close();
-        return users;
-    }
-
     public Customer findByUseAndPass(String userName,String password) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
