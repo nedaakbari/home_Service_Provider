@@ -3,6 +3,7 @@ package ir.maktab.homeServiceProvider.dao;
 import ir.maktab.homeServiceProvider.model.entity.Expert;
 import ir.maktab.homeServiceProvider.model.entity.User;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;
+import ir.maktab.homeServiceProvider.util.ImageWrapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,7 +18,7 @@ public class ExpertDao {
     public void save(Expert expert) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-       // ImageWrapper.saveImage(expert.getName()+".jpg",expert);
+        ImageWrapper.saveImage(expert.getName()+".jpg",expert);
         session.save(expert);
         transaction.commit();
         session.close();

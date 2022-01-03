@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.model.entity;
 
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
-import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.model.enumration.OrderState;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
