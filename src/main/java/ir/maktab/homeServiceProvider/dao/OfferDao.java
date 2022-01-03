@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.dao;
 
-import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

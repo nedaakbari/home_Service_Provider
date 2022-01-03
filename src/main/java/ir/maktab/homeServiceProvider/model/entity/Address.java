@@ -1,18 +1,24 @@
 package ir.maktab.homeServiceProvider.model.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//@Entity
 @Data
+@NoArgsConstructor
+@Embeddable
 public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String country;
     private String city;
-    private String postalCode;
+    private String street;
+    private String zipCode;
+
+    public Address(String city, String street, String zipCode) {
+        this.city = city;
+        this.street = street;
+        this.zipCode = zipCode;
+    }
 }
