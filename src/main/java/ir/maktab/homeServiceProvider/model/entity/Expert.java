@@ -35,32 +35,4 @@ public class Expert extends User{
         return super.toString() + " Score=" + Score;
     }
 
-/*    @Override
-    public String toString() {
-        return super.toString()+
-                "Score=" + Score +
-                ", services=" + services;
-    }*/
-
-    /*@PreRemove
-    public void removeExpertFromSubservice() {
-        for (SubService s : services) {
-            s.getExperts().remove(this);
-        }
-    }*/
-
-  /*  public  void saveImage() {
-        File file = new File("C:\\image\\" + this.getName() + "");
-        byte[] imageData = new byte[(int) file.length()];
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            fileInputStream.read(imageData);
-            fileInputStream.close();
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-        }
-        this.setImage(imageData);
-    }*/
 }
