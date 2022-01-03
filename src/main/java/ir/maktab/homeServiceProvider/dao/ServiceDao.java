@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.dao;
 
-import ir.maktab.homeServiceProvider.model.entity.Customer;
-import ir.maktab.homeServiceProvider.model.entity.User;
+import ir.maktab.homeServiceProvider.model.entity.Expert;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;
 import org.hibernate.Session;
@@ -38,28 +37,50 @@ public class ServiceDao {
         session.close();
     }
 
-    public List<User> findAll() {
+    public List<SubService> findAll() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from Customer ");
-        List<User> users = query.list();
+        Query query = session.createQuery("from SubService ");
+        List<SubService> services = query.list();
         //users = session.createQuery("from User ").list();
         transaction.commit();
         session.close();
-        return users;
+        return services;
     }
 
-    public Customer findByUseAndPass(String userName,String password) {
+    public List<SubService> findByCategory() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query<Customer> query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
-        query.setParameter("username", userName);
-        query.setParameter("password", password);
-        Customer customer = query.uniqueResult();
+        Query<SubService> query = session.createQuery("From SubService S join fetch S.main ");
+
+        List<SubService> services = query.list();
         transaction.commit();
         session.close();
-        return customer;
+        return services;
     }
+
+    public SubService findByName(String name) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("From SubService S where S.name=:name");
+        query.setParameter("name", name);
+        SubService result = (SubService) query.uniqueResult();
+        transaction.commit();
+        session.close();
+        return result;
+    }
+
+
+    public void deleteExpertByName(Expert expert) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery(" delete From SubService S where S.experts.id=:id ");
+        query.setParameter("id", expert.getId());
+        transaction.commit();
+        session.close();
+    }//??????????????????????
+
+
 
 
 }

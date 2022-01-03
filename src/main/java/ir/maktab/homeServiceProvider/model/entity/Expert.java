@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.model.entity;
 
-import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import lombok.Data;
 
 import javax.persistence.Entity;

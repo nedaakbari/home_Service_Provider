@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.dao;
 
-import ir.maktab.homeServiceProvider.model.entity.Customer;
-import ir.maktab.homeServiceProvider.model.entity.User;
+import ir.maktab.homeServiceProvider.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,59 +9,56 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class UserDao {
+public class MainServiceDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
-    public int save(User user) {
+    public void save(MainService mainService) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        int id = (int) session.save(user);
-        transaction.commit();
-        session.close();
-        if (id == 1) {
-            return 1;
-        }
-        return -1;
-    }
-
-
-    public void update(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(user);
+        session.save(mainService);
         transaction.commit();
         session.close();
     }
 
-    public void delete(User user) {
+    public void update(MainService mainService) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.delete(user);
+        session.update(mainService);
         transaction.commit();
         session.close();
     }
 
-    public List<User> findAll() {
+    public void delete(MainService mainService) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from User");
-        List<User> users = query.list();
+        session.delete(mainService);
+        transaction.commit();
+        session.close();
+    }
+
+    public List<MainService> findAll() {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from MainService ");
+        List<MainService> mainService = query.list();
         //users = session.createQuery("from User ").list();
         transaction.commit();
         session.close();
-        return users;
+        return mainService;
     }
 
-    public User findByUseAndPass(String userName, String password) {
+    public MainService findByName(String name) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query<Customer> query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
-        query.setParameter("username", userName);
-        query.setParameter("password", password);
-        User user = query.uniqueResult();
+        Query<MainService> query = session.createQuery("From MainService M Where M.name=:name");
+        query.setParameter("name", name);
+        MainService mainService = query.uniqueResult();
         transaction.commit();
         session.close();
-        return user;
+        return mainService;
     }
+
+
+
 
 }

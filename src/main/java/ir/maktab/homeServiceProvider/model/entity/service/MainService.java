@@ -1,0 +1,49 @@
+package ir.maktab.homeServiceProvider.model.entity.service;
+
+import ir.maktab.homeServiceProvider.model.entity.Expert;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@Entity
+public class MainService {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+/*    @Enumerated(EnumType.STRING)
+    private MainServices mainServices;*/
+    @OneToMany(mappedBy = "main")//,fetch = FetchType.EAGER
+    private List<SubService> subServiceList=new ArrayList<>();
+
+     @ManyToMany(fetch = FetchType.EAGER)//(mappedBy = "services")
+    private List<Expert> experts = new ArrayList<>();
+
+    /*@Override
+    public String toString() {
+        return "MainService{" +
+                "id=" + id +
+                ", mainServices=" + name +
+                '}';
+    }*/
+
+    @Override
+    public String toString() {
+        return "MainService{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+              //  ", subServiceList=" + subServiceList +
+                '}';
+    }
+
+    public String print() {
+        return "MainService{" +
+                "id=" + id +
+                ", mainServices=" + name +
+                ", subServiceList=" + subServiceList +
+                '}';
+    }
+}

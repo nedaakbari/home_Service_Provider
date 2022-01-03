@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.dao;
 
-import ir.maktab.homeServiceProvider.model.entity.Expert;
-import ir.maktab.homeServiceProvider.model.entity.User;
+import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,43 +9,42 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class ExpertDao {
+public class OfferDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
-
-    public void save(Expert expert) {
+    public void save(Offer offer) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-       // ImageWrapper.saveImage(expert.getName()+".jpg",expert);
-        session.save(expert);
+        session.persist(offer);
         transaction.commit();
         session.close();
     }
 
-    public void update(Expert expert) {
+    public void update(Offer offer) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.update(expert);
+        session.update(offer);
         transaction.commit();
         session.close();
     }
 
-    public void delete(Expert expert) {
+    public void delete(Offer offer) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.delete(expert);
+        session.delete(offer);
         transaction.commit();
         session.close();
     }
 
-    public List<User> findAll() {
+    public List<Offer> findAll() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from Expert ");
-        List<User> users = query.list();
+        Query query = session.createQuery("from Offer ");
+        List<Offer> offers = query.list();
         transaction.commit();
         session.close();
-        return users;
+        return offers;
     }
+
 
 }

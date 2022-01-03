@@ -13,38 +13,37 @@ import java.util.List;
 public class AdminDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
-    public int save(Admin admin) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.getTransaction();
-        int id = (int) session.save(admin);
+    public void save(Admin admin) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(admin);
         transaction.commit();
-        if (id == 1) {
-            return 1;
-        }
-        return -1;
+        session.close();
     }
 
     public void update(Admin admin) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.getTransaction();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         session.update(admin);
         transaction.commit();
+        session.close();
     }
 
     public void delete(Admin admin) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.getTransaction();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         session.delete(admin);
         transaction.commit();
+        session.close();
     }
 
     public List<User> findAll() {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.getTransaction();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from Admin ");
         List<User> users = query.list();
-        //users = session.createQuery("from User ").list();
         transaction.commit();
+        session.close();
         return users;
     }
 

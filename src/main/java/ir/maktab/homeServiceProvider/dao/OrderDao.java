@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.dao;
 
-import ir.maktab.homeServiceProvider.model.entity.Customer;
-import ir.maktab.homeServiceProvider.model.entity.User;
+import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,59 +9,54 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class UserDao {
+public class OrderDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
-    public int save(User user) {
+    public void save(Orders order) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        int id = (int) session.save(user);
-        transaction.commit();
-        session.close();
-        if (id == 1) {
-            return 1;
-        }
-        return -1;
-    }
-
-
-    public void update(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(user);
+         session.persist(order);
         transaction.commit();
         session.close();
     }
 
-    public void delete(User user) {
+    public void update(Orders order) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.delete(user);
+        session.update(order);
         transaction.commit();
         session.close();
     }
 
-    public List<User> findAll() {
+    public void delete(Orders order) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from User");
-        List<User> users = query.list();
+        session.delete(order);
+        transaction.commit();
+        session.close();
+    }
+
+    public List<Orders> findAll() {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from Orders ");
+        List<Orders> orders = query.list();
         //users = session.createQuery("from User ").list();
         transaction.commit();
         session.close();
-        return users;
+        return orders;
     }
 
-    public User findByUseAndPass(String userName, String password) {
+    public Orders findOrderByID(int id){
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query<Customer> query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
-        query.setParameter("username", userName);
-        query.setParameter("password", password);
-        User user = query.uniqueResult();
+        Query query = session.createQuery("from Orders O where O.id=:id");
+        query.setParameter("id", id);
+        Orders order = (Orders) query.uniqueResult();
         transaction.commit();
         session.close();
-        return user;
+        return order;
     }
+
 
 }
