@@ -14,6 +14,9 @@ public class AdminService {
         return adminDao;
     }
 
+    public Admin findAminByUseAndPass(String username, String password) {
+        return adminDao.findByUseAndPass(username, password);
+    }
     public void setAdminDao(AdminDao adminDao) {
         this.adminDao = adminDao;
     }
