@@ -1,13 +1,16 @@
 package ir.maktab.homeServiceProvider.model.entity;
 
-import ir.maktab.homeServiceProvider.model.enumeration.Role;
-import ir.maktab.homeServiceProvider.model.enumeration.UserRegistrationStatus;
+
+import ir.maktab.homeServiceProvider.model.enumration.Role;
+import ir.maktab.homeServiceProvider.model.enumration.UserRegistrationStatus;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-
+/**
+ * author: neda akbari
+ */
 @Getter
 @Setter
 @ToString

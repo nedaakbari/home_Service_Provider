@@ -1,5 +1,7 @@
 package ir.maktab.homeServiceProvider.dao;
-
+/**
+ * author: neda akbari
+ */
 import ir.maktab.homeServiceProvider.model.entity.Customer;
 import ir.maktab.homeServiceProvider.model.entity.User;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;

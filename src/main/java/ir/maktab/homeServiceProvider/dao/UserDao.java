@@ -9,7 +9,9 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
-
+/**
+ * author: neda akbari
+ */
 public class UserDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
@@ -56,13 +58,26 @@ public class UserDao {
     public User findByUseAndPass(String userName, String password) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query<Customer> query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
+        Query query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
         query.setParameter("username", userName);
         query.setParameter("password", password);
-        User user = query.uniqueResult();
+        User user = (User) query.uniqueResult();
         transaction.commit();
         session.close();
         return user;
     }
+
+
+    public User findUserByEmail(String email) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("From User U Where U.email = :email");
+        query.setParameter("email", email);
+        User user = (User) query.uniqueResult();
+        transaction.commit();
+        session.close();
+        return user;
+    }
+
 
 }

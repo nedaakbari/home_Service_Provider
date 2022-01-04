@@ -5,7 +5,9 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-
+/**
+ * author: neda akbari
+ */
 @Entity
 @Data
 public class TransAction {

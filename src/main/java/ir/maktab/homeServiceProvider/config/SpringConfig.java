@@ -10,7 +10,9 @@ import ir.maktab.homeServiceProvider.service.MainServiceService;
 import ir.maktab.homeServiceProvider.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+/**
+ * author: neda akbari
+ */
 @Configuration
 public class SpringConfig {
     @Bean

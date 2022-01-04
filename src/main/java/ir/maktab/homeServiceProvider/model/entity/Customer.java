@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.Entity;
-
+/**
+ * author: neda akbari
+ */
 @Entity
 @Data
 @ToString(callSuper = true)

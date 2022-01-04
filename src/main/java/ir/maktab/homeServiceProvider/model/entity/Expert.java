@@ -8,7 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * author: neda akbari
+ */
 @Entity
 @Data
 public class Expert extends User{

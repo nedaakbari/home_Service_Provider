@@ -11,6 +11,9 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
+/**
+ * author: neda akbari
+ */
 public class ExpertDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 

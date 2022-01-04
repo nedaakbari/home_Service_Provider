@@ -9,7 +9,9 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
-
+/**
+ * author: neda akbari
+ */
 public class ServiceDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 

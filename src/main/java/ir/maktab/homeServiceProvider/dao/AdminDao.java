@@ -10,6 +10,9 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
+/**
+ * author: neda akbari
+ */
 public class AdminDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 

@@ -32,6 +32,28 @@ public class UserService {
         return userDao.findByUseAndPass(username, password);
     }
 
+    public boolean duplicatePassword(String pass) {
+        List<User> users = userDao.findAll();
+        if (users.size()==0)
+            return false;
+        else if (users.stream().anyMatch(user -> user.getPassword().equals(pass)))
+            return true;
+        return false;
+    }
+
+    public boolean duplicateEmail(String email) {
+        List<User> users = userDao.findAll();
+        if (users.size()==0)
+            return false;
+        else if (users.stream().anyMatch(user -> user.getEmail().equals(email)))
+            return true;
+        return false;
+    }
+
+    public void updateUser(User user){
+        userDao.update(user);
+    }
+
     //region setter & getter
     public UserDao getUserDao() {
         return userDao;

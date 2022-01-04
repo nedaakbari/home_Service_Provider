@@ -6,7 +6,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
-
+/**
+ * author: neda akbari
+ */
 @Entity
 @Data
 public class Offer {
