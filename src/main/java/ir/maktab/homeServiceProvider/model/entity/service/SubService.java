@@ -1,8 +1,11 @@
 package ir.maktab.homeServiceProvider.model.entity.service;
 
+import ir.maktab.homeServiceProvider.model.entity.Expert;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -10,10 +13,6 @@ public class SubService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    /*@Enumerated(EnumType.STRING)//???????????
-    @Column(nullable = false)
-    private MainServices mainService;*/
 
     @ManyToOne
     //@Column(nullable = false)
@@ -23,18 +22,23 @@ public class SubService {
     private String name;
     private long baseAmount;
     private String description;
-   /* @ManyToMany(fetch = FetchType.EAGER)//(mappedBy = "services")
-    private List<Expert> experts = new ArrayList<>();*/
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subServiceList")
+    private List<Expert> experts = new ArrayList<>();
+
+    /*@Enumerated(EnumType.STRING)//???????????
+        @Column(nullable = false)
+        private MainServices mainService;*/
 
     @Override
     public String toString() {
         return "SubService{" +
-                " id=" + id  +" " + main.getName() +
-               // ", name='" + name + '\'' +
+                " id=" + id + " MainService=> " + main.getName() +
+                ", name='" + name + '\'' +
                 ", baseAmount=" + baseAmount +
                 ", description='" + description + '\'' +
                 '}';
     }
+
 
 }

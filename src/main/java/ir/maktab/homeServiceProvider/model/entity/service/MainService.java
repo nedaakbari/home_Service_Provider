@@ -13,14 +13,12 @@ public class MainService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(unique = true)
     private String name;
-/*    @Enumerated(EnumType.STRING)
-    private MainServices mainServices;*/
+    /*    @Enumerated(EnumType.STRING)
+        private MainServices mainServices;*/
     @OneToMany(mappedBy = "main")//,fetch = FetchType.EAGER
     private List<SubService> subServiceList=new ArrayList<>();
-
-     @ManyToMany(fetch = FetchType.EAGER)//(mappedBy = "services")
-    private List<Expert> experts = new ArrayList<>();
 
     /*@Override
     public String toString() {

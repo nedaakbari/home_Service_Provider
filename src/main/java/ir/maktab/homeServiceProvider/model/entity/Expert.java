@@ -1,26 +1,27 @@
 package ir.maktab.homeServiceProvider.model.entity;
 
 import ir.maktab.homeServiceProvider.model.entity.service.MainService;
+import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * author: neda akbari
  */
 @Entity
 @Data
-public class Expert extends User{
+public class Expert extends User {
     //private Blob picture;
+    @Lob
+    @Column(columnDefinition = "BLOB")
     private byte[] image;
-
     private int Score;
 
-    @ManyToMany(mappedBy = "experts", fetch = FetchType.EAGER)
-    private List<MainService> mainServices = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)//mappedBy = "experts",
+    private List<SubService> subServiceList = new ArrayList<>();
 
 
     @Override
