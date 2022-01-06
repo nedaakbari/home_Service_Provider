@@ -6,6 +6,7 @@ import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.model.entity.Person.User;
+import ir.maktab.homeServiceProvider.model.entity.TransAction;
 import ir.maktab.homeServiceProvider.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import org.hibernate.SessionFactory;
@@ -46,7 +47,7 @@ public class HibernateUtil {
                     configuration.addAnnotatedClass(Customer.class);
                     configuration.addAnnotatedClass(SubService.class);
                     configuration.addAnnotatedClass(MainService.class);
-                    configuration.addAnnotatedClass(Transaction.class);
+                    configuration.addAnnotatedClass(TransAction.class);
                     configuration.addAnnotatedClass(Offer.class);
                     configuration.addAnnotatedClass(Orders.class);
 
