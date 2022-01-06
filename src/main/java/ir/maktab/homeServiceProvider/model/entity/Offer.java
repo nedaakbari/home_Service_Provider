@@ -42,8 +42,7 @@ public class Offer {
                 ", duringTime=" + duringTime +
                 ", startWorkTime=" + startWorkTime +
                 ", submissionDate=" + submissionDate +
-                ", offerDate=" + offerDate +
-                ", expert=" + expert.getName() + " " + expert.getLastName() +
+                ", expert=" + expert +
                 '}';
     }
 }
