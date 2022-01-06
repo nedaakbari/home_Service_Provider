@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.dao.OrderDao;
 import ir.maktab.homeServiceProvider.model.dto.OrdersDto;
+import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
@@ -10,6 +11,7 @@ import ir.maktab.homeServiceProvider.util.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.Order;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,6 +49,8 @@ public class OrderService {
         List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());
         return orderOfCustomer.stream().map(mapper::OrdersDto).collect(Collectors.toList());
     }
+
+
 
     //region setter & getter & constructor
     @Autowired
