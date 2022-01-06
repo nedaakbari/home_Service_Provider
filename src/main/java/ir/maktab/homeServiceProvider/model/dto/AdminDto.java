@@ -6,32 +6,24 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+@Builder
 @Getter
 @Setter
-@Builder
-public class ExpertDto {
+public class AdminDto {
     private int id;
     private String name;
     private String email;
-    private String family;
+    private String lastName;
     private String phoneNumber;
-    private UserRegistrationStatus status;
-    private Date registerDate;
-    private long creditCart;
-    private double score;
 
     @Override
     public String toString() {
-        return "UserDto{" +
+        return "AdminDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", family='" + family + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", status=" + status +
-                ", registerDate=" + registerDate +
-                ", creditCart=" + creditCart +
-                ", score=" + score +
                 '}';
     }
 }
