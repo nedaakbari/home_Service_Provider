@@ -26,13 +26,18 @@ public class OfferService {
         SubService orderSubService = orders.getSubService();
         boolean isExist = subServiceList.stream().allMatch(subService -> subService.getName().equalsIgnoreCase(orderSubService.getName()));
         if (isExist) {
-            List<Offer> list = offerDao.findAllOfferOfAnOrder(orders.getId());
-            if (list == null) {
-                orders.setState(OrderState.WAITING_FOR_SELECT_AN_EXPERT);
-                orderDao.update(orders);
-            }
-            offerDao.save(offer);
-        }else 
+            long baseAmount = orders.getSubService().getBaseAmount();
+            long offerPrice = offer.getProposedPriceOffer();
+            if (offerPrice > baseAmount) {
+                List<Offer> list = offerDao.findAllOfferOfAnOrder(orders.getId());
+                if (list == null) {
+                    orders.setState(OrderState.WAITING_FOR_SELECT_AN_EXPERT);
+                    orderDao.update(orders);
+                }
+                offerDao.save(offer);
+            } else
+                throw new RuntimeException("offerPrice must not be lower than baseAmount of this subService");
+        } else
             throw new RuntimeException("This field is not your specialty ");
     }
 

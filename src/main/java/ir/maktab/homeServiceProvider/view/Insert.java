@@ -1,14 +1,18 @@
 package ir.maktab.homeServiceProvider.view;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
+import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.service.*;
+import ir.maktab.homeServiceProvider.util.DateUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.time.LocalTime;
 
 
 public class Insert {
@@ -393,13 +397,11 @@ public class Insert {
         Orders orderByID = orderService.findOrderByID(1);
 
 
-        //به محض اینکه یک آفر ثبت شد بیاد استیت رو تغییر بده
-
-        /*Offer offer=new Offer();
+        Offer offer=new Offer();
         offer.setExpert(nader);
         LocalTime localTime = DateUtil.convertStringToTime("12:00");
         offer.setStartWorkTime(localTime);
-        offer.setDescription("i can do that");
+        offer.setDescription("i can do that perfectly");
         offer.setOrders(orderByID);
         offer.setDuringTime(4);
         offer.setProposedPriceOffer(1500000);
