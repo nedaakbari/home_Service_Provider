@@ -69,7 +69,7 @@ public class OrderDao {
     public List<Orders> findOrderOfCustomer(int customerId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from Orders O join fetch O.customer C where C.id=:id");
+        Query query = session.createQuery("from Orders O join fetch O.customer C where C.id=:id ");//todo and O.state NOT IN ('PAID')
         query.setParameter("id", customerId);
         List<Orders> orders = query.list();
         transaction.commit();

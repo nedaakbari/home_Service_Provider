@@ -64,7 +64,7 @@ public class SubServiceService {
         }
     }
 
-    public List<SubService> findSubserivceOfExpert(int expertId){
+    public List<SubService> findSubServiceOfExpert(int expertId){
         return subServiceDao.findSubserivceOfExpert(expertId);
     }
 

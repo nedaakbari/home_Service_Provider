@@ -3,9 +3,11 @@ package ir.maktab.homeServiceProvider.view;
 import ir.maktab.homeServiceProvider.config.SpringConfig;
 import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
+import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
+import ir.maktab.homeServiceProvider.model.enumeration.OfferStatus;
 import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.service.*;
 import ir.maktab.homeServiceProvider.util.DateUtil;
@@ -385,7 +387,7 @@ public class Insert {
  *متخصص بره لیست سفارش ها رو ببینه و اگر توی تخصصش بود بتونه پیشنهاد بده و کمتر از پایه هم پیشنهاد نده
  */
 //از این خدمات کدومش؟
-        mainServiceService.findAll().forEach(System.out::println);
+        /*mainServiceService.findAll().forEach(System.out::println);
         MainService main = mainServiceService.findById(5);
         System.out.println("************** ");
         //از کدوم خدمت؟
@@ -395,10 +397,10 @@ public class Insert {
         SubService homeSpray = subServiceService.findById(7);
         orderService.findOrdersOfSubService(homeSpray.getId()).forEach(System.out::println);
         System.out.println("*******************************************888");
-        Orders orderByID = orderService.findOrderByID(1);
+        Orders orderByID = orderService.findOrderByID(1);*/
 
 
-        Offer offer = new Offer();
+       /* Offer offer = new Offer();
         offer.setExpert(nader);
         LocalTime localTime = DateUtil.convertStringToTime("12:00");
         offer.setStartWorkTime(localTime);
@@ -406,10 +408,10 @@ public class Insert {
         offer.setOrders(orderByID);
         offer.setDuringTime(4);
         offer.setProposedPriceOffer(1500000);
+        offer.setStatus(OfferStatus.SUSPENDED);
+        offerService.saveOffer(offer, orderByID);*/
 
-        offerService.saveOffer(offer, orderByID);
-
-        /*Offer offer=new Offer();
+        /*Offer offer = new Offer();
         offer.setExpert(sara);
         LocalTime localTime = DateUtil.convertStringToTime("13:00");
         offer.setStartWorkTime(localTime);
@@ -417,24 +419,24 @@ public class Insert {
         offer.setOrders(orderByID);
         offer.setDuringTime(3);
         offer.setProposedPriceOffer(1400000);
-
-        offerDao.save(offer);*/
+        offer.setStatus(OfferStatus.SUSPENDED);
+        offerService.saveOffer(offer, orderByID);*/
 
 
         /**
          * الان کاستومر میخواد بیاد ببینه چه پیشنهادهایی برای سفارشش ثبت شده
          */
-        /*Customer neda = customerDao.findByUseAndPass("neda_ak", "Neda@137");
+        Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
         System.out.println(neda);
         //neda.getOrdersList();//این باید فچ تایپش رو تغییر بدم
-        orderDao.findOrderOfCustomer(neda.getId()).forEach(System.out::println);//todo dto dont show all field to him
+        orderService.findOrderOfCustomer(neda).forEach(System.out::println);//todo dto dont show all field to him
         System.out.println("which order do you wanna check offers?");
-        Orders orderByID = orderDao.findOrderByID(1);
+        Orders orderByID = orderService.findOrderByID(1);
         //orderByID.getOffers().forEach(System.out::println); باید فچ تایپش رو تغییر بدم
         List<Offer> allOfferOfOrder = offerDao.findAllOfferOfOrder(orderByID.getId());
-        allOfferOfOrder.forEach(System.out::println);
+        allOfferOfOrder.forEach(System.out::println);*/
 
-*//**
+/**
          *یکی از اینا رو انتخاب میکنه
          *//*
         Offer offerById = offerDao.findOfferById(1);

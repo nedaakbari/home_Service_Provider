@@ -3,6 +3,8 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.dao.OrderDao;
 import ir.maktab.homeServiceProvider.model.dto.OrdersDto;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
+import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.util.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrderService {
+    Mapper mapper=new Mapper();
     OrderDao orderDao;
 
 
@@ -29,7 +32,6 @@ public class OrderService {
 
     public List<OrdersDto> findOrdersOfSubService(int subServiceId) {
         List<Orders> orders = orderDao.findOrdersOfSubService(subServiceId);
-        Mapper mapper = new Mapper();
         return orders.stream().map(mapper::OrdersDto).collect(Collectors.toList());
     }
 
@@ -39,6 +41,11 @@ public class OrderService {
             return foundOrder.get();
         } else
             throw new RuntimeException("❌❌❌ Error to find order ❌❌❌");
+    }
+
+    public List<OrdersDto> findOrderOfCustomer(Customer customer){
+        List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());
+        return orderOfCustomer.stream().map(mapper::OrdersDto).collect(Collectors.toList());
     }
 
     //region setter & getter & constructor
