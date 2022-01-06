@@ -1,13 +1,9 @@
 package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
-import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
-import ir.maktab.homeServiceProvider.model.enumeration.Role;
-import ir.maktab.homeServiceProvider.model.enumeration.UserRegistrationStatus;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
