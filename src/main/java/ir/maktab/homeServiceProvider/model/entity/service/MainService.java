@@ -14,25 +14,15 @@ public class MainService {
     private int id;
     @Column(unique = true)
     private String name;
-    /*    @Enumerated(EnumType.STRING)
-        private MainServices mainServices;*/
-    @OneToMany(mappedBy = "main")//,fetch = FetchType.EAGER
-    private List<SubService> subServiceList=new ArrayList<>();
-
-    /*@Override
-    public String toString() {
-        return "MainService{" +
-                "id=" + id +
-                ", mainServices=" + name +
-                '}';
-    }*/
+    @OneToMany(mappedBy = "main",fetch = FetchType.LAZY)
+    private List<SubService> subServiceList = new ArrayList<>();
 
     @Override
     public String toString() {
         return "MainService{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-              //  ", subServiceList=" + subServiceList +
+                // ", subServiceList=" + subServiceList +
                 '}';
     }
 

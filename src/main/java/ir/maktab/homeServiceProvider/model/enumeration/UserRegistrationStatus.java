@@ -1,4 +1,4 @@
-package ir.maktab.homeServiceProvider.model.enumration;
+package ir.maktab.homeServiceProvider.model.enumeration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,13 +1,13 @@
 package ir.maktab.homeServiceProvider.model.entity;
 
+import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-/**
- * author: neda akbari
- */
+
 @Entity
 @Data
 public class TransAction {

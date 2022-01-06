@@ -1,10 +1,11 @@
 package ir.maktab.homeServiceProvider.model.entity.service;
 
+import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Data
@@ -22,8 +23,8 @@ public class SubService {
     private long baseAmount;
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subServiceList")
-    private List<Expert> experts = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)//,mappedBy = "subServiceList"
+    private Set<Expert> experts ;
 
     /*@Enumerated(EnumType.STRING)//???????????
         @Column(nullable = false)
@@ -32,12 +33,23 @@ public class SubService {
     @Override
     public String toString() {
         return "SubService{" +
-                " id=" + id + " MainService=> " + main.getName() +
+                " id=" + id  +" MainService=> " + main.getName() +
                 ", name='" + name + '\'' +
                 ", baseAmount=" + baseAmount +
                 ", description='" + description + '\'' +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubService that = (SubService) o;
+        return id == that.id && Objects.equals(name, that.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

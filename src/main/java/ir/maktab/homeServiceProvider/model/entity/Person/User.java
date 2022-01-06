@@ -1,24 +1,23 @@
-package ir.maktab.homeServiceProvider.model.entity;
+package ir.maktab.homeServiceProvider.model.entity.Person;
 
-
-import ir.maktab.homeServiceProvider.model.enumration.Role;
-import ir.maktab.homeServiceProvider.model.enumration.UserRegistrationStatus;
-import lombok.*;
+import ir.maktab.homeServiceProvider.model.enumeration.Role;
+import ir.maktab.homeServiceProvider.model.enumeration.UserRegistrationStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-/**
- * author: neda akbari
- */
+
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-//@Table(uniqueConstraints = @UniqueConstraint(columnNames = "user"))
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@AllArgsConstructor
+//@MappedSuperclass
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -47,19 +46,24 @@ public class User {
 
     private long creditCart;
 
-/*    @Builder
-    public User(String name, String lastName, String email, String password, String username, Role role) {
+    public User(String name, String lastName, String email, String phoneNumber, String username, String password, UserRegistrationStatus status, Role role) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.username = username;
         this.password = password;
+        this.status = status;
         this.role = role;
-    }*/
+    }
+
+    public User() {
+
+    }
 
     @Override
     public String toString() {
-        return ", name='" + name + '\'' +
+        return "user "+id+ " name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

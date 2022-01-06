@@ -1,17 +1,17 @@
 package ir.maktab.homeServiceProvider.model.entity;
 
+import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
-import ir.maktab.homeServiceProvider.model.enumration.OrderState;
+import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-/**
- * author: neda akbari
- */
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Data
 @Entity
@@ -20,9 +20,14 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private long proposedPrice;
+    //private long agreedPrice;
+
     private String description;
     @CreationTimestamp
     private Date orderDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date workDay;
     @Embedded
     private Address address;
 
@@ -35,8 +40,8 @@ public class Orders {
     @ManyToOne
     private Customer customer;
 
-    @OneToMany(mappedBy = "orders")
-    private List<Offer> offers = new ArrayList<>();
+    @OneToMany(mappedBy = "orders"/*,fetch = FetchType.EAGER*/)
+    private Set<Offer> offers = new HashSet<>();
 
     @ManyToOne
     private Expert expert;
@@ -45,6 +50,34 @@ public class Orders {
 
     private String comment;
 
-    /*@OneToOne
-    private TransAction transAction;*/
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "id=" + id +
+                ", proposedPrice=" + proposedPrice +
+                ", description='" + description + '\'' +
+                ", orderDate=" + orderDate +
+                ", workDay=" + workDay +
+                ", address=" + address +
+                ", subService=" + subService.getName() +
+                ", state=" + state +
+                ", customer=" + customer +
+                ", expert=" + expert +
+                ", score=" + score +
+               // ", agreedPrice= "+agreedPrice+
+                ", comment='" + comment + '\'' +
+                '}';
+    }
+
+
+    public String prints() {
+        return "id=" + this.id +
+                ", proposedPrice=" + proposedPrice +
+                ", description='" + description + '\'' +
+                ", orderDate=" + orderDate +
+                ", workDay=" + workDay +
+                '}';
+    }
+
+
 }

@@ -1,13 +1,14 @@
 package ir.maktab.homeServiceProvider.model.entity;
 
+import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-/**
- * author: neda akbari
- */
+import java.util.Set;
+
 @Entity
 @Data
 public class Company {
@@ -18,5 +19,7 @@ public class Company {
     private long amount;
 
     @OneToMany
-    private List<Admin> admins=new ArrayList<>();
+    private Set<Admin> admins = new HashSet<>();
+    @OneToMany
+    private List<TransAction> transActions = new ArrayList<>();
 }

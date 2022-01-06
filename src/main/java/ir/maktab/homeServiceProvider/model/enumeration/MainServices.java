@@ -1,4 +1,4 @@
-package ir.maktab.homeServiceProvider.model.enumration;
+package ir.maktab.homeServiceProvider.model.enumeration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,6 @@ public enum MainServices {
     MOVING_HELP(4,"moving help"),//اسباب کشی و باربری
     HOME_APPLIANCES(5,"home appliances"),//لوازم خانگی
     HOME_CLEANING_AND_HYGIENE(6,"home cleaning and hygiene");//نظافت و بهداشت
-
     int id;
     String name;
 
