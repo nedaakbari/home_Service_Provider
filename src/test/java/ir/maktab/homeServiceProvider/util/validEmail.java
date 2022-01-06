@@ -6,20 +6,19 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class validPasswordTest {
+public class validEmail {
 
     @ParameterizedTest
-    @CsvSource({"Neda", "1398", "Neda@13", "neda@1386", "neda1386", "Neda_1398", "Neda 135874@"})
-    void giveInvalidPass_validPassword_ResponseFalse(String password) {
-        boolean valid = ValidateInput.validPassword(password);
+    @CsvSource({"Neda@@", "neda@com", "Neda    @13", "@gmail.com"})
+    void giveInvalidEmail_validEmail_ResponseFalse(String password) {
+        boolean valid = ValidateInput.validEmail(password);
         assertFalse(valid);
     }
 
     @ParameterizedTest
-    @CsvSource({"Neda@1386", "Neda#1398", "Nima136588@01"})
-    void giveValidPass_validPassword_ResponseTrue(String password) {
+    @CsvSource({"Neda13254@gmail.com"})
+    void giveValidPass_validEmail_ResponseTrue(String password) {
         boolean valid = ValidateInput.validPassword(password);
         assertTrue(valid);
     }
-
 }

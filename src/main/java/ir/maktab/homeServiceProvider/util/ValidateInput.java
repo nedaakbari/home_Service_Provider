@@ -2,7 +2,6 @@ package ir.maktab.homeServiceProvider.util;
 
 public class ValidateInput {
 
-
     public static boolean validUserName(String userName) {
         String pattern = "[a-zA-z0-9._-]+";
         boolean matches = userName.matches(pattern);

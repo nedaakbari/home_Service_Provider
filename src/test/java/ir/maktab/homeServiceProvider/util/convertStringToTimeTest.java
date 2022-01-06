@@ -1,4 +1,4 @@
-package ir.maktab.homeServiceProvider.service;
+package ir.maktab.homeServiceProvider.util;
 
 import ir.maktab.homeServiceProvider.util.DateUtil;
 import org.junit.jupiter.api.Assertions;
