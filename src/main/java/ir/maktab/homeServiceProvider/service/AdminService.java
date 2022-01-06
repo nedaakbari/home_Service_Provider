@@ -33,6 +33,11 @@ public class AdminService {
         } else
             throw new RuntimeException("no admin found with these use and pass");
     }
+       /* public Admin findAminByUseAndPass(Admin admin) {
+        Optional<Admin> found = adminDao.findByUseAndPass(admin.getUserName(), admin.getPassWord());
+        return found.orElse(null);
+    }*///todo which one is better
+
 
     public boolean isExist(String username, String password){
         Optional<Admin> found = adminDao.findByUseAndPass(username, password);
@@ -45,10 +50,7 @@ public class AdminService {
         return adminDao.findAll();
     }
 
-   /* public Admin findAminByUseAndPass(Admin admin) {
-        Optional<Admin> found = adminDao.findByUseAndPass(admin.getUserName(), admin.getPassWord());
-        return found.orElse(null);
-    }*/
+
 
 
     //region setter & getter & constructor

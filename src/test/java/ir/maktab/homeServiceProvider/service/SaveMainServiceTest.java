@@ -26,7 +26,7 @@ public class SaveMainServiceTest {
         Assertions.assertEquals("❌❌❌ this main service is already exist ❌❌❌",result.getMessage());
     }
 
-    /*@Test
+    /*@Test //todo is better this test or upper test
     void giveNoCustomer_deleteMethode_ThrowException() {
         mainService.setName("STUFF");
         MainService found = mainServiceService.findByName(mainService.getName());

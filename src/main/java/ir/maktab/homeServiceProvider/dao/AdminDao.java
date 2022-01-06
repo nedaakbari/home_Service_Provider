@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.dao;
 
 
 import ir.maktab.homeServiceProvider.config.HibernateUtil;
+import ir.maktab.homeServiceProvider.model.dto.AdminDto;
 import ir.maktab.homeServiceProvider.model.dto.UserDto;
 import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.model.entity.Person.User;
@@ -70,7 +71,7 @@ public class AdminDao {
         return admin;
     }
 
-    public List<AdminDto> findUsersByFilter(UserFilter filter) {
+    public List<AdminDto> findAdminsByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(Admin.class, "a");
