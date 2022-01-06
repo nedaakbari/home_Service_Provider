@@ -1,8 +1,6 @@
 package ir.maktab.homeServiceProvider.dao;
 
 import ir.maktab.homeServiceProvider.model.dto.UserDto;
-import ir.maktab.homeServiceProvider.model.entity.Customer;
-import ir.maktab.homeServiceProvider.model.entity.User;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;
 import ir.maktab.homeServiceProvider.util.filter.UserFilter;
 import org.hibernate.Criteria;

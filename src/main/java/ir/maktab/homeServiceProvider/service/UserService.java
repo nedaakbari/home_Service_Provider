@@ -3,7 +3,6 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.dao.CustomerDao;
 import ir.maktab.homeServiceProvider.dao.ExpertDao;
 import ir.maktab.homeServiceProvider.dao.UserDao;
-import ir.maktab.homeServiceProvider.model.entity.User;
 
 import java.util.List;
 

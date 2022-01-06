@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.dao.ExpertDao;
-import ir.maktab.homeServiceProvider.model.entity.Expert;
 
 public class ExpertService {
 

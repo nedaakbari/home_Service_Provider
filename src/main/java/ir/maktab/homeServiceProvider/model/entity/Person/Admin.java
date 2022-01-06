@@ -1,4 +1,4 @@
-package ir.maktab.homeServiceProvider.model.entity;
+package ir.maktab.homeServiceProvider.model.entity.Person;
 
 import lombok.Data;
 
@@ -6,9 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-/**
- * author: neda akbari
- */
+
 @Entity
 @Data
 public class Admin {
@@ -17,6 +15,6 @@ public class Admin {
     private int id;
     private String userName;
     private String passWord;
-
-
+    private String name;
+    private String family;
 }

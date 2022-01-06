@@ -1,7 +1,5 @@
 package ir.maktab.homeServiceProvider.dao;
 
-import ir.maktab.homeServiceProvider.model.entity.Admin;
-import ir.maktab.homeServiceProvider.model.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -9,13 +7,8 @@ import org.hibernate.query.Query;
 import java.util.List;
 import ir.maktab.homeServiceProvider.config.HibernateUtil;
 import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 /**

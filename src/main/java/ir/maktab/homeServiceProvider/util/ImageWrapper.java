@@ -1,7 +1,5 @@
 package ir.maktab.homeServiceProvider.util;
 
-import ir.maktab.homeServiceProvider.model.entity.Expert;
-
 import java.io.File;
 import java.io.FileInputStream;
 

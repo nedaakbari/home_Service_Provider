@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.dao;
 
-import ir.maktab.homeServiceProvider.model.entity.Expert;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.util.HibernateUtil;
 import org.hibernate.Session;

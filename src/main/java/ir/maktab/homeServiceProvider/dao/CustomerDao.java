@@ -1,17 +1,16 @@
 package ir.maktab.homeServiceProvider.dao;
-/**
- * author: neda akbari
- */
-import ir.maktab.homeServiceProvider.model.entity.Customer;
-import ir.maktab.homeServiceProvider.model.entity.User;
-import ir.maktab.homeServiceProvider.util.HibernateUtil;
+
+import ir.maktab.homeServiceProvider.config.HibernateUtil;
+import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+import java.util.Optional;
+@Component
 public class CustomerDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
@@ -39,28 +38,36 @@ public class CustomerDao {
         session.close();
     }
 
-    public List<User> findAll() {
+    public List<Customer> findAll() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from Customer ");
-        List<User> users = query.list();
-        //users = session.createQuery("from User ").list();
+        List<Customer> customers = query.list();
         transaction.commit();
         session.close();
-        return users;
+        return customers;
     }
 
-    public Customer findByUseAndPass(String userName,String password) {
+    public Optional<Customer> findByUseAndPass(String userName,String password) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query<Customer> query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
+        Query<Customer> query = session.createQuery("From Customer C Where C.password = :password and  C.username=:username");
         query.setParameter("username", userName);
         query.setParameter("password", password);
-        Customer customer = query.uniqueResult();
+        Optional<Customer> customer = Optional.ofNullable(query.uniqueResult());
         transaction.commit();
         session.close();
         return customer;
     }
-
+    public Optional<Customer> findByEmail(String email) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Customer> query = session.createQuery("FROM Customer C WHERE C.email=:email");
+        query.setParameter("email", email);
+        Optional<Customer> customer = Optional.ofNullable(query.uniqueResult());
+        transaction.commit();
+        session.close();
+        return customer;
+    }
 
 }
