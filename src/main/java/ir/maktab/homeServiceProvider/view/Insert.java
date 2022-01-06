@@ -459,7 +459,7 @@ public class Insert {
         orderService.update(orderByID);
 
         //وقتی دان میشه کاستومر باید پرداخت کنه و  پیام میره برای کاستومره که امتیاز بده
-        Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
+        /*Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
         System.out.println("do you wanna paid? by catch   by online");
         TransAction transAction = new TransAction();
         //orderByID.getOffers()//todo set Price for this
@@ -467,67 +467,18 @@ public class Insert {
         transAction.setCustomer(neda);
         transAction.setExpert(orderByID.getExpert());
         transAction.setOrders(orderByID);
-        transActionService.save(transAction);
+        transActionService.save(transAction);*/
 
-        /*System.out.println("thanks for trust us ...please give score to expert from 1 to 10");
+        System.out.println("thanks for trust us ...please give score to expert from 1 to 10");
         int scoreByCustomer = 10;
         orderByID.setScore(scoreByCustomer);
-        orderDao.update(orderByID);
+        orderService.update(orderByID);
         Expert expert = orderByID.getExpert();
         expert.setScore( expert.getScore()+scoreByCustomer);
-        expertDao.update(expert);*/
+        expertService.updateExpert(expert);
         //امتیاز که داد میگه دوست داری کانت بدی؟
 
 
-
-       /* serviceDao.findAll().forEach(System.out::println);
-        System.out.println("**********************");
-        serviceDao.findByCategory().forEach(System.out::println);*/
-
-
-
-        /*SubService laundry = serviceDao.findByName("laundry");
-        List<Expert> experts = laundry.getExperts();
-        experts.remove(nader);
-        System.out.println(experts);
-        serviceDao.update(laundry);
-
-        SubService laundry1 = serviceDao.findByName("laundry");
-        laundry1.getExperts().forEach(System.out::println);*/
-        /*
-        experts.add((Expert) nader);
-        serviceDao.update(laundry);*/
-
-       /* SubService homeSpraying = serviceDao.findByName("homeSpraying");
-        List<Expert> experts1 = homeSpraying.getExperts();
-        experts1.add((Expert) nader);
-        experts1.add((Expert) ashkan);
-        serviceDao.update(homeSpraying);*/
-
-        /*Customer neda = (Customer) userDao.findByUseAndPass("neda_ak", "Neda@137");
-        Address address = new Address();
-        address.setCity("shiraz");
-        address.setStreet("enghelab");
-        address.setZipCode("4785P");
-
-        Orders orders = new Orders();
-        orders.setAddress(address);
-        orders.setDescription("i want to spray my home");
-        orders.setCustomer(neda);
-        orders.setProposedPrice(120000);
-        orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
-        orderDao.save(orders);*/
-
-       /* Orders orderByID = orderDao.findOrderByID(1);
-        Offer offer = new Offer();
-        offer.setDescription("i agree with that but yard doesnt support");
-        offer.setDuringTime(4);
-        offer.setOrders(orderByID);
-        offer.setProposedPriceOffer(125000);
-        offer.setStartWorkTime(DateUtil.convertStringToTime("12:00"));
-
-        offerDao.save(offer);*/
-        //userService.findAllUser().forEach(System.out::println);
 
     }
 
