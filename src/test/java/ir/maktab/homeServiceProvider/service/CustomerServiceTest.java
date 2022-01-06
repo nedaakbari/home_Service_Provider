@@ -25,30 +25,6 @@ public class CustomerServiceTest {
                 .phoneNumber("9178542569").build();
     }
 
-    /**
-     * Test method for {customerService#saveCustomer()}.
-     */
-   /* @Test
-    void giveDuplicateCustomer_findCustomerByUseAndPass_ThrowException() {
-        Customer foundCustomer = null;
-        try {
-            foundCustomer = customerService.findCustomerByUseAndPass(customer.getUsername(), customer.getPassword());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        if (foundCustomer == null) {
-            customerService.saveCustomer(customer);
-            customerService.saveCustomer(customer);
-            RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
-                    customerService.saveCustomer(customer));
-            Assertions.assertEquals("this customer is already exist", result.getMessage());
-        } else
-            customerService.saveCustomer(foundCustomer);
-        RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
-                customerService.saveCustomer(customer));
-        Assertions.assertEquals("this customer is already exist", result.getMessage());
-    }*/
-
     @Test
     void giveDuplicateCustomer_findCustomerByUseAndPass_ThrowException() {
         customer = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
@@ -68,6 +44,30 @@ public class CustomerServiceTest {
         RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
                 customerService.findCustomerByUseAndPass(customer.getUsername(),customer.getPassword()));
         Assertions.assertEquals("no customer found with these use and pass", result.getMessage());
+    }
+
+    /**
+     * Test method for {customerService#saveCustomer()}.
+     */
+    @Test
+    void giveDuplicateCustomer_findCustomerByUseAndPass_ThrowExceptions() {
+        Customer foundCustomer = null;
+        try {
+            foundCustomer = customerService.findCustomerByUseAndPass(customer.getUsername(), customer.getPassword());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        if (foundCustomer == null) {
+            customerService.saveCustomer(customer);
+            customerService.saveCustomer(customer);
+            RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
+                    customerService.saveCustomer(customer));
+            Assertions.assertEquals("this customer is already exist", result.getMessage());
+        } else
+            customerService.saveCustomer(foundCustomer);
+        RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
+                customerService.saveCustomer(customer));
+        Assertions.assertEquals("this customer is already exist", result.getMessage());
     }
 
 

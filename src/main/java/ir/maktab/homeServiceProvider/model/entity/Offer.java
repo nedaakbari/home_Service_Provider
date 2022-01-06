@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.model.entity;
 
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.model.enumeration.OfferStatus;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -32,6 +33,7 @@ public class Offer {
 
     @ManyToOne
     private Orders orders;
+
 
     @Override
     public String toString() {

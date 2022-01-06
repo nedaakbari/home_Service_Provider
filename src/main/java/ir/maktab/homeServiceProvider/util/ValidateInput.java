@@ -16,11 +16,13 @@ public class ValidateInput {
         if (matches)
             return true;
         return false;
+        //region passCondition
         /* At least 8 chars
         Contains at least one digit
         Contains at least one lower alpha char and one upper alpha char
         Contains at least one char within a set of special chars (@#%$^ etc.)
         Does not contain space, tab, etc.*/
+        //endregion
     }
 
     public static boolean validName(String name) {

@@ -10,7 +10,6 @@ public class findMainServiceByNameTest {
     ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
     MainServiceService mainServiceService = context.getBean(MainServiceService.class);
 
-
     @Test
     void giveAMainServiceName_findByNameMethode_throwException() {
         RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->

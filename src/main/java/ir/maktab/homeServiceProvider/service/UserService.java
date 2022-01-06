@@ -33,6 +33,10 @@ public class UserService {
         }
     }
 
+    public User findUserById(int id) {
+        return userDao.findUserById(id).get();
+    }
+
     public void update(User user) {
         userDao.update(user);
     }

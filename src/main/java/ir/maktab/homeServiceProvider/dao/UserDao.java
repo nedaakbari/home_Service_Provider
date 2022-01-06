@@ -86,6 +86,18 @@ public class UserDao {
         return user;
     }
 
+    public Optional<User> findUserById(int id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<User> query = session.createQuery("From User U Where U.id = :id");
+        query.setParameter("id", id);
+        Optional<User> user = Optional.ofNullable(query.uniqueResult());
+        transaction.commit();
+        session.close();
+        return user;
+    }
+
+
     public List<UserDto> findUsersByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

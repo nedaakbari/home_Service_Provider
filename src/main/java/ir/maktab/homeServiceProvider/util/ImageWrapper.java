@@ -2,7 +2,8 @@ package ir.maktab.homeServiceProvider.util;
 
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
 
 
 public class ImageWrapper {
@@ -25,17 +26,5 @@ public class ImageWrapper {
             throw new RuntimeException("image is too large to upload");
     }
 
-
-  /*  public byte[] fileToBytes(String filename) throws IOException {
-        final byte[] buffer = new byte[256];
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            try (InputStream in = new FileInputStream(new File(filename))) {
-                int bytesRead;
-                while ((bytesRead = in.read(buffer)) > 0)
-                    out.write(buffer, 0, bytesRead);
-            }
-            return out.toByteArray();
-        }
-    }*/
 
 }

@@ -50,9 +50,6 @@ public class AdminService {
         return adminDao.findAll();
     }
 
-
-
-
     //region setter & getter & constructor
     public AdminDao getAdminDao() {
         return adminDao;
