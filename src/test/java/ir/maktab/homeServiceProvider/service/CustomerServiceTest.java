@@ -28,7 +28,7 @@ public class CustomerServiceTest {
     /**
      * Test method for {customerService#saveCustomer()}.
      */
-    @Test
+   /* @Test
     void giveDuplicateCustomer_findCustomerByUseAndPass_ThrowException() {
         Customer foundCustomer = null;
         try {
@@ -47,6 +47,22 @@ public class CustomerServiceTest {
         RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
                 customerService.saveCustomer(customer));
         Assertions.assertEquals("this customer is already exist", result.getMessage());
+    }*/
+
+    @Test
+    void giveDuplicateCustomer_findCustomerByUseAndPass_ThrowException() {
+        customer = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
+        RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
+                customerService.saveCustomer(customer));
+        Assertions.assertEquals("this customer is already exist", result.getMessage());
     }
+    @Test
+    void deleteNoExistCustomer_deleteCustomer_ThrowException() {
+        RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
+                customerService.deleteCustomer(customer));
+        Assertions.assertEquals("there is no customer with these info", result.getMessage());
+    }
+
+
 
 }
