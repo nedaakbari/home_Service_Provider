@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.util;
 
-import java.util.List;
+import java.util.InputMismatchException;
 
 public class ValidateInput {
 
@@ -47,7 +47,6 @@ public class ValidateInput {
             return true;
         return false;
     }
-
 
 
 }
