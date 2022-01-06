@@ -32,6 +32,7 @@ public class Insert {
         AdminService adminService = context.getBean(AdminService.class);
         OrderService orderService = context.getBean(OrderService.class);
         OfferService offerService = context.getBean(OfferService.class);
+        TransActionService transActionService=context.getBean(TransActionService.class);
         // Mapper mapper=context.getBean(Mapper.class);
 
 
@@ -466,7 +467,7 @@ public class Insert {
         transAction.setCustomer(neda);
         transAction.setExpert(orderByID.getExpert());
         transAction.setOrders(orderByID);
-        transActionDao.save(transAction);
+        transActionService.save(transAction);
 
         /*System.out.println("thanks for trust us ...please give score to expert from 1 to 10");
         int scoreByCustomer = 10;
