@@ -22,4 +22,15 @@ public class OfferDto {
         this.proposedPriceOffer = proposedPriceOffer;
         this.startWorkTime = startWorkTime;
     }
+
+    @Override
+    public String toString() {
+        return "OfferDto{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", duringTime=" + duringTime +
+                ", proposedPriceOffer=" + proposedPriceOffer +
+                ", startWorkTime=" + startWorkTime +
+                '}';
+    }
 }

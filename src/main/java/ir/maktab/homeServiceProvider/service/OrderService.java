@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrderService {
-    Mapper mapper=new Mapper();
+    Mapper mapper = new Mapper();
     OrderDao orderDao;
 
 
@@ -27,6 +27,10 @@ public class OrderService {
             orderDao.save(orders);
         } else
             throw new Exception("your proposedPrice must be more than base amount of this service");
+    }
+
+    public void update(Orders orders) {
+        orderDao.update(orders);
     }
 
     public List<OrdersDto> findOrdersOfSubService(int subServiceId) {
@@ -42,11 +46,10 @@ public class OrderService {
             throw new RuntimeException("❌❌❌ Error to find order ❌❌❌");
     }
 
-    public List<OrdersDto> findOrderOfCustomer(Customer customer){
+    public List<OrdersDto> findOrderOfCustomer(Customer customer) {
         List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());
         return orderOfCustomer.stream().map(mapper::ordersDto).collect(Collectors.toList());
     }
-
 
 
     //region setter & getter & constructor

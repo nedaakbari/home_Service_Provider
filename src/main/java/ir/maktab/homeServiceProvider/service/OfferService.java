@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.dao.OfferDao;
 import ir.maktab.homeServiceProvider.dao.OrderDao;
+import ir.maktab.homeServiceProvider.model.dto.OfferDto;
 import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
@@ -80,7 +81,6 @@ public class OfferService {
     public List<OfferDto> findAllOfferOfOrder(Orders order){
         List<Offer> listOfferOfAnOrder = offerDao.findAllOfferOfAnOrder(order.getId());
         return listOfferOfAnOrder.stream().map(mapper::offerDto).collect(Collectors.toList());
-
     }
 
 

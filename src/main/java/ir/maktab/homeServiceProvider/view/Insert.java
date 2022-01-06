@@ -1,10 +1,12 @@
 package ir.maktab.homeServiceProvider.view;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
+import ir.maktab.homeServiceProvider.model.dto.OfferDto;
 import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.model.entity.TransAction;
 import ir.maktab.homeServiceProvider.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.model.enumeration.OfferStatus;
@@ -427,41 +429,44 @@ public class Insert {
         /**
          * الان کاستومر میخواد بیاد ببینه چه پیشنهادهایی برای سفارشش ثبت شده
          */
-        Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
+  /*      Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
         System.out.println(neda);
         //neda.getOrdersList();//این باید فچ تایپش رو تغییر بدم
-        orderService.findOrderOfCustomer(neda).forEach(System.out::println);//todo dto dont show all field to him
+        orderService.findOrderOfCustomer(neda).forEach(System.out::println);
         System.out.println("which order do you wanna check offers?");
         Orders orderByID = orderService.findOrderByID(1);
         //orderByID.getOffers().forEach(System.out::println); باید فچ تایپش رو تغییر بدم
-        List<Offer> allOfferOfOrder = offerDao.findAllOfferOfOrder(orderByID.getId());
+        List<OfferDto> allOfferOfOrder = offerService.findAllOfferOfOrder(orderByID);
         allOfferOfOrder.forEach(System.out::println);*/
 
 /**
-         *یکی از اینا رو انتخاب میکنه
-         *//*
-        Offer offerById = offerDao.findOfferById(1);
+ *یکی از اینا رو انتخاب میکنه
+ */
+        /*Offer offerById = offerService.findOfferById(1);
+        offerById.setStatus(OfferStatus.ACCEPTED);//todo where i must handle this?
+        offerService.updateOffer(offerById);
         Expert expert = offerById.getExpert();
         orderByID.setExpert(expert);
-        orderByID.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);
-        orderDao.update(orderByID);*/
+        orderByID.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);//todo where i must handle this?
+        orderService.update(orderByID);*/
 
 //حالا اکسپرته رفته اونجا تموم شده بعد میخواد امتیاز و نظر بده
         //اکسپرته اردر رو درحال انجام میزنه
         //اکسپرته کار رو تموم میزنه
-        // Orders orderByID = orderDao.findOrderByID(1);
-        //orderByID.setState(OrderState.DONE);
-        //orderDao.update(orderByID);
+        Orders orderByID = orderService.findOrderByID(1);
+        orderByID.setState(OrderState.DONE);
+        orderService.update(orderByID);
 
         //وقتی دان میشه کاستومر باید پرداخت کنه و  پیام میره برای کاستومره که امتیاز بده
-        // Customer neda = customerDao.findByUseAndPass("neda_ak", "Neda@137");
-       /* System.out.println("do you wanna paid? by catch   by online");
+        Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
+        System.out.println("do you wanna paid? by catch   by online");
         TransAction transAction = new TransAction();
-        transAction.setAmount(orderByID.getOffers());//todo چجوری بدونم کدوم آفر واسه این تایید شده
+        //orderByID.getOffers()//todo set Price for this
+       // transAction.setAmount();
         transAction.setCustomer(neda);
         transAction.setExpert(orderByID.getExpert());
         transAction.setOrders(orderByID);
-        transActionDao.save(transAction);*/
+        transActionDao.save(transAction);
 
         /*System.out.println("thanks for trust us ...please give score to expert from 1 to 10");
         int scoreByCustomer = 10;
