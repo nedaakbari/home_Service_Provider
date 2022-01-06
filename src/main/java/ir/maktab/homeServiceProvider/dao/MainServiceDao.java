@@ -1,16 +1,17 @@
 package ir.maktab.homeServiceProvider.dao;
 
+import ir.maktab.homeServiceProvider.config.HibernateUtil;
 import ir.maktab.homeServiceProvider.model.entity.service.MainService;
-import ir.maktab.homeServiceProvider.util.HibernateUtil;
+import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-/**
- * author: neda akbari
- */
+import java.util.Optional;
+@Component
 public class MainServiceDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
@@ -49,17 +50,27 @@ public class MainServiceDao {
         return mainService;
     }
 
-    public MainService findByName(String name) {
+    public Optional<MainService> findByName(String name) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query<MainService> query = session.createQuery("From MainService M Where M.name=:name");
         query.setParameter("name", name);
-        MainService mainService = query.uniqueResult();
+        Optional<MainService> mainService = Optional.ofNullable(query.uniqueResult());
         transaction.commit();
         session.close();
         return mainService;
     }
 
+    public Optional<MainService> findById(int mainId) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<MainService> query = session.createQuery("From MainService M Where M.id=:id");
+        query.setParameter("id", mainId);
+        Optional<MainService> mainService = Optional.ofNullable(query.uniqueResult());
+        transaction.commit();
+        session.close();
+        return mainService;
+    }
 
 
 
