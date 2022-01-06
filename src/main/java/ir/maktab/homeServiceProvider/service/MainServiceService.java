@@ -2,7 +2,6 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.dao.MainServiceDao;
 import ir.maktab.homeServiceProvider.model.entity.service.MainService;
-import ir.maktab.homeServiceProvider.util.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

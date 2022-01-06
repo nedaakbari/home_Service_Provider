@@ -14,7 +14,7 @@ public class MainService {
     private int id;
     @Column(unique = true)
     private String name;
-    @OneToMany(mappedBy = "main",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "main", fetch = FetchType.LAZY)
     private List<SubService> subServiceList = new ArrayList<>();
 
     @Override
@@ -22,15 +22,7 @@ public class MainService {
         return "MainService{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                // ", subServiceList=" + subServiceList +
                 '}';
     }
 
-    public String print() {
-        return "MainService{" +
-                "id=" + id +
-                ", mainServices=" + name +
-                ", subServiceList=" + subServiceList +
-                '}';
-    }
 }

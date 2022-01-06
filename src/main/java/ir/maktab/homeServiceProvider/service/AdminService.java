@@ -39,9 +39,9 @@ public class AdminService {
     }*///todo which one is better
 
 
-    public boolean isExist(String username, String password){
+    public boolean isExist(String username, String password) {
         Optional<Admin> found = adminDao.findByUseAndPass(username, password);
-        if (found!=null)
+        if (found != null)
             return true;
         else return false;
     }

@@ -21,7 +21,7 @@ public class Expert extends User {
     private byte[] image;
     private double Score;
 
-    @ManyToMany( mappedBy = "experts",fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
+    @ManyToMany(mappedBy = "experts", fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
     private Set<SubService> subServiceList = new HashSet<>();
 
     public Expert() {

@@ -58,13 +58,13 @@ public class SubServiceService {
     public SubService findById(int id) {
         Optional<SubService> foundService = subServiceDao.findById(id);
         if (foundService.isPresent()) {
-           return foundService.get();
+            return foundService.get();
         } else {
             throw new RuntimeException("❌❌❌ this subService is not exist ❌❌❌");
         }
     }
 
-    public List<SubService> findSubServiceOfExpert(int expertId){
+    public List<SubService> findSubServiceOfExpert(int expertId) {
         return subServiceDao.findSubserivceOfExpert(expertId);
     }
 

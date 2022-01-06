@@ -24,16 +24,13 @@ public class SubService {
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER)//,mappedBy = "subServiceList"
-    private Set<Expert> experts ;
+    private Set<Expert> experts;
 
-    /*@Enumerated(EnumType.STRING)//???????????
-        @Column(nullable = false)
-        private MainServices mainService;*/
 
     @Override
     public String toString() {
         return "SubService{" +
-                " id=" + id  +" MainService=> " + main.getName() +
+                " id=" + id + " MainService=> " + main.getName() +
                 ", name='" + name + '\'' +
                 ", baseAmount=" + baseAmount +
                 ", description='" + description + '\'' +

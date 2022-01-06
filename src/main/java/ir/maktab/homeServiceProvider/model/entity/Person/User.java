@@ -33,7 +33,7 @@ public class User {
 
     @Column(nullable = false)
     private String username;
-    @Column(nullable = false, length = 8 )
+    @Column(nullable = false, length = 8)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -63,7 +63,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "user "+id+ " name='" + name + '\'' +
+        return "user " + id + " name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
@@ -72,6 +72,6 @@ public class User {
                 ", status=" + status +
                 ", role=" + role +
                 ", registerDate=" + registerDate +
-                ", creditCart=" + creditCart ;
+                ", creditCart=" + creditCart;
     }
 }
