@@ -5,7 +5,6 @@ import ir.maktab.homeServiceProvider.config.HibernateUtil;
 import ir.maktab.homeServiceProvider.model.dto.AdminDto;
 import ir.maktab.homeServiceProvider.model.dto.UserDto;
 import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
-import ir.maktab.homeServiceProvider.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -76,7 +75,7 @@ public class AdminDao {
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(Admin.class, "a");
 
-        if (filter.getEmail()!= null) {
+        if (filter.getEmail() != null) {
             SimpleExpression filterByEmail = Restrictions.eq("a.email", filter.getEmail());
             criteria.add(filterByEmail);
         }

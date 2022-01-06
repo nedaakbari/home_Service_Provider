@@ -71,6 +71,7 @@ public class SubServiceDao {
         session.close();
         return subService;
     }
+
     public Optional<SubService> findById(int id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

@@ -1,12 +1,10 @@
 package ir.maktab.homeServiceProvider.dao;
 
 import ir.maktab.homeServiceProvider.config.HibernateUtil;
-import ir.maktab.homeServiceProvider.model.dto.OrdersDto;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
-import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.model.entity.service.SubService;
-import org.hibernate.*;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
@@ -62,8 +60,6 @@ public class OrderDao {
         session.close();
         return orders;
     }
-
-
 
 
     public List<Orders> findOrderOfCustomer(int customerId) {

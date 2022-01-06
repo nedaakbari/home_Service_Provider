@@ -74,7 +74,6 @@ public class UserDao {
         return user;
     }
 
-
     public Optional<User> findUserByEmail(String email) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -106,7 +105,7 @@ public class UserDao {
             SimpleExpression filterByRole = Restrictions.eq("u.role", filter.getRole());
             criteria.add(filterByRole);
         }
-        if (filter.getEmail()!= null) {
+        if (filter.getEmail() != null) {
             SimpleExpression filterByEmail = Restrictions.eq("u.email", filter.getEmail());
             criteria.add(filterByEmail);
         }

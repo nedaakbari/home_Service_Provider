@@ -29,7 +29,7 @@ public class UserDto {
                 ", status=" + status +
                 ", registerDate=" + registerDate +
                 ", creditCart=" + creditCart +
-                ", email= "+email+
+                ", email= " + email +
                 '}';
     }
 }

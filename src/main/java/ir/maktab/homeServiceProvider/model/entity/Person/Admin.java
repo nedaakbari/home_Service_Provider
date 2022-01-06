@@ -16,5 +16,18 @@ public class Admin {
     private String userName;
     private String passWord;
     private String name;
-    private String family;
+    private String lastName;
+    private String phoneNumber;
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

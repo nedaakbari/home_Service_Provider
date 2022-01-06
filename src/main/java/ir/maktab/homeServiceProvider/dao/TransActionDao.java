@@ -22,7 +22,6 @@ public class TransActionDao {
         session.close();
     }
 
-
     public List<TransAction> findAll() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

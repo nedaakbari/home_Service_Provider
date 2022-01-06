@@ -1,11 +1,8 @@
 package ir.maktab.homeServiceProvider.model.dto;
 
-import ir.maktab.homeServiceProvider.model.enumeration.UserRegistrationStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 @Builder
 @Getter
 @Setter

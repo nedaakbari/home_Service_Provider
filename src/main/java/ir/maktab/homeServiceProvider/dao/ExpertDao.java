@@ -26,7 +26,7 @@ public class ExpertDao {
     public void save(Expert expert) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        ImageWrapper.saveImage(expert.getName()+".jpg",expert);
+        ImageWrapper.saveImage(expert.getName() + ".jpg", expert);
         session.save(expert);
         transaction.commit();
         session.close();
@@ -59,7 +59,7 @@ public class ExpertDao {
         return experts;
     }
 
-    public Optional<Expert> findByUseAndPass(String userName,String password) {
+    public Optional<Expert> findByUseAndPass(String userName, String password) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query<Expert> query = session.createQuery("From Expert E Where E.password = :password and  E.username=:username");
@@ -97,20 +97,20 @@ public class ExpertDao {
             criteria.add(filterByFamily);
         }
 
-        if (filter.getSubService()!=null) {
+        if (filter.getSubService() != null) {
             SimpleExpression filterByMainService = Restrictions.eq("s.name", filter.getSubService());
             criteria.add(filterByMainService);
         }
         criteria.setProjection(Projections.projectionList()
-                        .add(Projections.property("u.registerDate").as("registerDate"))
-                        .add(Projections.property("u.role").as("role"))
-                        .add(Projections.property("u.name").as("name"))
-                        .add(Projections.property("u.lastName").as("lastName"))
-                        .add(Projections.property("u.role").as("role"))
-                        .add(Projections.property("u.phoneNumber").as("phoneNumber"))
-                        .add(Projections.property("u.email").as("email"))
-                        .add(Projections.property("u.status").as("status"))
-                        .add(Projections.property("u.id").as("id")));
+                .add(Projections.property("u.registerDate").as("registerDate"))
+                .add(Projections.property("u.role").as("role"))
+                .add(Projections.property("u.name").as("name"))
+                .add(Projections.property("u.lastName").as("lastName"))
+                .add(Projections.property("u.role").as("role"))
+                .add(Projections.property("u.phoneNumber").as("phoneNumber"))
+                .add(Projections.property("u.email").as("email"))
+                .add(Projections.property("u.status").as("status"))
+                .add(Projections.property("u.id").as("id")));
 
         criteria.setResultTransformer(Transformers.aliasToBean(ExpertDto.class));
         List<ExpertDto> list = criteria.list();
