@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Lazy
 @Component
@@ -51,7 +52,7 @@ public class OfferDao {
         return offers;
     }
 
-    public List<Offer> findAllOfferOfAnOrder(int OrderId) {
+    public List<Offer> findAllOfferOfAnOrder(int OrderId) {//is exist
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from Offer O join fetch O.orders S where S.id=:id ");//todo چک کن فقط اونایی نشونش بده که باید انتظار باشن and s.state=''
@@ -62,17 +63,16 @@ public class OfferDao {
         return offers;
     }
 
-
-
-    public Offer findOfferById(int id) {
+    public Optional<Offer> findOfferById(int id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("From Offer o where o.id=:id");
+        Query<Offer> query = session.createQuery("From Offer o where o.id=:id");
         query.setParameter("id", id);
-        Offer offer = (Offer) query.uniqueResult();
+        Optional<Offer> offer = Optional.ofNullable(query.uniqueResult());
         transaction.commit();
         session.close();
         return offer;
     }
+
 
 }

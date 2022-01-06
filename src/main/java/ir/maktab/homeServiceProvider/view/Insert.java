@@ -392,9 +392,9 @@ public class Insert {
         System.out.println("*******************************************888");
         Orders orderByID = orderService.findOrderByID(1);
 
+
         //به محض اینکه یک آفر ثبت شد بیاد استیت رو تغییر بده
-        orderByID.setState(OrderState.WAITING_FOR_SELECT_AN_EXPERT);
-        orderDao.update(orderByID);
+
         /*Offer offer=new Offer();
         offer.setExpert(nader);
         LocalTime localTime = DateUtil.convertStringToTime("12:00");
