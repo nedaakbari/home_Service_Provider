@@ -63,6 +63,12 @@ public class CustomerServiceTest {
         Assertions.assertEquals("there is no customer with these info", result.getMessage());
     }
 
+    @Test
+    void NoExistCustomer_findCustomerByUseAndPass_ThrowException() {
+        RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
+                customerService.findCustomerByUseAndPass(customer.getUsername(),customer.getPassword()));
+        Assertions.assertEquals("no customer found with these use and pass", result.getMessage());
+    }
 
 
 }
