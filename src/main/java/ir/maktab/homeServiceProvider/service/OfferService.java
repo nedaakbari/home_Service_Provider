@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.dao.ExpertDao;
 import ir.maktab.homeServiceProvider.dao.OfferDao;
 import ir.maktab.homeServiceProvider.dao.OrderDao;
 import ir.maktab.homeServiceProvider.model.entity.Offer;
@@ -12,7 +11,6 @@ import ir.maktab.homeServiceProvider.util.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.Order;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -81,7 +79,7 @@ public class OfferService {
 
     public List<OfferDto> findAllOfferOfOrder(Orders order){
         List<Offer> listOfferOfAnOrder = offerDao.findAllOfferOfAnOrder(order.getId());
-        return listOfferOfAnOrder.stream().map(mapper::OfferDto).collect(Collectors.toList());
+        return listOfferOfAnOrder.stream().map(mapper::offerDto).collect(Collectors.toList());
 
     }
 

@@ -1,15 +1,18 @@
 package ir.maktab.homeServiceProvider.util.mapper;
 
 import ir.maktab.homeServiceProvider.model.dto.ExpertDto;
+import ir.maktab.homeServiceProvider.model.dto.OfferDto;
 import ir.maktab.homeServiceProvider.model.dto.OrdersDto;
 import ir.maktab.homeServiceProvider.model.dto.SubServiceDto;
 import ir.maktab.homeServiceProvider.model.entity.Address;
+import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 @Component
@@ -38,13 +41,23 @@ public class Mapper {
                 .build();
     }
 
-    public OrdersDto OrdersDto(Orders orders) {
+    public OrdersDto ordersDto(Orders orders) {
         return OrdersDto.builder()
                 .id(orders.getId())
                 .address(orders.getAddress())
                 .proposedPrice(orders.getProposedPrice())
                 .description(orders.getDescription())
                 .workDay(orders.getWorkDay())
+                .build();
+    }
+
+    public OfferDto offerDto(Offer offer) {
+        return OfferDto.builder()
+                .id(offer.getId())
+                .duringTime(offer.getDuringTime())
+                .description(offer.getDescription())
+                .startWorkTime(offer.getStartWorkTime())
+                .proposedPriceOffer(offer.getProposedPriceOffer())
                 .build();
     }
 }

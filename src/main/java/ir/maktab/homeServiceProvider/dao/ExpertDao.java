@@ -4,7 +4,7 @@ import ir.maktab.homeServiceProvider.config.HibernateUtil;
 import ir.maktab.homeServiceProvider.model.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.util.ImageWrapper;
-import ir.maktab.homeServiceProvider.util.filter.UserFilter;
+import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

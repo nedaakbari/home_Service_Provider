@@ -3,7 +3,7 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.dao.UserDao;
 import ir.maktab.homeServiceProvider.model.dto.UserDto;
 import ir.maktab.homeServiceProvider.model.entity.Person.User;
-import ir.maktab.homeServiceProvider.util.filter.UserFilter;
+import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

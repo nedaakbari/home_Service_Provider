@@ -3,7 +3,7 @@ package ir.maktab.homeServiceProvider.dao;
 import ir.maktab.homeServiceProvider.config.HibernateUtil;
 import ir.maktab.homeServiceProvider.model.dto.UserDto;
 import ir.maktab.homeServiceProvider.model.entity.Person.User;
-import ir.maktab.homeServiceProvider.util.filter.UserFilter;
+import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

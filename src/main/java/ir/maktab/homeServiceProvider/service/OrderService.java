@@ -2,16 +2,13 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.dao.OrderDao;
 import ir.maktab.homeServiceProvider.model.dto.OrdersDto;
-import ir.maktab.homeServiceProvider.model.entity.Offer;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.util.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.Order;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,7 +31,7 @@ public class OrderService {
 
     public List<OrdersDto> findOrdersOfSubService(int subServiceId) {
         List<Orders> orders = orderDao.findOrdersOfSubService(subServiceId);
-        return orders.stream().map(mapper::OrdersDto).collect(Collectors.toList());
+        return orders.stream().map(mapper::ordersDto).collect(Collectors.toList());
     }
 
     public Orders findOrderByID(int id) {
@@ -47,7 +44,7 @@ public class OrderService {
 
     public List<OrdersDto> findOrderOfCustomer(Customer customer){
         List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());
-        return orderOfCustomer.stream().map(mapper::OrdersDto).collect(Collectors.toList());
+        return orderOfCustomer.stream().map(mapper::ordersDto).collect(Collectors.toList());
     }
 
 
