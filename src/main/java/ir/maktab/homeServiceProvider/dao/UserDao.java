@@ -1,23 +1,21 @@
 package ir.maktab.homeServiceProvider.dao;
 
+import ir.maktab.homeServiceProvider.config.HibernateUtil;
 import ir.maktab.homeServiceProvider.model.dto.UserDto;
-import ir.maktab.homeServiceProvider.util.HibernateUtil;
+import ir.maktab.homeServiceProvider.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.util.filter.UserFilter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.SimpleExpression;
+import org.hibernate.criterion.*;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-/**
- * author: neda akbari
- */
+import java.util.Optional;
+@Component
 public class UserDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
@@ -61,29 +59,30 @@ public class UserDao {
         return users;
     }
 
-    public User findByUseAndPass(String userName, String password) {
+    public Optional<User> findByUseAndPass(String userName, String password) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
+        Query<User> query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
         query.setParameter("username", userName);
         query.setParameter("password", password);
-        User user = (User) query.uniqueResult();
+        Optional<User> user = Optional.ofNullable(query.uniqueResult());
         transaction.commit();
         session.close();
         return user;
     }
 
 
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("From User U Where U.email = :email");
+        Query<User> query = session.createQuery("From User U Where U.email = :email");
         query.setParameter("email", email);
-        User user = (User) query.uniqueResult();
+        Optional<User> user = Optional.ofNullable(query.uniqueResult());
         transaction.commit();
         session.close();
         return user;
     }
+
     public List<UserDto> findUsersByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -91,6 +90,10 @@ public class UserDao {
         if (filter.getRole() != null) {
             SimpleExpression filterByRole = Restrictions.eq("u.role", filter.getRole());
             criteria.add(filterByRole);
+        }
+        if (filter.getEmail()!= null) {
+            SimpleExpression filterByEmail = Restrictions.eq("u.email", filter.getEmail());
+            criteria.add(filterByEmail);
         }
         if (filter.getStatus() != null) {
             SimpleExpression filterByStatus = Restrictions.eq("u.status", filter.getStatus());
@@ -104,11 +107,6 @@ public class UserDao {
             SimpleExpression filterByFamily = Restrictions.eq("u.lastName", filter.getLastName());
             criteria.add(filterByFamily);
         }
-        if (filter.getStartDate() != null && filter.getEndDate() != null) {
-            Criterion between = Restrictions.between("u.registerDate", filter.getStartDate(), filter.getEndDate());
-            criteria.add(between);
-        }
-
 
         criteria.setProjection(Projections.projectionList()
                 .add(Projections.property("u.registerDate").as("registerDate"))
@@ -127,6 +125,5 @@ public class UserDao {
         session.close();
         return list;
     }
-
 
 }
