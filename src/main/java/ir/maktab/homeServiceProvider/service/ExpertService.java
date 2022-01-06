@@ -2,8 +2,6 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.dao.ExpertDao;
 import ir.maktab.homeServiceProvider.model.dto.ExpertDto;
-import ir.maktab.homeServiceProvider.model.dto.UserDto;
-import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.util.filter.UserFilter;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.config;
 
-
-import ir.maktab.homeServiceProvider.model.entity.*;
+import ir.maktab.homeServiceProvider.model.entity.Offer;
+import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
@@ -16,9 +16,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 import java.util.Properties;
-/**
- * author: neda akbari
- */
+
 public class HibernateUtil {
 
     public static SessionFactory sessionFactory;

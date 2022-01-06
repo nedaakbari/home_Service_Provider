@@ -1,19 +1,17 @@
 package ir.maktab.homeServiceProvider.dao;
 
+
+import ir.maktab.homeServiceProvider.config.HibernateUtil;
+import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.util.List;
-import ir.maktab.homeServiceProvider.config.HibernateUtil;
-import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
-/**
- * author: neda akbari
- */
 @Component
 public class AdminDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();

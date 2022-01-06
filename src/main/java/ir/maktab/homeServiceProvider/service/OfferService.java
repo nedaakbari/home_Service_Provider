@@ -2,11 +2,11 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.dao.OfferDao;
 import ir.maktab.homeServiceProvider.model.entity.Offer;
-import ir.maktab.homeServiceProvider.model.entity.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 @Component
 public class OfferService {
     OfferDao offerDao;

@@ -4,6 +4,7 @@ import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 
 @Data
 @Entity
+
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +52,20 @@ public class Orders {
 
     private String comment;
 
+    @Builder
+    public Orders(long proposedPrice, String description, Date workDay, Address address, SubService subService, Customer customer) {
+        this.proposedPrice = proposedPrice;
+        this.description = description;
+        this.workDay = workDay;
+        this.address = address;
+        this.subService = subService;
+        this.customer = customer;
+    }
+
+    public Orders() {
+
+    }
+
     @Override
     public String toString() {
         return "Orders{" +
@@ -64,7 +80,7 @@ public class Orders {
                 ", customer=" + customer +
                 ", expert=" + expert +
                 ", score=" + score +
-               // ", agreedPrice= "+agreedPrice+
+                // ", agreedPrice= "+agreedPrice+
                 ", comment='" + comment + '\'' +
                 '}';
     }

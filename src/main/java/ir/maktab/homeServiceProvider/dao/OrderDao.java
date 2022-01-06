@@ -1,15 +1,17 @@
 package ir.maktab.homeServiceProvider.dao;
 
 import ir.maktab.homeServiceProvider.config.HibernateUtil;
+import ir.maktab.homeServiceProvider.model.dto.OrdersDto;
 import ir.maktab.homeServiceProvider.model.entity.Orders;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.model.entity.service.SubService;
+import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 //@Lazy
 @Component
@@ -50,7 +52,7 @@ public class OrderDao {
         return orders;
     }
 
-    public List<Orders> findOrder(int serviceId) {
+    public List<Orders> findOrdersOfSubService(int serviceId) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("from Orders O join fetch O.subService S where S.id=:id and O.state='WAITING_FOR_EXPERT_SUGGESTION'");
@@ -60,6 +62,9 @@ public class OrderDao {
         session.close();
         return orders;
     }
+
+
+
 
     public List<Orders> findOrderOfCustomer(int customerId) {
         Session session = sessionFactory.openSession();
@@ -72,16 +77,15 @@ public class OrderDao {
         return orders;
     }
 
-    public Orders findOrderByID(int id) {
+    public Optional<Orders> findOrderByID(int id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from Orders O where O.id=:id");
+        Query<Orders> query = session.createQuery("from Orders O where O.id=:id");
         query.setParameter("id", id);
-        Orders order = (Orders) query.uniqueResult();
+        Optional<Orders> order = Optional.ofNullable(query.uniqueResult());
         transaction.commit();
         session.close();
         return order;
     }
-
 
 }

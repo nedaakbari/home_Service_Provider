@@ -3,7 +3,6 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.dao.AdminDao;
 import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -33,6 +32,13 @@ public class AdminService {
             return admin.get();
         } else
             throw new RuntimeException("no admin found with these use and pass");
+    }
+
+    public boolean isExist(String username, String password){
+        Optional<Admin> found = adminDao.findByUseAndPass(username, password);
+        if (found!=null)
+            return true;
+        else return false;
     }
 
     public List<Admin> findAll() {

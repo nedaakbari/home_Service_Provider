@@ -1,7 +1,5 @@
 package ir.maktab.homeServiceProvider.util;
 
-import java.util.InputMismatchException;
-
 public class ValidateInput {
 
 

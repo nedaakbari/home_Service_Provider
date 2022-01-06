@@ -9,13 +9,16 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+
 @Component
 public class ExpertDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
@@ -99,15 +102,15 @@ public class ExpertDao {
             criteria.add(filterByMainService);
         }
         criteria.setProjection(Projections.projectionList()
-                .add(Projections.property("u.registerDate").as("registerDate"))
-                .add(Projections.property("u.role").as("role"))
-                .add(Projections.property("u.name").as("name"))
-                .add(Projections.property("u.lastName").as("lastName"))
-                .add(Projections.property("u.role").as("role"))
-                .add(Projections.property("u.phoneNumber").as("phoneNumber"))
-                .add(Projections.property("u.email").as("email"))
-                .add(Projections.property("u.status").as("status"))
-                .add(Projections.property("u.id").as("id")));
+                        .add(Projections.property("u.registerDate").as("registerDate"))
+                        .add(Projections.property("u.role").as("role"))
+                        .add(Projections.property("u.name").as("name"))
+                        .add(Projections.property("u.lastName").as("lastName"))
+                        .add(Projections.property("u.role").as("role"))
+                        .add(Projections.property("u.phoneNumber").as("phoneNumber"))
+                        .add(Projections.property("u.email").as("email"))
+                        .add(Projections.property("u.status").as("status"))
+                        .add(Projections.property("u.id").as("id")));
 
         criteria.setResultTransformer(Transformers.aliasToBean(ExpertDto.class));
         List<ExpertDto> list = criteria.list();

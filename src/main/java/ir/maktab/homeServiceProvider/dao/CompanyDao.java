@@ -1,7 +1,8 @@
 package ir.maktab.homeServiceProvider.dao;
-/**
- * author: neda akbari
- */
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class CompanyDao {
 
 }

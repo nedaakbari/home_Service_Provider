@@ -1,10 +1,11 @@
 package ir.maktab.homeServiceProvider.dao;
 
 import ir.maktab.homeServiceProvider.config.HibernateUtil;
+import ir.maktab.homeServiceProvider.model.dto.OrdersDto;
 import ir.maktab.homeServiceProvider.model.entity.Offer;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import ir.maktab.homeServiceProvider.model.entity.service.SubService;
+import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -60,6 +61,8 @@ public class OfferDao {
         session.close();
         return offers;
     }
+
+
 
     public Offer findOfferById(int id) {
         Session session = sessionFactory.openSession();
