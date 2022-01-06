@@ -26,6 +26,7 @@ public class Insert {
         SubServiceService subServiceService = context.getBean(SubServiceService.class);
         AdminService adminService = context.getBean(AdminService.class);
         OrderService orderService = context.getBean(OrderService.class);
+        OfferService offerService = context.getBean(OfferService.class);
         // Mapper mapper=context.getBean(Mapper.class);
 
 
@@ -397,7 +398,7 @@ public class Insert {
         Orders orderByID = orderService.findOrderByID(1);
 
 
-        Offer offer=new Offer();
+        Offer offer = new Offer();
         offer.setExpert(nader);
         LocalTime localTime = DateUtil.convertStringToTime("12:00");
         offer.setStartWorkTime(localTime);
@@ -406,7 +407,7 @@ public class Insert {
         offer.setDuringTime(4);
         offer.setProposedPriceOffer(1500000);
 
-        offerDao.save(offer);*///todo چک کن اگه توی تخصصش باشه سیو کنه
+        offerService.saveOffer(offer, orderByID);
 
         /*Offer offer=new Offer();
         offer.setExpert(sara);

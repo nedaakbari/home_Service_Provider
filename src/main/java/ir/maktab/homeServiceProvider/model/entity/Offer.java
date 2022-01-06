@@ -15,6 +15,7 @@ public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;//want to give long because of very suggest
+
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
     private long proposedPriceOffer;
@@ -25,9 +26,6 @@ public class Offer {
 
     @CreationTimestamp
     private Date submissionDate;
-
-    @Temporal(TemporalType.DATE)
-    private Date offerDate;
 
     @ManyToOne
     private Expert expert;
