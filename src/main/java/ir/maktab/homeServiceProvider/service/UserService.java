@@ -1,22 +1,36 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.dao.CustomerDao;
-import ir.maktab.homeServiceProvider.dao.ExpertDao;
 import ir.maktab.homeServiceProvider.dao.UserDao;
+import ir.maktab.homeServiceProvider.model.dto.UserDto;
+import ir.maktab.homeServiceProvider.model.entity.Person.User;
+import ir.maktab.homeServiceProvider.util.filter.UserFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
+@Component
 public class UserService {
     private UserDao userDao;
-    private CustomerDao customerDao;
-    private ExpertDao expertDao;
+
 
     public void saveUser(User user) {
-        userDao.save(user);
+        Optional<User> foundUser = userDao.findByUseAndPass(user.getUsername(), user.getPassword());
+        if (foundUser.isPresent()) {
+            throw new RuntimeException("user with these use an pass is already exist");
+        } else {
+            userDao.save(user);
+        }
     }
 
     public void deleteUser(User user) {
-        userDao.delete(user);
+        Optional<User> foundUser = userDao.findByUseAndPass(user.getUsername(), user.getPassword());
+        if (foundUser.isPresent()) {
+            userDao.delete(user);
+        } else {
+            throw new RuntimeException("user doesn't exist");
+        }
     }
 
     public void update(User user) {
@@ -28,32 +42,40 @@ public class UserService {
     }
 
     public User findUserByUseAndPass(String username, String password) {
-        return userDao.findByUseAndPass(username, password);
-    }
-
-    public boolean duplicatePassword(String pass) {
-        List<User> users = userDao.findAll();
-        if (users.size()==0)
-            return false;
-        else if (users.stream().anyMatch(user -> user.getPassword().equals(pass)))
-            return true;
-        return false;
+        Optional<User> user = userDao.findByUseAndPass(username, password);
+        if (user.isPresent()) {
+            return user.get();
+        } else
+            throw new RuntimeException("no user found with these use and pass");
     }
 
     public boolean duplicateEmail(String email) {
-        List<User> users = userDao.findAll();
-        if (users.size()==0)
-            return false;
-        else if (users.stream().anyMatch(user -> user.getEmail().equals(email)))
+        Optional<User> userByEmail = userDao.findUserByEmail(email);
+        if (userByEmail.isPresent()) {
             return true;
-        return false;
+        } else
+            return false;
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user) {
         userDao.update(user);
+/*        int update =userDao.update(user);///???????????چجوری چک کنم ابدیت شده یا نه؟
+        if (update==1)
+            System.out.println("your pass successfully changed");
+        else
+            System.out.println("your request not response, try again");*/
     }
 
-    //region setter & getter
+    public List<UserDto> findAllUsersByFilter(UserFilter userFilter) {
+        return userDao.findUsersByFilter(userFilter);
+    }
+
+    //region setter & getter & constructor
+    @Autowired
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     public UserDao getUserDao() {
         return userDao;
     }
@@ -61,21 +83,5 @@ public class UserService {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-
-    public CustomerDao getCustomerDao() {
-        return customerDao;
-    }
-
-    public void setCustomerDao(CustomerDao customerDao) {
-        this.customerDao = customerDao;
-    }
-
-    public ExpertDao getExpertDao() {
-        return expertDao;
-    }
-
-    public void setExpertDao(ExpertDao expertDao) {
-        this.expertDao = expertDao;
-    }
-    //endregion
+    //endregion &
 }
