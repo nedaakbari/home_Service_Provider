@@ -4,12 +4,12 @@ import ir.maktab.homeServiceProvider.dao.AdminDao;
 import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-//@Service
-@Component
+@Service
 public class AdminService {
 
     private AdminDao adminDao;

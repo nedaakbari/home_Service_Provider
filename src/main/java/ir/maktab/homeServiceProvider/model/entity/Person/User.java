@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @AllArgsConstructor

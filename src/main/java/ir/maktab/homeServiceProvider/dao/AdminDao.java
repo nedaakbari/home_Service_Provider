@@ -96,7 +96,7 @@ public class AdminDao {
                 .add(Projections.property("a.email").as("email"))
                 .add(Projections.property("a.id").as("id")));
 
-        criteria.setResultTransformer(Transformers.aliasToBean(UserDto.class));
+        criteria.setResultTransformer(Transformers.aliasToBean(AdminDto.class));
         List<AdminDto> list = criteria.list();
         transaction.commit();
         session.close();

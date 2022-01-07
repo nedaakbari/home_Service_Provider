@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.model.entity;
 
 import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
 import lombok.Builder;
@@ -20,7 +21,7 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private long proposedPrice;
+    private Double proposedPrice;
     //private long agreedPrice;
 
     private String description;
@@ -34,11 +35,14 @@ public class Orders {
 
     @ManyToOne
     private SubService subService;
+    /*@ManyToOne
+    private MainService mainService;*/
 
     @Enumerated(EnumType.STRING)
     private OrderState state;
 
     @ManyToOne
+    @Column(nullable = false)
     private Customer customer;
 
     @OneToMany(mappedBy = "orders"/*,fetch = FetchType.EAGER*/)
@@ -52,7 +56,7 @@ public class Orders {
     private String comment;
 
     @Builder
-    public Orders(long proposedPrice, String description, Date workDay, Address address, SubService subService, Customer customer) {
+    public Orders(Double proposedPrice, String description, Date workDay, Address address, SubService subService, Customer customer) {
         this.proposedPrice = proposedPrice;
         this.description = description;
         this.workDay = workDay;

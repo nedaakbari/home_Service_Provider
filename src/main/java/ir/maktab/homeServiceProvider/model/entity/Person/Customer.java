@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @Setter//@ToString(callSuper = true)
 public class Customer extends User {
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "customer")
     private Set<Orders> ordersList = new HashSet<>();
 
     @Builder

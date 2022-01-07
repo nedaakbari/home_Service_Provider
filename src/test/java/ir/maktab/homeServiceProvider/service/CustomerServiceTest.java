@@ -49,7 +49,7 @@ public class CustomerServiceTest {
     /**
      * Test method for {customerService#saveCustomer()}.
      */
-    @Test
+  /*  @Test
     void giveDuplicateCustomer_findCustomerByUseAndPass_ThrowExceptions() {
         Customer foundCustomer = null;
         try {
@@ -68,7 +68,7 @@ public class CustomerServiceTest {
         RuntimeException result = Assertions.assertThrows(RuntimeException.class, () ->
                 customerService.saveCustomer(customer));
         Assertions.assertEquals("this customer is already exist", result.getMessage());
-    }
+    }*/
 
 
 }

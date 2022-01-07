@@ -71,7 +71,4 @@ public class CustomerDao {
         return customer;
     }
 
-
-
-
 }

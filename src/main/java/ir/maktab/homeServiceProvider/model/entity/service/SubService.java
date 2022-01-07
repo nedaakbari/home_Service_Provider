@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.model.entity.service;
 
+import ir.maktab.homeServiceProvider.model.entity.Orders;
 import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
 import lombok.Data;
 
@@ -15,17 +16,19 @@ public class SubService {
     private int id;
 
     @ManyToOne
-    //@Column(nullable = false)
+    //@Column(nullable = false)//todo
     private MainService main;
 
     @Column(unique = true)
     private String name;
-    private long baseAmount;
+    private Double baseAmount;
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER)//,mappedBy = "subServiceList"
-    private Set<Expert> experts;
+    private Set<Expert> experts;//todo delete
 
+    @OneToMany
+    private Set<Orders> orders;
 
     @Override
     public String toString() {

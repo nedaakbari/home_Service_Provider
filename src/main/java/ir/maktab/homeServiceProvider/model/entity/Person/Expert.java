@@ -17,12 +17,12 @@ import java.util.Set;
 @Setter
 public class Expert extends User {
     @Lob
-    @Column(columnDefinition = "BLOB")
+    @Column(columnDefinition = "BLOB",length = 300000)
     private byte[] image;
     private double Score;
 
     @ManyToMany(mappedBy = "experts", fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
-    private Set<SubService> subServiceList = new HashSet<>();
+    private Set<SubService> subServiceList = new HashSet<>();//todo
 
     public Expert() {
     }

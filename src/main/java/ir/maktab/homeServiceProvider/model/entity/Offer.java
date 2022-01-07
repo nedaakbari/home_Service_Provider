@@ -18,19 +18,22 @@ public class Offer {
 
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
-    private long proposedPriceOffer;
+    private Double proposedPriceOffer;
     private String description;
     private int duringTime;
 
-    private LocalTime startWorkTime;
+    @Temporal(TemporalType.TIME)
+    private Date startWorkTime;
 
     @CreationTimestamp
     private Date submissionDate;
 
     @ManyToOne
+    @Column(nullable = false)
     private Expert expert;
 
     @ManyToOne
+    @Column(nullable = false)
     private Orders orders;
 
 

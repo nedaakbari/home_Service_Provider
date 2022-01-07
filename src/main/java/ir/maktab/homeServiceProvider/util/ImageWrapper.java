@@ -7,12 +7,12 @@ import java.io.FileInputStream;
 
 
 public class ImageWrapper {
-   // private int maxFileSize =350 * 350;
+    private static int maxFileSize =5000000;
 
     public static void saveImage(String picName, Expert expert) {
         File file = new File("C:\\image\\" + picName + "");
         int length = (int) file.length();
-        if (length < 15000 * 15000) {
+        if (length > maxFileSize) {
             byte[] imageData = new byte[length];
             try {
                 FileInputStream fileInputStream = new FileInputStream(file);
