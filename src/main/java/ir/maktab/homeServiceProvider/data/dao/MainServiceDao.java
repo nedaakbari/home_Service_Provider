@@ -6,13 +6,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 public class MainServiceDao {
-    private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
     public void save(MainService mainService) {
         Session session = sessionFactory.openSession();

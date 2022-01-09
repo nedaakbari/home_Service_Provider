@@ -7,11 +7,12 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 public interface CustomerDao extends PagingAndSortingRepository<Customer, Integer> {
     //public void save(Customer customer) ;
     //public void delete(Customer customer) ;

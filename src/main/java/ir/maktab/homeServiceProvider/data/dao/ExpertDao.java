@@ -13,75 +13,35 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class ExpertDao {
-    private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+@Repository
+public interface ExpertDao extends PagingAndSortingRepository<Expert,Integer> {
 
-    public void save(Expert expert) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        ImageWrapper.saveImage(expert.getName() + ".jpg", expert);
-        session.save(expert);
-        transaction.commit();
-        session.close();
-    }
-
-    public void update(Expert expert) {
+ //void save(Expert expert)
+//void delete(Expert expert)
+    // List<Expert> findAll()
+  /*  public void update(Expert expert) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(expert);
         transaction.commit();
         session.close();
-    }
+    }*/
 
-    public void delete(Expert expert) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.delete(expert);
-        transaction.commit();
-        session.close();
-    }
 
-    public List<Expert> findAll() {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from Expert ");
-        List<Expert> experts = query.list();
-        //users = session.createQuery("from User ").list();
-        transaction.commit();
-        session.close();
-        return experts;
-    }
+//"From Expert E Where E.password = :password and  E.username=:username"
+    Optional<Expert> findByUsernameAndPassword(String userName, String password)
 
-    public Optional<Expert> findByUseAndPass(String userName, String password) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<Expert> query = session.createQuery("From Expert E Where E.password = :password and  E.username=:username");
-        query.setParameter("username", userName);
-        query.setParameter("password", password);
-        Optional<Expert> expert = Optional.ofNullable(query.uniqueResult());
-        transaction.commit();
-        session.close();
-        return expert;
-    }
+//"From Expert E Where E.email = :email"
+    Optional<Expert> findByEmail(String email) ;
 
-    public Optional<Expert> findByEmail(String email) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<Expert> query = session.createQuery("From Expert E Where E.email = :email");
-        query.setParameter("email", email);
-        Optional<Expert> expert = Optional.ofNullable(query.uniqueResult());
-        transaction.commit();
-        session.close();
-        return expert;
-    }
-
-    public List<ExpertDto> findAllExpertsByFilter(UserFilter filter) {
+   /* public List<ExpertDto> findAllExpertsByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(Expert.class, "e");
@@ -116,6 +76,6 @@ public class ExpertDao {
         transaction.commit();
         session.close();
         return list;
-    }
+    }*/
 
 }
