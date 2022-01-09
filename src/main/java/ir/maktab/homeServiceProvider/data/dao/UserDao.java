@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -19,86 +20,32 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserDao {
-
-        private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
-
-    public int save(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        int id = (int) session.save(user);
-        transaction.commit();
-        session.close();
-        if (id == 1) {
-            return 1;
-        }
-        return -1;
-    }
+public interface UserDao extends PagingAndSortingRepository<User, Integer> {
 
 
-    public void update(User user) {
+    //public int save(User user);
+//    public void delete(User user);
+//List<User> findAll() ;
+
+   /* public void update(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(user);
         transaction.commit();
         session.close();
-    }
+    }*/
 
-    public void delete(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.delete(user);
-        transaction.commit();
-        session.close();
-    }
+    //"From User U Where U.password = :password and  U.username=:username")
+    Optional<User> findByUsernameAndPassword(String userName, String password);
 
-    public List<User> findAll() {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from User");
-        List<User> users = query.list();
-        //users = session.createQuery("from User ").list();
-        transaction.commit();
-        session.close();
-        return users;
-    }
+    //"From User U Where U.email = :email"
+    Optional<User> findUserByEmail(String email);
 
-    public Optional<User> findByUseAndPass(String userName, String password) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<User> query = session.createQuery("From User U Where U.password = :password and  U.username=:username");
-        query.setParameter("username", userName);
-        query.setParameter("password", password);
-        Optional<User> user = Optional.ofNullable(query.uniqueResult());
-        transaction.commit();
-        session.close();
-        return user;
-    }
-
-    public Optional<User> findUserByEmail(String email) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<User> query = session.createQuery("From User U Where U.email = :email");
-        query.setParameter("email", email);
-        Optional<User> user = Optional.ofNullable(query.uniqueResult());
-        transaction.commit();
-        session.close();
-        return user;
-    }
-
-    public Optional<User> findUserById(int id) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<User> query = session.createQuery("From User U Where U.id = :id");
-        query.setParameter("id", id);
-        Optional<User> user = Optional.ofNullable(query.uniqueResult());
-        transaction.commit();
-        session.close();
-        return user;
-    }
+    //"From User U Where U.id = :id"
+     Optional<User> findUserById(int id);
 
 
-    public List<UserDto> findUsersByFilter(UserFilter filter) {
+   /* public List<UserDto> findUsersByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(User.class, "u");
@@ -139,6 +86,6 @@ public class UserDao {
         transaction.commit();
         session.close();
         return list;
-    }
+    }*/
 
 }
