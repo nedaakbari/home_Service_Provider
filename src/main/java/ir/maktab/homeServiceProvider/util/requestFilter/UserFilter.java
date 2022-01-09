@@ -1,8 +1,8 @@
 package ir.maktab.homeServiceProvider.util.requestFilter;
 
-import ir.maktab.homeServiceProvider.model.entity.service.SubService;
-import ir.maktab.homeServiceProvider.model.enumeration.Role;
-import ir.maktab.homeServiceProvider.model.enumeration.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
+import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
+import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import lombok.Getter;
 import lombok.Setter;
 

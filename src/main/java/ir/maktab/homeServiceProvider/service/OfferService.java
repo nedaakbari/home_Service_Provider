@@ -1,14 +1,14 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.dao.OfferDao;
-import ir.maktab.homeServiceProvider.dao.OrderDao;
-import ir.maktab.homeServiceProvider.model.dto.OfferDto;
-import ir.maktab.homeServiceProvider.model.entity.Offer;
-import ir.maktab.homeServiceProvider.model.entity.Orders;
-import ir.maktab.homeServiceProvider.model.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.model.entity.service.SubService;
-import ir.maktab.homeServiceProvider.model.enumeration.OrderState;
-import ir.maktab.homeServiceProvider.util.mapper.Mapper;
+import ir.maktab.homeServiceProvider.data.dao.OfferDao;
+import ir.maktab.homeServiceProvider.data.dao.OrderDao;
+import ir.maktab.homeServiceProvider.dto.OfferDto;
+import ir.maktab.homeServiceProvider.data.model.entity.Offer;
+import ir.maktab.homeServiceProvider.data.model.entity.Orders;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
+import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
+import ir.maktab.homeServiceProvider.dto.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.dao.CustomerDao;
-import ir.maktab.homeServiceProvider.model.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.dao.CustomerDao;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

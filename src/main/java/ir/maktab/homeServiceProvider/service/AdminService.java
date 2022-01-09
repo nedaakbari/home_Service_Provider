@@ -1,9 +1,8 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.dao.AdminDao;
-import ir.maktab.homeServiceProvider.model.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.data.dao.AdminDao;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

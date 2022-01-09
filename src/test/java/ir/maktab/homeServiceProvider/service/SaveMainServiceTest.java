@@ -1,8 +1,7 @@
 package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
-import ir.maktab.homeServiceProvider.model.entity.service.MainService;
-import ir.maktab.homeServiceProvider.model.entity.service.SubService;
+import ir.maktab.homeServiceProvider.data.model.entity.service.MainService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
