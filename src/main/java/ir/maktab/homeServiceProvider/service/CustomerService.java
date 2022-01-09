@@ -4,6 +4,7 @@ import ir.maktab.homeServiceProvider.data.dao.CustomerDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,6 +19,11 @@ public class CustomerService {
 
     public void removeCustomer(Customer customer) {
         customerDao.delete(customer);
+    }
+
+    @Transactional
+    public void UpdatePassword(String newPassword, int id) {
+        customerDao.UpdatePassword(newPassword, id);
     }
 /*
     public void saveCustomer(Customer customer) {

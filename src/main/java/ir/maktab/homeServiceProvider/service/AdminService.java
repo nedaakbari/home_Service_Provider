@@ -4,7 +4,11 @@ import ir.maktab.homeServiceProvider.data.dao.AdminDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,12 +23,19 @@ public class AdminService {
     public void removeAdmin(Admin admin) {
         adminDao.delete(admin);
     }
-/*
 
- */
-/*   public void updateAdmin(Admin admin) {
-        adminDao.update(admin);
-    }*//*
+    public List<Admin> findAllAdmins() {
+        List<Admin> list = new ArrayList<>();
+        Iterable<Admin> admins = adminDao.findAll();
+        admins.forEach(list::add);
+        return list;
+    }
+
+    @Transactional
+    public void UpdatePassword(String newPassword, int id) {
+        adminDao.UpdatePassword(newPassword, id);
+    }
+    /*
 
 
     public void deleteAdmin(Admin admin) {
@@ -41,7 +52,7 @@ public class AdminService {
     }*//*
 
 
-  */
+     */
 /*  public Admin findAminByUseAndPass(Admin admin) {
         Optional<Admin> found = adminDao.findByUserNameAndPassWord(admin.getUserName(), admin.getPassWord());
         return found.orElse(null);

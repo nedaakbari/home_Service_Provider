@@ -13,6 +13,11 @@ import java.util.Optional;
 @Repository
 public interface AdminDao extends PagingAndSortingRepository<Admin, Integer> {
 
+    @Modifying
+    @Query(value = "UPDATE Admin a set a.passWord =:password where a.id=:id")
+    void UpdatePassword(@Param("password") String password,@Param("id") int id);
+
+
    /* @Transactional
     @Modifying
     @Query(value = "UPDATE Admin a SET a.passWord =:passWord WHERE a.id =:id")
