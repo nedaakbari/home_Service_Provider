@@ -15,7 +15,7 @@ public class ExpertService {
     private ExpertDao expertDao;
 
     public void saveExpert(Expert expert) {
-        Optional<Expert> foundExpert = expertDao.findByUseAndPass(expert.getUsername(), expert.getPassword());
+        Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
         if (foundExpert.isPresent()) {
             throw new RuntimeException("this expert is already exist");
         } else {
@@ -25,7 +25,7 @@ public class ExpertService {
     }
 
     public void deleteExpert(Expert expert) {
-        Optional<Expert> foundExpert = expertDao.findByUseAndPass(expert.getUsername(), expert.getPassword());
+        Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
         if (foundExpert.isPresent()) {
             expertDao.delete(expert);
         } else {
@@ -33,25 +33,25 @@ public class ExpertService {
         }
     }
 
-    public void updateExpert(Expert expert) {
+ /*   public void updateExpert(Expert expert) {
         expertDao.update(expert);
-    }
+    }*/
 
     public Expert findExpertByUseAndPass(String username, String password) {
-        Optional<Expert> expert = expertDao.findByUseAndPass(username, password);
+        Optional<Expert> expert = expertDao.findByUsernameAndPassword(username, password);
         if (expert.isPresent()) {
             return expert.get();
         } else
             throw new RuntimeException("no expert found with these use and pass");
     }
 
-    public List<Expert> findAll() {
+    public Iterable<Expert> findAll() {
         return expertDao.findAll();
     }
 
-    public List<ExpertDto> findAllUsersByFilter(UserFilter userFilter) {
+ /*   public List<ExpertDto> findAllUsersByFilter(UserFilter userFilter) {
         return expertDao.findAllExpertsByFilter(userFilter);
-    }
+    }*/
 
     public Expert findByEmail(String email) {
         Optional<Expert> foundExpert = expertDao.findByEmail(email);
@@ -68,12 +68,5 @@ public class ExpertService {
         this.expertDao = expertDao;
     }
 
-    public ExpertDao getExpertDao() {
-        return expertDao;
-    }
-
-    public void setExpertDao(ExpertDao expertDao) {
-        this.expertDao = expertDao;
-    }
     //endregion
 }
