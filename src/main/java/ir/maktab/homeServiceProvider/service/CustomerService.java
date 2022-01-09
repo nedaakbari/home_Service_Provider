@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.CustomerDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ public class CustomerService {
     private CustomerDao customerDao;
 
     public void saveCustomer(Customer customer) {
+       // customer.setStatus(UserRegistrationStatus.NEW);
         customerDao.save(customer);
     }
 

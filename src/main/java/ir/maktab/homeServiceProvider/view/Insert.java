@@ -5,6 +5,7 @@ import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.data.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
@@ -34,7 +35,7 @@ public class Insert {
  */
         ////////////// save customer
 
-        Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
+      /*  Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
                 .password("Nima@12").status(UserRegistrationStatus.WAITING_FOR_CONFIRM)
                 .phoneNumber("9398745644").email("nimaAskari@gmail.com").build();
         customerService.saveCustomer(nima);
@@ -103,7 +104,7 @@ public class Insert {
         mainServiceService.saveMainService(mainService4);
         mainServiceService.saveMainService(mainService5);
         mainServiceService.saveMainService(mainService6);
-
+*/
         /**
          * find a mainServiceDao by Name
          */
@@ -183,7 +184,10 @@ public class Insert {
         //ابدیت کردن یوزر
         /*User nima = userService.findUserByUseAndPass("nima_", "Nima@12");
         nima.setCreditCart(300000);
-        userService.updateUser(nima);*/
+        userService.saveUser(nima);*/
+
+        /*User sara =  userService.findUserById(3);
+        userService.updatePassword("sara_222",3);*/
 
         //دیلیت کردن کاستومر
         /* customerDao.delete(neda_ak);*/

@@ -11,28 +11,19 @@ import java.util.Optional;
 
 @Repository
 public interface UserDao extends PagingAndSortingRepository<User, Integer> {
-     Optional<User> findByUsernameAndPassword(String username,String password);
+    Optional<User> findByUsernameAndPassword(String username, String password);
 
     @Modifying
     @Query(value = "UPDATE User u set u.password =:password where u.id=:id")
-    void UpdatePassword(@Param("password") String password,@Param("id") int id);
+    void updatePassword(@Param("password") String password, @Param("id") int id);
 
+    Optional<User> findByEmail(String email);
 }
 
 /*
 
-    //public int save(User user);
-//    public void delete(User user);
-//List<User> findAll() ;
 
-   */
-/* public void update(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(user);
-        transaction.commit();
-        session.close();
-    }*//*
+
 
 
     //"From User U Where U.password = :password and  U.username=:username")
