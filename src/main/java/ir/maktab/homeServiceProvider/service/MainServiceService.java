@@ -29,17 +29,17 @@ public class MainServiceService {
         }
     }
 
-    public void updateMainService(MainService mainService) {
+   /* public void updateMainService(MainService mainService) {
         mainServiceDao.update(mainService);
-    }
+    }*/
 
-    public List<MainService> findAllMainService() {
+/*    public List<MainService> findAllMainService() {
         List<MainService> all = mainServiceDao.findAll();
         if (all.size() != 0) {
             return all;
         } else
             throw new RuntimeException("no mainService Exist");
-    }
+    }*/
 
     public MainService findByName(String name) {
         Optional<MainService> main = mainServiceDao.findByName(name);
@@ -57,7 +57,7 @@ public class MainServiceService {
             throw new RuntimeException("there is no mainService With this id");
     }
 
-    public List<MainService> findAll() {
+    public Iterable<MainService> findAll() {
         return mainServiceDao.findAll();
     }
 
