@@ -1,11 +1,10 @@
-package ir.maktab.homeServiceProvider.data.dao;
+package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

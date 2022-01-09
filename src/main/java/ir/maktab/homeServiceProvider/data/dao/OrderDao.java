@@ -1,9 +1,6 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

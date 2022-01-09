@@ -1,22 +1,9 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
-import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
-import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.SimpleExpression;
-import org.hibernate.query.Query;
-import org.hibernate.transform.Transformers;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
