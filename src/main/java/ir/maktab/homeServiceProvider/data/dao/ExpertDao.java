@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
-import ir.maktab.homeServiceProvider.config.HibernateUtil;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.util.ImageWrapper;

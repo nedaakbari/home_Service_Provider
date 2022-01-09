@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
-import ir.maktab.homeServiceProvider.config.HibernateUtil;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;

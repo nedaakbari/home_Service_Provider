@@ -1,29 +1,17 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
-
-import ir.maktab.homeServiceProvider.config.HibernateUtil;
-import ir.maktab.homeServiceProvider.dto.AdminDto;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
-import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.SimpleExpression;
-import org.hibernate.transform.Transformers;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 public interface AdminDao extends PagingAndSortingRepository<Admin, Integer> {
 
     @Transactional

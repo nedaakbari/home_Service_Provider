@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.dao.AdminDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import java.util.Optional;
 @Service
 public class AdminService {
 
-    private AdminDao adminDao;
+   /* private final AdminDao adminDao;
 
     public void saveAdmin(Admin admin) {
         adminDao.save(admin);
@@ -32,10 +31,10 @@ public class AdminService {
         } else
             throw new RuntimeException("no admin found with these use and pass");
     }
-       /* public Admin findAminByUseAndPass(Admin admin) {
+       *//* public Admin findAminByUseAndPass(Admin admin) {
         Optional<Admin> found = adminDao.findByUseAndPass(admin.getUserName(), admin.getPassWord());
         return found.orElse(null);
-    }*///todo which one is better
+    }*//*//todo which one is better
 
 
     public boolean isExist(String username, String password) {
@@ -62,5 +61,5 @@ public class AdminService {
     public void setAdminDao(AdminDao adminDao) {
         this.adminDao = adminDao;
     }
-    //endregion
+    //endregion*/
 }

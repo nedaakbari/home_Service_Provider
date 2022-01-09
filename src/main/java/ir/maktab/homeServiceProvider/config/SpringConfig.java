@@ -2,10 +2,11 @@ package ir.maktab.homeServiceProvider.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
-@ComponentScan(basePackages = {"ir.maktab.homeServiceProvider.data.dao","ir.maktab.homeServiceProvider.service"})
-//@ComponentScan("ir.maktab")
 @Configuration
+@ComponentScan(basePackages = {"ir.maktab.homeServiceProvider"})
+@Import(value = {DatabaseConfig.class})
 public class SpringConfig {
 
 }
