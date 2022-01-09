@@ -4,7 +4,9 @@ import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -14,7 +16,8 @@ import java.util.Date;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 //@MappedSuperclass
 public class User {
     @Id
@@ -41,20 +44,7 @@ public class User {
 
     private long creditCart;
 
-    public User(String name, String lastName, String email, String phoneNumber, String username, String password, UserRegistrationStatus status, Role role) {
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.username = username;
-        this.password = password;
-        this.status = status;
-        this.role = role;
-    }
 
-    public User() {
-
-    }
 
     @Override
     public String toString() {
