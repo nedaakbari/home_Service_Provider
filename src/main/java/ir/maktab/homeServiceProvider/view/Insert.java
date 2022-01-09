@@ -2,8 +2,13 @@ package ir.maktab.homeServiceProvider.view;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.model.entity.service.MainService;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
+import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
+import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -12,7 +17,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class Insert {
     public static void main(String[] args) throws Exception {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-
         CustomerService customerService = context.getBean(CustomerService.class);
         ExpertService expertService = context.getBean(ExpertService.class);
         UserService userService = context.getBean(UserService.class);
@@ -21,7 +25,7 @@ public class Insert {
         AdminService adminService = context.getBean(AdminService.class);
         OrderService orderService = context.getBean(OrderService.class);
         OfferService offerService = context.getBean(OfferService.class);
-        TransActionService transActionService=context.getBean(TransActionService.class);
+        TransActionService transActionService = context.getBean(TransActionService.class);
         // Mapper mapper=context.getBean(Mapper.class);
 
 
@@ -30,7 +34,7 @@ public class Insert {
  */
         ////////////// save customer
 
-       /* Customer nima = Customer.builder().name("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
+        Customer nima = Customer.builder().name("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
                 .password("Nima@12").status(UserRegistrationStatus.WAITING_FOR_CONFIRM)
                 .phoneNumber("9398745644").build();
         customerService.saveCustomer(nima);
@@ -83,14 +87,14 @@ public class Insert {
 
         /////////save admin
         Admin admin1 = new Admin();
-        admin1.setName("mehran");
-        admin1.setFamily("ebadi");
+        admin1.setFirstName("mehran");
+        admin1.setLastName("ebadi");
         admin1.setUserName("admin1");
         admin1.setPassWord("admin123");
 
         Admin admin2 = new Admin();
-        admin2.setName("sanaz");
-        admin2.setFamily("salehi");
+        admin2.setFirstName("sanaz");
+        admin2.setLastName("salehi");
         admin2.setUserName("admin2");
         admin2.setPassWord("admin456");
 
@@ -130,7 +134,7 @@ public class Insert {
         mainServiceService.saveMainService(mainService3);
         mainServiceService.saveMainService(mainService4);
         mainServiceService.saveMainService(mainService5);
-        mainServiceService.saveMainService(mainService6);*/
+        mainServiceService.saveMainService(mainService6);
 
         /**
          * find a mainServiceDao by Name
@@ -277,9 +281,9 @@ public class Insert {
 
         ////اضافه کردن اکسپرت به زیرتخصص ها
 
-        Expert nader = expertService.findExpertByUseAndPass("nader_", "nader_22");
+        /*Expert nader = expertService.findExpertByUseAndPass("nader_", "nader_22");
         Expert ashkan = expertService.findExpertByUseAndPass("ashkan_", "ashkan@7");
-        Expert sara = expertService.findExpertByUseAndPass("sara@", "sara_111");
+        Expert sara = expertService.findExpertByUseAndPass("sara@", "sara_111");*/
 
         /*
         //1 اول متخصص وارد مین سرویس میشه
@@ -443,8 +447,8 @@ public class Insert {
 //حالا اکسپرته رفته اونجا تموم شده بعد میخواد امتیاز و نظر بده
         //اکسپرته اردر رو درحال انجام میزنه
         //اکسپرته کار رو تموم میزنه
-        Orders orderByID = orderService.findOrderByID(1);
-        orderByID.setState(OrderState.DONE);
+/*        Orders orderByID = orderService.findOrderByID(1);
+        orderByID.setState(OrderState.DONE);*/
         //orderService.update(orderByID);
 
         //وقتی دان میشه کاستومر باید پرداخت کنه و  پیام میره برای کاستومره که امتیاز بده
@@ -458,15 +462,14 @@ public class Insert {
         transAction.setOrders(orderByID);
         transActionService.save(transAction);*/
 
-        System.out.println("thanks for trust us ...please give score to expert from 1 to 10");
+ /*       System.out.println("thanks for trust us ...please give score to expert from 1 to 10");
         int scoreByCustomer = 10;
         //orderByID.setScore(scoreByCustomer);
        // orderService.update(orderByID);
         Expert expert = orderByID.getExpert();
         expert.setScore( expert.getScore()+scoreByCustomer);
        // expertService.updateExpert(expert);
-        //امتیاز که داد میگه دوست داری کانت بدی؟
-
+        //امتیاز که داد میگه دوست داری کانت بدی؟*/
 
 
     }

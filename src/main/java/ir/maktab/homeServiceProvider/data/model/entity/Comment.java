@@ -14,10 +14,10 @@ public class Comment {
     @Column(length = 150)
     private String comment;
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Customer customer;
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Expert expert;
     @OneToOne
     Orders orders;

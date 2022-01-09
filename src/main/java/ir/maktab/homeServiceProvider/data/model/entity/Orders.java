@@ -4,8 +4,7 @@ import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -14,20 +13,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@Data
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Double proposedPrice;
-    //private long agreedPrice;
+    private long agreedPrice;
     private String description;
     @CreationTimestamp
     private Date orderDate;
     @Temporal(TemporalType.DATE)
     private Date workDay;
-    @Embedded
+    @OneToOne
     private Address address;
     @ManyToOne
     private SubService subService;
@@ -36,7 +39,7 @@ public class Orders {
     @Enumerated(EnumType.STRING)
     private OrderState state;
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Customer customer;
     @OneToMany(mappedBy = "orders"/*,fetch = FetchType.EAGER*/)
     private Set<Offer> offers = new HashSet<>();
@@ -45,19 +48,7 @@ public class Orders {
     private Double score;//choose wrapper because I don't want save 0, want null mean that not yet give comment
     private String comment;
 
-    @Builder
-    public Orders(Double proposedPrice, String description, Date workDay, Address address, SubService subService, Customer customer) {
-        this.proposedPrice = proposedPrice;
-        this.description = description;
-        this.workDay = workDay;
-        this.address = address;
-        this.subService = subService;
-        this.customer = customer;
-    }
 
-    public Orders() {
-
-    }
 
     @Override
     public String toString() {
@@ -78,15 +69,6 @@ public class Orders {
                 '}';
     }
 
-
-    public String prints() {
-        return "id=" + this.id +
-                ", proposedPrice=" + proposedPrice +
-                ", description='" + description + '\'' +
-                ", orderDate=" + orderDate +
-                ", workDay=" + workDay +
-                '}';
-    }
 
 
 }

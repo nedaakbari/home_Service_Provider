@@ -3,28 +3,17 @@ package ir.maktab.homeServiceProvider.data.model.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@Embeddable
+@Entity
 public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String city;
     private String street;
     private String zipCode;
 
-    public Address(String city, String street, String zipCode) {
-        this.city = city;
-        this.street = street;
-        this.zipCode = zipCode;
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                '}';
-    }
 }

@@ -24,10 +24,10 @@ public class Offer {
     @CreationTimestamp
     private Date submissionDate;
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Expert expert;
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Orders orders;
 
 

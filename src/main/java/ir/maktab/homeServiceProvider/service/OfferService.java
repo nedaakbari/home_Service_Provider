@@ -6,10 +6,11 @@ import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.dto.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class OfferService {
     Mapper mapper=new Mapper();
     OfferDao offerDao;

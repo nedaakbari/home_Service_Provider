@@ -42,7 +42,7 @@ public class DatabaseConfig {
         //entityManagerFactoryBean is a proxy
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan("ir.maktab.data.model");
+        entityManagerFactoryBean.setPackagesToScan("ir.maktab.homeServiceProvider.data.model");
 
         entityManagerFactoryBean.setJpaProperties(hibernateProperties());
 

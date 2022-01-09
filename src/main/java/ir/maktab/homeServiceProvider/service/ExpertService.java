@@ -4,10 +4,11 @@ import ir.maktab.homeServiceProvider.data.dao.ExpertDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class ExpertService {
 
     private ExpertDao expertDao;
