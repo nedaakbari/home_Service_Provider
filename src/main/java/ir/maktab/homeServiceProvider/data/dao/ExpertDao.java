@@ -1,4 +1,4 @@
-package ir.maktab.homeServiceProvider.service;
+package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import org.springframework.data.repository.PagingAndSortingRepository;

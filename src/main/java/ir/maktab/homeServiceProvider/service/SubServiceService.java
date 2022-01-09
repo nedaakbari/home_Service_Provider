@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.service;
 
+import ir.maktab.homeServiceProvider.data.dao.SubServiceDao;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,13 +34,13 @@ public class SubServiceService {
         }
     }
 
-    public void updateSubService(SubService subService) {
+    /*public void updateSubService(SubService subService) {
         subServiceDao.update(subService);
     }
 
-    public List<SubService> findAll() {
+    public Iterable<SubService> findAll() {
         return subServiceDao.findAll();
-    }
+    }*/
 
     public SubService findByName(String name) {
         Optional<SubService> found = subServiceDao.findByName(name);

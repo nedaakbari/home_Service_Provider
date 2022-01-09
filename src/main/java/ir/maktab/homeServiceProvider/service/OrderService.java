@@ -1,17 +1,12 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.dto.OrdersDto;
+import ir.maktab.homeServiceProvider.data.dao.OrderDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.dto.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -46,10 +41,10 @@ public class OrderService {
             throw new RuntimeException("❌❌❌ Error to find order ❌❌❌");
     }
 
-    public List<OrdersDto> findOrderOfCustomer(Customer customer) {
+   /* public List<OrdersDto> findOrderOfCustomer(Customer customer) {
         List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());
         return orderOfCustomer.stream().map(mapper::ordersDto).collect(Collectors.toList());
-    }
+    }*/
 
 
     //region setter & getter & constructor

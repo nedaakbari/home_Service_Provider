@@ -28,16 +28,16 @@ public class Mapper {
                 .build();
     }
 
-    public SubServiceDto subServiceDto(SubService subService) {
+/*    public SubServiceDto subServiceDto(SubService subService) {
         return SubServiceDto.builder()
                 .name(subService.getName())
                 .description(subService.getDescription())
                 .mainService(subService.getMain())
                 .basePrice(subService.getBaseAmount())
                 .build();
-    }
+    }*/
 
-    public OrdersDto ordersDto(Orders orders) {
+/*    public OrdersDto ordersDto(Orders orders) {
         return OrdersDto.builder()
                 .id(orders.getId())
                 .address(orders.getAddress())
@@ -55,5 +55,5 @@ public class Mapper {
                 .startWorkTime(offer.getStartWorkTime())
                 .proposedPriceOffer(offer.getProposedPriceOffer())
                 .build();
-    }
+    }*/
 }

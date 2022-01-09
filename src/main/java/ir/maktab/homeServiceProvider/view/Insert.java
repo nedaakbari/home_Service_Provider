@@ -445,7 +445,7 @@ public class Insert {
         //اکسپرته کار رو تموم میزنه
         Orders orderByID = orderService.findOrderByID(1);
         orderByID.setState(OrderState.DONE);
-        orderService.update(orderByID);
+        //orderService.update(orderByID);
 
         //وقتی دان میشه کاستومر باید پرداخت کنه و  پیام میره برای کاستومره که امتیاز بده
         /*Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
@@ -460,11 +460,11 @@ public class Insert {
 
         System.out.println("thanks for trust us ...please give score to expert from 1 to 10");
         int scoreByCustomer = 10;
-        orderByID.setScore(scoreByCustomer);
-        orderService.update(orderByID);
+        //orderByID.setScore(scoreByCustomer);
+       // orderService.update(orderByID);
         Expert expert = orderByID.getExpert();
         expert.setScore( expert.getScore()+scoreByCustomer);
-        expertService.updateExpert(expert);
+       // expertService.updateExpert(expert);
         //امتیاز که داد میگه دوست داری کانت بدی؟
 
 
