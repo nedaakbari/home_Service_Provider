@@ -13,11 +13,12 @@ import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 public class UserDao {
 
         private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
