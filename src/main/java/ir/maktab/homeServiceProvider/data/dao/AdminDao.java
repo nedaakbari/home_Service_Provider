@@ -12,64 +12,31 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
-import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public class AdminDao {
-    private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+public interface AdminDao extends PagingAndSortingRepository<Admin, Integer> {
 
-    public void save(Admin admin) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(admin);
-        transaction.commit();
-        session.close();
-    }
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE Admin a SET a.passWord =:passWord WHERE a.id =:id")
+    void updatePasswordById(@Param("passWord") String passWord, @Param("id") int id);
 
-    public void update(Admin admin) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(admin);
-        transaction.commit();
-        session.close();
-    }
 
-    public void delete(Admin admin) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.delete(admin);
-        transaction.commit();
-        session.close();
-    }
+    //"From Admin A Where A.passWord = :password and  A.userName=:username"
+    Optional<Admin> findByUserNameAndPassWord(String userName, String password);
 
-    public List<Admin> findAll() {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from Admin ");
-        List<Admin> admins = query.list();
-        transaction.commit();
-        session.close();
-        return admins;
-    }
 
-    public Optional<Admin> findByUseAndPass(String userName, String password) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<Admin> query = session.createQuery("From Admin A Where A.passWord = :password and  A.userName=:username");
-        query.setParameter("username", userName);
-        query.setParameter("password", password);
-        Optional<Admin> admin = Optional.ofNullable(query.uniqueResult());
-        transaction.commit();
-        session.close();
-        return admin;
-    }
-
-    public List<AdminDto> findAdminsByFilter(UserFilter filter) {
+/*    public List<AdminDto> findAdminsByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(Admin.class, "a");
@@ -100,7 +67,7 @@ public class AdminDao {
         transaction.commit();
         session.close();
         return list;
-    }
+    }*/
 
 
 }

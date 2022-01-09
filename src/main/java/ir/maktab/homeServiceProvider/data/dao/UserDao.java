@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,7 +21,8 @@ import java.util.Optional;
 
 @Component
 public class UserDao {
-    private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+
+        private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
 
     public int save(User user) {
         Session session = sessionFactory.openSession();
