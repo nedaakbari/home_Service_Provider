@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.dao.UserDao;
 import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;

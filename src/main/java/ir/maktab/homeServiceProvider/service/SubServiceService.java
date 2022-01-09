@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.dao.SubServiceDao;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

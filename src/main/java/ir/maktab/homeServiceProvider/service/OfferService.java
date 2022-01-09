@@ -1,7 +1,5 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.dao.OfferDao;
-import ir.maktab.homeServiceProvider.data.dao.OrderDao;
 import ir.maktab.homeServiceProvider.dto.OfferDto;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;

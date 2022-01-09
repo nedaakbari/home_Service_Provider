@@ -18,7 +18,6 @@ public interface AdminDao extends PagingAndSortingRepository<Admin, Integer> {
     @Query(value = "UPDATE Admin a SET a.passWord =:passWord WHERE a.id =:id")
     void updatePasswordById(@Param("passWord") String passWord, @Param("id") int id);
 
-
     //"From Admin A Where A.passWord = :password and  A.userName=:username"
     Optional<Admin> findByUserNameAndPassWord(String userName, String password);
 

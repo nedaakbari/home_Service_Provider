@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.dao.CustomerDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ public class CustomerService {
     private CustomerDao customerDao;
 
     public void saveCustomer(Customer customer) {
-        Optional<Customer> foundUser = customerDao.findByUseAndPass(customer.getUsername(), customer.getPassword());
+        Optional<Customer> foundUser = customerDao.findByUsernameAndPassword(customer.getUsername(), customer.getPassword());
         if (foundUser.isPresent()) {
             throw new RuntimeException("this customer is already exist");
         } else {
@@ -23,7 +22,7 @@ public class CustomerService {
     }
 
     public void deleteCustomer(Customer customer) {
-        Optional<Customer> foundUser = customerDao.findByUseAndPass(customer.getUsername(), customer.getPassword());
+        Optional<Customer> foundUser = customerDao.findByUsernameAndPassword(customer.getUsername(), customer.getPassword());
         if (foundUser.isPresent()) {
             customerDao.delete(customer);
         } else {
@@ -31,19 +30,19 @@ public class CustomerService {
         }
     }
 
-    public void updateCustomer(Customer customer) {
+ /*   public void updateCustomer(Customer customer) {
         customerDao.update(customer);
-    }
+    }*/
 
     public Customer findCustomerByUseAndPass(String username, String password) {
-        Optional<Customer> customer = customerDao.findByUseAndPass(username, password);
+        Optional<Customer> customer = customerDao.findByUsernameAndPassword(username, password);
         if (customer.isPresent()) {
             return customer.get();
         } else
             throw new RuntimeException("no customer found with these use and pass");
     }
 
-    public List<Customer> findAll() {
+    public Iterable<Customer> findAll() {
         return customerDao.findAll();
     }
 
@@ -53,12 +52,6 @@ public class CustomerService {
         this.customerDao = customerDao;
     }
 
-    public CustomerDao getCustomerDao() {
-        return customerDao;
-    }
 
-    public void setCustomerDao(CustomerDao customerDao) {
-        this.customerDao = customerDao;
-    }
     //endregion
 }
