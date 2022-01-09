@@ -3,10 +3,12 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.data.model.entity.TransAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
+
 public class TransActionService {
     TransActionDao transActionDao;
 
@@ -14,7 +16,7 @@ public class TransActionService {
         transActionDao.save(transAction);
     }
 
-    public List<TransAction> findAll() {
+    public Iterable<TransAction> findAll() {
         return transActionDao.findAll();
     }
 

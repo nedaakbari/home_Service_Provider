@@ -5,17 +5,18 @@ import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class UserService {
     private UserDao userDao;
 
 
     public void saveUser(User user) {
-        Optional<User> foundUser = userDao.findByUseAndPass(user.getUsername(), user.getPassword());
+        Optional<User> foundUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (foundUser.isPresent()) {
             throw new RuntimeException("user with these use an pass is already exist");
         } else {
@@ -24,7 +25,7 @@ public class UserService {
     }
 
     public void deleteUser(User user) {
-        Optional<User> foundUser = userDao.findByUseAndPass(user.getUsername(), user.getPassword());
+        Optional<User> foundUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (foundUser.isPresent()) {
             userDao.delete(user);
         } else {
@@ -36,16 +37,16 @@ public class UserService {
         return userDao.findUserById(id).get();
     }
 
-    public void update(User user) {
+ /*   public void update(User user) {
         userDao.update(user);
-    }
+    }*/
 
-    public List<User> findAllUser() {
+    public Iterable<User> findAllUser() {
         return userDao.findAll();
     }
 
     public User findUserByUseAndPass(String username, String password) {
-        Optional<User> user = userDao.findByUseAndPass(username, password);
+        Optional<User> user = userDao.findByUsernameAndPassword(username, password);
         if (user.isPresent()) {
             return user.get();
         } else
@@ -60,18 +61,13 @@ public class UserService {
             return false;
     }
 
-    public void updateUser(User user) {
+   /* public void updateUser(User user) {
         userDao.update(user);
-/*        int update =userDao.update(user);///???????????چجوری چک کنم ابدیت شده یا نه؟
-        if (update==1)
-            System.out.println("your pass successfully changed");
-        else
-            System.out.println("your request not response, try again");*/
-    }
+    }*/
 
-    public List<UserDto> findAllUsersByFilter(UserFilter userFilter) {
+  /*  public List<UserDto> findAllUsersByFilter(UserFilter userFilter) {
         return userDao.findUsersByFilter(userFilter);
-    }
+    }*/
 
     //region setter & getter & constructor
     @Autowired
