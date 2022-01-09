@@ -11,62 +11,25 @@ import java.util.Optional;
 @Service
 public class ExpertService {
 
-    private ExpertDao expertDao;
+    private final ExpertDao expertDao;
 
-    public void saveExpert(Expert expert){
+    public void saveExpert(Expert expert) {
         expertDao.save(expert);
     }
 
-    public void removeExpert(Expert expert){
+    public void removeExpert(Expert expert) {
         expertDao.delete(expert);
     }
-   /* public void saveExpert(Expert expert) {
-        Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
-        if (foundExpert.isPresent()) {
-            throw new RuntimeException("this expert is already exist");
-        } else {
-            expertDao.save(expert);
-        }
 
-    }
 
-    public void deleteExpert(Expert expert) {
-        Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
-        if (foundExpert.isPresent()) {
-            expertDao.delete(expert);
-        } else {
-            throw new RuntimeException("there is no expert with these info");
-        }
-    }
-
- *//*   public void updateExpert(Expert expert) {
-        expertDao.update(expert);
-    }*//*
-
-    public Expert findExpertByUseAndPass(String username, String password) {
+  /*  public Expert findExpertByUseAndPass(String username, String password) {
         Optional<Expert> expert = expertDao.findByUsernameAndPassword(username, password);
         if (expert.isPresent()) {
             return expert.get();
         } else
             throw new RuntimeException("no expert found with these use and pass");
-    }
+    }*/
 
-    public Iterable<Expert> findAll() {
-        return expertDao.findAll();
-    }
-
- *//*   public List<ExpertDto> findAllUsersByFilter(UserFilter userFilter) {
-        return expertDao.findAllExpertsByFilter(userFilter);
-    }*//*
-
-    public Expert findByEmail(String email) {
-        Optional<Expert> foundExpert = expertDao.findByEmail(email);
-        if (foundExpert.isPresent())
-            return foundExpert.get();
-        else
-            throw new RuntimeException("no expert found with this email");
-    }
-*/
 
     //region setter & getter & constructor
     @Autowired

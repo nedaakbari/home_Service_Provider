@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class OfferService {
     Mapper mapper = new Mapper();
-    OfferDao offerDao;
+   private final OfferDao offerDao;
     OrderDao orderDao;
 
     public void saveOffer(Offer offer) {
@@ -89,21 +89,6 @@ public class OfferService {
         this.orderDao = orderDao;
     }
 
-    public OfferDao getOfferDao() {
-        return offerDao;
-    }
-
-    public void setOfferDao(OfferDao offerDao) {
-        this.offerDao = offerDao;
-    }
-
-    public OrderDao getOrderDao() {
-        return orderDao;
-    }
-
-    public void setOrderDao(OrderDao orderDao) {
-        this.orderDao = orderDao;
-    }
 
     //endregion
 }

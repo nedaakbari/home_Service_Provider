@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 
 public class TransActionService {
-    TransActionDao transActionDao;
+    private final TransActionDao transActionDao;
 
   /*  public void save(TransAction transAction) {
         transActionDao.save(transAction);
@@ -27,8 +27,5 @@ public class TransActionService {
         return transActionDao;
     }
 
-    public void setTransActionDao(TransActionDao transActionDao) {
-        this.transActionDao = transActionDao;
-    }
     //endregion
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    private CustomerDao customerDao;
+    private final CustomerDao customerDao;
 
     public void saveCustomer(Customer customer) {
        // customer.setStatus(UserRegistrationStatus.NEW);

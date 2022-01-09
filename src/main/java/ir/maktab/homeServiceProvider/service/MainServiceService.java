@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public class MainServiceService {
-    MainServiceDao mainServiceDao;
+    private final MainServiceDao mainServiceDao;
 
     public void saveMainService(MainService mainService) {
         mainServiceDao.save(mainService);
@@ -74,12 +74,6 @@ public class MainServiceService {
         this.mainServiceDao = mainServiceDao;
     }
 
-    public MainServiceDao getMainServiceDao() {
-        return mainServiceDao;
-    }
 
-    public void setMainServiceDao(MainServiceDao mainServiceDao) {
-        this.mainServiceDao = mainServiceDao;
-    }
     //endregion
 }

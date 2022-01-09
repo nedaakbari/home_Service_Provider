@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class OrderService {
     Mapper mapper = new Mapper();
-    OrderDao orderDao;
+    private final OrderDao orderDao;
 
 
 /*    public void saveOrder(Orders orders) throws Exception {
@@ -53,13 +53,6 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public OrderDao getOrderDao() {
-        return orderDao;
-    }
-
-    public void setOrderDao(OrderDao orderDao) {
-        this.orderDao = orderDao;
-    }
 
     //endregion
 }
