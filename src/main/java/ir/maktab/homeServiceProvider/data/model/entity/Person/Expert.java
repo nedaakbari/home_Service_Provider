@@ -23,7 +23,7 @@ public class Expert extends User {
     @Column(columnDefinition = "BLOB", length = 300000)
     private byte[] image;
     private Double Score;
-    @ManyToMany(mappedBy = "experts", fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
+    @ManyToMany( fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
     //@EqualsAndHashCode.Include
     private Set<SubService> subServiceList = new HashSet<>();
 

@@ -16,6 +16,9 @@ public class CustomerService {
         customerDao.save(customer);
     }
 
+    public void removeCustomer(Customer customer) {
+        customerDao.delete(customer);
+    }
 /*
     public void saveCustomer(Customer customer) {
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword(customer.getUsername(), customer.getPassword());

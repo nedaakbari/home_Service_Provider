@@ -20,7 +20,7 @@ public class SubServiceDto {
                 "name='" + name + '\'' +
                 ", basePrice=" + basePrice +
                 ", description='" + description + '\'' +
-                ", mainService=" + mainService.getName() +
+                ", mainService=" + mainService.getTitle() +
                 '}';
     }
 }

@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Data
-public class TransAction {
+public class TransActions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

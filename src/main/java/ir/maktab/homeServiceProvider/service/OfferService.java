@@ -3,6 +3,7 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.data.dao.OfferDao;
 import ir.maktab.homeServiceProvider.data.dao.OrderDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
+import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.dto.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,9 +13,13 @@ import java.util.Optional;
 
 @Service
 public class OfferService {
-    Mapper mapper=new Mapper();
+    Mapper mapper = new Mapper();
     OfferDao offerDao;
     OrderDao orderDao;
+
+    public void saveOffer(Offer offer) {
+        offerDao.save(offer);
+    }
 
 /*
     public void saveOffer(Offer offer, Orders orders) {

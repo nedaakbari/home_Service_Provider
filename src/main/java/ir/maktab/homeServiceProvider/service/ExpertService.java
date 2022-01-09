@@ -16,6 +16,10 @@ public class ExpertService {
     public void saveExpert(Expert expert){
         expertDao.save(expert);
     }
+
+    public void removeExpert(Expert expert){
+        expertDao.delete(expert);
+    }
    /* public void saveExpert(Expert expert) {
         Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
         if (foundExpert.isPresent()) {

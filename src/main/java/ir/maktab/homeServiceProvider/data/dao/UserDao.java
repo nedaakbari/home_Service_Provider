@@ -1,13 +1,22 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
 public interface UserDao extends PagingAndSortingRepository<User, Integer> {
+     Optional<User> findByUsernameAndPassword(String username,String password);
+
+    @Modifying
+    @Query(value = "UPDATE User u set u.password =:password where u.id=:id")
+    void UpdatePassword(@Param("password") String password,@Param("id") int id);
+
 }
 
 /*

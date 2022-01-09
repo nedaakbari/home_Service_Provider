@@ -19,7 +19,7 @@ public class MainService {
     private int id;
     @Column(unique = true)
     private String title;
-    @OneToMany(mappedBy = "main", fetch = FetchType.LAZY)
+    @OneToMany( mappedBy = "main",fetch = FetchType.LAZY)
     private Set<SubService> subServiceList = new HashSet<>();
 
     @Override

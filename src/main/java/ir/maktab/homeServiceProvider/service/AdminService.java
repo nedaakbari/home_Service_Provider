@@ -15,6 +15,10 @@ public class AdminService {
     public void saveAdmin(Admin admin) {
         adminDao.save(admin);
     }
+
+    public void removeAdmin(Admin admin) {
+        adminDao.delete(admin);
+    }
 /*
 
  */

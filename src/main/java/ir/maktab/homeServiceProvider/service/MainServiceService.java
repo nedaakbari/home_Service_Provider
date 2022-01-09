@@ -14,6 +14,10 @@ public class MainServiceService {
     public void saveMainService(MainService mainService) {
         mainServiceDao.save(mainService);
     }
+
+    public void removeMainService(MainService mainService) {
+        mainServiceDao.delete(mainService);
+    }
   /*  public void saveMainService(MainService mainService) {
         Optional<MainService> foundMainService = mainServiceDao.findByName(mainService.getName());
         if (foundMainService.isPresent()) {

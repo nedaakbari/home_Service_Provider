@@ -25,7 +25,7 @@ import java.util.Set;
 public class Customer extends User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private Set<Orders> ordersList = new HashSet<>();
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<Comment> comments=new ArrayList<>();
 
     @Override

@@ -22,17 +22,17 @@ public class SubService {
     private int id;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private MainService main;
     @Column(unique = true)
     private String title;
     private Double baseAmount;
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)//,mappedBy = "subServiceList"
+    @ManyToMany(mappedBy = "subServiceList",fetch = FetchType.EAGER)//,mappedBy = "subServiceList"
     private Set<Expert> experts=new HashSet<>();
 
-    @OneToMany(mappedBy ="SubService", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy ="subService", fetch = FetchType.LAZY)
     private Set<Orders> orders=new HashSet<>();;
 
     @Override

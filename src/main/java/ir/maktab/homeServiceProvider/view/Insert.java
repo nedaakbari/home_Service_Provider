@@ -34,33 +34,33 @@ public class Insert {
  */
         ////////////// save customer
 
-        Customer nima = Customer.builder().name("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
+        Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
                 .password("Nima@12").status(UserRegistrationStatus.WAITING_FOR_CONFIRM)
                 .phoneNumber("9398745644").email("nimaAskari@gmail.com").build();
         customerService.saveCustomer(nima);
 
-        Customer neda = Customer.builder().name("neda").lastName("akbari").role(Role.CUSTOMER).username("neda_ak")
+        Customer neda = Customer.builder().firstName("neda").lastName("akbari").role(Role.CUSTOMER).username("neda_ak")
                 .password("Neda@137").status(UserRegistrationStatus.WAITING_FOR_CONFIRM)
                 .phoneNumber("09370730398").email("neda@gmail.com").build();
         customerService.saveCustomer(neda);
 
 
-        Expert sara = Expert.builder().name("sara").lastName("saraee").email("sara@gmail.com")
+        Expert sara = Expert.builder().firstName("sara").lastName("saraee").email("sara@gmail.com")
                 .phoneNumber("09370000000").username("sara@").password("sara_111").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.saveExpert(sara);
 
-        Expert nader = Expert.builder().name("nader").lastName("naderi").email("nader@gmail.com")
+        Expert nader = Expert.builder().firstName("nader").lastName("naderi").email("nader@gmail.com")
                 .phoneNumber("09360000000").username("nader_").password("nader_22").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.saveExpert(nader);
 
-        Expert ashkan = Expert.builder().name("ashkan").lastName("ashkani").email("ashkan@gmail.com")
+        Expert ashkan = Expert.builder().firstName("ashkan").lastName("ashkani").email("ashkan@gmail.com")
                 .phoneNumber("09350000000").username("ashkan_").password("ashkan@7").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.saveExpert(ashkan);
 
-        Expert sana = Expert.builder().name("sana").lastName("sanaee").email("sana@gmail.com")
+        Expert sana = Expert.builder().firstName("sana").lastName("sanaee").email("sana@gmail.com")
                 .phoneNumber("09340000000").username("sana_").password("sana@747").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.saveExpert(sana);
@@ -80,24 +80,22 @@ public class Insert {
         MainService mainService = new MainService();
         String name = "building decoration";
         String replace = name.toUpperCase().replace(" ", "_");
-        mainService.setName(replace);
+        mainService.setTitle(replace);
 
         MainService mainService2 = new MainService();
-        mainService2.setName("BUILDING_FACILITIES");
+        mainService2.setTitle("BUILDING_FACILITIES");
 
         MainService mainService3 = new MainService();
-        mainService3.setName("VEHICLES");
+        mainService3.setTitle("VEHICLES");
 
         MainService mainService4 = new MainService();
-        mainService4.setName("MOVING_HELP");
+        mainService4.setTitle("MOVING_HELP");
 
         MainService mainService5 = new MainService();
-        mainService5.setName("HOME_APPLIANCES");
+        mainService5.setTitle("HOME_APPLIANCES");
 
         MainService mainService6 = new MainService();
-        mainService6.setName("HOME_CLEANING_AND_HYGIENE");
-
-
+        mainService6.setTitle("HOME_CLEANING_AND_HYGIENE");
 
         mainServiceService.saveMainService(mainService);
         mainServiceService.saveMainService(mainService2);

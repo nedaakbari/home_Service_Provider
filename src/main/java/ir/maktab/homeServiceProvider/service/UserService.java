@@ -3,7 +3,9 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.data.dao.UserDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,6 +16,17 @@ public class UserService {
     public void saveUser(User user) {
         userDao.save(user);
     }
+
+    public void removeUser(User user) {
+        userDao.delete(user);
+    }
+
+    @Transactional
+    public void UpdatePassword(String newPassword, int id) {
+        userDao.UpdatePassword(newPassword, id);
+    }
+
+
    /* public void saveUser(User user) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (foundUser.isPresent()) {

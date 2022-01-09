@@ -17,8 +17,8 @@ public class Mapper {
 
     public ExpertDto expertDto(Expert expert) {
         return ExpertDto.builder()
-                .name(expert.getName())
-                .family(expert.getLastName())
+                .firstName(expert.getFirstName())
+                .lastName(expert.getLastName())
                 .email(expert.getEmail())
                 .status(expert.getStatus())
                 .registerDate(expert.getRegisterDate())
