@@ -21,7 +21,7 @@ public class OfferService {
     OfferDao offerDao;
     OrderDao orderDao;
 
-
+/*
     public void saveOffer(Offer offer, Orders orders) {
         Expert expert = offer.getExpert();
         Set<SubService> subServiceList = expert.getSubServiceList();
@@ -41,32 +41,32 @@ public class OfferService {
                 throw new RuntimeException("offerPrice must not be lower than baseAmount of this subService");
         } else
             throw new RuntimeException("This field is not your specialty ");
-    }
+    }*/
 
 
     public void deleteOffer(Offer offer) {
         offerDao.delete(offer);
     }
 
-    public void updateOffer(Offer offer) {
+/*    public void updateOffer(Offer offer) {
         offerDao.update(offer);
-    }
+    }*/
 
-    public List<Offer> findAllOffer() {
+  /*  public List<Offer> findAllOffer() {
         List<Offer> all = offerDao.findAll();
         if (all.size() != 0) {
             return all;
         } else
             throw new RuntimeException("no offer Exist yet");
-    }
+    }*/
 
-    public List<Offer> findAllOfferOfAnOrder(int OrderId) {
+/*    public List<Offer> findAllOfferOfAnOrder(int OrderId) {
         List<Offer> all = offerDao.findAllOfferOfAnOrder(OrderId);
         if (all.size() != 0) {
             return all;
         } else
             throw new RuntimeException("no offer for this order Exist yet ");
-    }
+    }*/
 
     public Offer findOfferById(int id) {
         Optional<Offer> found = offerDao.findOfferById(id);
@@ -76,10 +76,10 @@ public class OfferService {
             throw new RuntimeException("no offer found");
     }
 
-    public List<OfferDto> findAllOfferOfOrder(Orders order){
+/*    public List<OfferDto> findAllOfferOfOrder(Orders order){
         List<Offer> listOfferOfAnOrder = offerDao.findAllOfferOfAnOrder(order.getId());
         return listOfferOfAnOrder.stream().map(mapper::offerDto).collect(Collectors.toList());
-    }
+    }*/
 
 
     //region setter & getter & constructor
