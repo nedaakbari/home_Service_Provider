@@ -36,7 +36,7 @@ public interface ExpertDao extends PagingAndSortingRepository<Expert,Integer> {
 
 
 //"From Expert E Where E.password = :password and  E.username=:username"
-    Optional<Expert> findByUsernameAndPassword(String userName, String password)
+    Optional<Expert> findByUsernameAndPassword(String userName, String password);
 
 //"From Expert E Where E.email = :email"
     Optional<Expert> findByEmail(String email) ;
