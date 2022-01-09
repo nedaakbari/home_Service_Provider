@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Entity
 public class Comment {
     @Id
-    private int id;
-    @Column(nullable = false)
-    private Double rate;
+    private Long id;
+/*    @Column(nullable = false)
+    private Double rate;*/
     @Column(length = 150)
     private String comment;
     @ManyToOne
@@ -20,5 +20,5 @@ public class Comment {
     @JoinColumn(nullable = false)
     private Expert expert;
     @OneToOne
-    Orders orders;
+    Orders order;
 }

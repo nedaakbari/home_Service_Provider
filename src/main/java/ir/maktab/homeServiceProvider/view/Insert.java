@@ -36,67 +36,45 @@ public class Insert {
 
         Customer nima = Customer.builder().name("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
                 .password("Nima@12").status(UserRegistrationStatus.WAITING_FOR_CONFIRM)
-                .phoneNumber("9398745644").build();
+                .phoneNumber("9398745644").email("nimaAskari@gmail.com").build();
         customerService.saveCustomer(nima);
 
-        Customer neda = new Customer();
-        neda.setName("neda");
-        neda.setLastName("akbari");
-        neda.setEmail("neda@gmail.com");
-        neda.setPhoneNumber("09370730398");
-        neda.setUsername("neda_ak");
-        neda.setPassword("Neda@137");
-        neda.setRole(Role.CUSTOMER);
-        neda.setStatus(UserRegistrationStatus.WAITING_FOR_CONFIRM);
+        Customer neda = Customer.builder().name("neda").lastName("akbari").role(Role.CUSTOMER).username("neda_ak")
+                .password("Neda@137").status(UserRegistrationStatus.WAITING_FOR_CONFIRM)
+                .phoneNumber("09370730398").email("neda@gmail.com").build();
         customerService.saveCustomer(neda);
+
 
         Expert sara = Expert.builder().name("sara").lastName("saraee").email("sara@gmail.com")
                 .phoneNumber("09370000000").username("sara@").password("sara_111").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
+        expertService.saveExpert(sara);
 
-        Expert expert2 = new Expert();
-        expert2.setName("nader");
-        expert2.setLastName("naderi");
-        expert2.setEmail("nader@gmail.com");
-        expert2.setPhoneNumber("09360000000");
-        expert2.setUsername("nader_");
-        expert2.setPassword("nader_22");
-        expert2.setRole(Role.EXPERT);
-        expert2.setStatus(UserRegistrationStatus.WAITING_FOR_CONFIRM);
+        Expert nader = Expert.builder().name("nader").lastName("naderi").email("nader@gmail.com")
+                .phoneNumber("09360000000").username("nader_").password("nader_22").role(Role.EXPERT)
+                .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
+        expertService.saveExpert(nader);
 
-        Expert expert3 = new Expert();
-        expert3.setName("ashkan");
-        expert3.setLastName("ashkani");
-        expert3.setEmail("ashkan@gmail.com");
-        expert3.setPhoneNumber("09350000000");
-        expert3.setUsername("ashkan_");
-        expert3.setPassword("ashkan@7");
-        expert3.setRole(Role.EXPERT);
-        expert3.setStatus(UserRegistrationStatus.WAITING_FOR_CONFIRM);
+        Expert ashkan = Expert.builder().name("ashkan").lastName("ashkani").email("ashkan@gmail.com")
+                .phoneNumber("09350000000").username("ashkan_").password("ashkan@7").role(Role.EXPERT)
+                .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
+        expertService.saveExpert(ashkan);
 
-        Expert expert4 = new Expert();
-        expert4.setName("sana");
-        expert4.setLastName("sanaee");
-        expert4.setEmail("sana@gmail.com");
-        expert4.setPhoneNumber("09340000000");
-        expert4.setUsername("sana_");
-        expert4.setPassword("sana@747");
-        expert4.setRole(Role.EXPERT);
-        expert4.setStatus(UserRegistrationStatus.WAITING_FOR_CONFIRM);
+        Expert sana = Expert.builder().name("sana").lastName("sanaee").email("sana@gmail.com")
+                .phoneNumber("09340000000").username("sana_").password("sana@747").role(Role.EXPERT)
+                .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
+        expertService.saveExpert(sana);
 
 
         /////////save admin
-        Admin admin1 = new Admin();
-        admin1.setFirstName("mehran");
-        admin1.setLastName("ebadi");
-        admin1.setUserName("admin1");
-        admin1.setPassWord("admin123");
+        Admin mehran = Admin.builder().firstName("mehran").lastName("ebadi")
+                .userName("admin1").passWord("admin123").build();
 
-        Admin admin2 = new Admin();
-        admin2.setFirstName("sanaz");
-        admin2.setLastName("salehi");
-        admin2.setUserName("admin2");
-        admin2.setPassWord("admin456");
+        Admin sanaz = Admin.builder().firstName("sanaz").lastName("salehi")
+                .userName("admin2").passWord("admin456").build();
+
+        adminService.saveAdmin(mehran);
+        adminService.saveAdmin(sanaz);
 
         /////////////save mainservice
         MainService mainService = new MainService();
@@ -120,14 +98,6 @@ public class Insert {
         mainService6.setName("HOME_CLEANING_AND_HYGIENE");
 
 
-        expertService.saveExpert(sara);
-        expertService.saveExpert(expert2);
-        expertService.saveExpert(expert3);
-        expertService.saveExpert(expert4);
-
-
-        adminService.saveAdmin(admin1);
-        adminService.saveAdmin(admin2);
 
         mainServiceService.saveMainService(mainService);
         mainServiceService.saveMainService(mainService2);

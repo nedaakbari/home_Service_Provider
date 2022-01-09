@@ -8,19 +8,23 @@ import java.util.Optional;
 
 @Repository
 public interface UserDao extends PagingAndSortingRepository<User, Integer> {
+}
 
+/*
 
     //public int save(User user);
 //    public void delete(User user);
 //List<User> findAll() ;
 
-   /* public void update(User user) {
+   */
+/* public void update(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(user);
         transaction.commit();
         session.close();
-    }*/
+    }*//*
+
 
     //"From User U Where U.password = :password and  U.username=:username")
     Optional<User> findByUsernameAndPassword(String userName, String password);
@@ -32,7 +36,8 @@ public interface UserDao extends PagingAndSortingRepository<User, Integer> {
      Optional<User> findUserById(int id);
 
 
-   /* public List<UserDto> findUsersByFilter(UserFilter filter) {
+   */
+/* public List<UserDto> findUsersByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(User.class, "u");
@@ -74,5 +79,3 @@ public interface UserDao extends PagingAndSortingRepository<User, Integer> {
         session.close();
         return list;
     }*/
-
-}

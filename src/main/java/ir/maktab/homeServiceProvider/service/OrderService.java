@@ -33,13 +33,13 @@ public class OrderService {
         return orders.stream().map(mapper::ordersDto).collect(Collectors.toList());
     }*/
 
-    public Orders findOrderByID(int id) {
+   /* public Orders findOrderByID(int id) {
         Optional<Orders> foundOrder = orderDao.findOrderByID(id);
         if (foundOrder.isPresent()) {
             return foundOrder.get();
         } else
             throw new RuntimeException("❌❌❌ Error to find order ❌❌❌");
-    }
+    }*/
 
    /* public List<OrdersDto> findOrderOfCustomer(Customer customer) {
         List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());

@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 public class TransActionService {
     TransActionDao transActionDao;
 
-    public void save(TransAction transAction) {
+  /*  public void save(TransAction transAction) {
         transActionDao.save(transAction);
     }
 
     public Iterable<TransAction> findAll() {
         return transActionDao.findAll();
-    }
+    }*/
 
     //region getter & setter & constructor
     @Autowired

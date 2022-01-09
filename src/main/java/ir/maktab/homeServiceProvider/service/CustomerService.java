@@ -13,6 +13,11 @@ public class CustomerService {
     private CustomerDao customerDao;
 
     public void saveCustomer(Customer customer) {
+        customerDao.save(customer);
+    }
+
+/*
+    public void saveCustomer(Customer customer) {
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword(customer.getUsername(), customer.getPassword());
         if (foundUser.isPresent()) {
             throw new RuntimeException("this customer is already exist");
@@ -30,9 +35,11 @@ public class CustomerService {
         }
     }
 
- /*   public void updateCustomer(Customer customer) {
+ */
+/*   public void updateCustomer(Customer customer) {
         customerDao.update(customer);
-    }*/
+    }*//*
+
 
     public Customer findCustomerByUseAndPass(String username, String password) {
         Optional<Customer> customer = customerDao.findByUsernameAndPassword(username, password);
@@ -45,6 +52,7 @@ public class CustomerService {
     public Iterable<Customer> findAll() {
         return customerDao.findAll();
     }
+*/
 
     //region setter & getter & constructor
     @Autowired

@@ -13,7 +13,7 @@ import java.util.Date;
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
     private Double proposedPrice;

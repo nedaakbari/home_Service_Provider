@@ -3,53 +3,46 @@ package ir.maktab.homeServiceProvider.data.model.entity.service;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 public class SubService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    //@Column(nullable = false)//todo
+    @Column(nullable = false)
     private MainService main;
-
     @Column(unique = true)
-    private String name;
+    private String title;
     private Double baseAmount;
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER)//,mappedBy = "subServiceList"
-    private Set<Expert> experts;//todo delete
+    private Set<Expert> experts=new HashSet<>();
 
-    @OneToMany
-    private Set<Orders> orders;
+    @OneToMany(mappedBy ="SubService", fetch = FetchType.LAZY)
+    private Set<Orders> orders=new HashSet<>();;
 
     @Override
     public String toString() {
         return "SubService{" +
-                " id=" + id + " MainService=> " + main.getName() +
-                ", name='" + name + '\'' +
+                " id=" + id + " MainService=> " + main +
+                ", title='" + title + '\'' +
                 ", baseAmount=" + baseAmount +
                 ", description='" + description + '\'' +
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SubService that = (SubService) o;
-        return id == that.id && Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
 }

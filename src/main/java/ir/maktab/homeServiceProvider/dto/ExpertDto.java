@@ -11,9 +11,9 @@ import java.util.Date;
 @Builder
 public class ExpertDto {
     private int id;
-    private String name;
+    private String firstName;
     private String email;
-    private String family;
+    private String lastName;
     private String phoneNumber;
     private UserRegistrationStatus status;
     private Date registerDate;
@@ -24,9 +24,9 @@ public class ExpertDto {
     public String toString() {
         return "UserDto{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", email='" + email + '\'' +
-                ", family='" + family + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", status=" + status +
                 ", registerDate=" + registerDate +

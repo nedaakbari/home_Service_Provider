@@ -12,6 +12,9 @@ public class MainServiceService {
     MainServiceDao mainServiceDao;
 
     public void saveMainService(MainService mainService) {
+        mainServiceDao.save(mainService);
+    }
+  /*  public void saveMainService(MainService mainService) {
         Optional<MainService> foundMainService = mainServiceDao.findByName(mainService.getName());
         if (foundMainService.isPresent()) {
             throw new RuntimeException("❌❌❌ this main service is already exist ❌❌❌");
@@ -29,17 +32,17 @@ public class MainServiceService {
         }
     }
 
-   /* public void updateMainService(MainService mainService) {
+   *//* public void updateMainService(MainService mainService) {
         mainServiceDao.update(mainService);
-    }*/
+    }*//*
 
-/*    public List<MainService> findAllMainService() {
+*//*    public List<MainService> findAllMainService() {
         List<MainService> all = mainServiceDao.findAll();
         if (all.size() != 0) {
             return all;
         } else
             throw new RuntimeException("no mainService Exist");
-    }*/
+    }*//*
 
     public MainService findByName(String name) {
         Optional<MainService> main = mainServiceDao.findByName(name);
@@ -59,7 +62,7 @@ public class MainServiceService {
 
     public Iterable<MainService> findAll() {
         return mainServiceDao.findAll();
-    }
+    }*/
 
     //region getter & setter & constructor
     @Autowired

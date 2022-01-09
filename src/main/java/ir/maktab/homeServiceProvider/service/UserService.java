@@ -11,8 +11,10 @@ import java.util.Optional;
 public class UserService {
     private UserDao userDao;
 
-
     public void saveUser(User user) {
+        userDao.save(user);
+    }
+   /* public void saveUser(User user) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (foundUser.isPresent()) {
             throw new RuntimeException("user with these use an pass is already exist");
@@ -34,9 +36,9 @@ public class UserService {
         return userDao.findUserById(id).get();
     }
 
- /*   public void update(User user) {
+ *//*   public void update(User user) {
         userDao.update(user);
-    }*/
+    }*//*
 
     public Iterable<User> findAllUser() {
         return userDao.findAll();
@@ -56,7 +58,7 @@ public class UserService {
             return true;
         } else
             return false;
-    }
+    }*/
 
    /* public void updateUser(User user) {
         userDao.update(user);

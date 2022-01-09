@@ -10,7 +10,7 @@ import java.util.Date;
 public class UserDto {
     private int id;
     private Role role;
-    private String name;
+    private String firstName;
     private String lastName;
     private String phoneNumber;
     private UserRegistrationStatus status;
@@ -23,7 +23,7 @@ public class UserDto {
         return "UserDto{" +
                 "id=" + id +
                 ", role=" + role +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", family='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", status=" + status +

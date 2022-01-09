@@ -19,12 +19,12 @@ public interface CustomerDao extends PagingAndSortingRepository<Customer, Intege
         transaction.commit();
         session.close();
     }*/
-
+/*
     //"From Customer C Where C.password = :password and  C.username=:username"
     Optional<Customer> findByUsernameAndPassword(String userName, String password);
 
     //"FROM Customer C WHERE C.email=:email"
-    Optional<Customer> findByEmail(String email);
+    Optional<Customer> findByEmail(String email);*/
 
 
 }

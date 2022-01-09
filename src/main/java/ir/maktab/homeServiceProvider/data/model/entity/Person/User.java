@@ -26,7 +26,7 @@ public class User {
     //@NotNull(message = "Name cannot be null")
     //@Size(min = 3, max = 10, message = "length should be in between 2 to 10")
     @Column(length = 50)
-    private String name;
+    private String firstName;
     private String lastName;
     @Column(unique = true)
     private String email;
@@ -48,7 +48,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "user " + id + " name='" + name + '\'' +
+        return "user " + id + " firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

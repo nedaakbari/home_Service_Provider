@@ -13,7 +13,10 @@ public class ExpertService {
 
     private ExpertDao expertDao;
 
-    public void saveExpert(Expert expert) {
+    public void saveExpert(Expert expert){
+        expertDao.save(expert);
+    }
+   /* public void saveExpert(Expert expert) {
         Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
         if (foundExpert.isPresent()) {
             throw new RuntimeException("this expert is already exist");
@@ -32,9 +35,9 @@ public class ExpertService {
         }
     }
 
- /*   public void updateExpert(Expert expert) {
+ *//*   public void updateExpert(Expert expert) {
         expertDao.update(expert);
-    }*/
+    }*//*
 
     public Expert findExpertByUseAndPass(String username, String password) {
         Optional<Expert> expert = expertDao.findByUsernameAndPassword(username, password);
@@ -48,9 +51,9 @@ public class ExpertService {
         return expertDao.findAll();
     }
 
- /*   public List<ExpertDto> findAllUsersByFilter(UserFilter userFilter) {
+ *//*   public List<ExpertDto> findAllUsersByFilter(UserFilter userFilter) {
         return expertDao.findAllExpertsByFilter(userFilter);
-    }*/
+    }*//*
 
     public Expert findByEmail(String email) {
         Optional<Expert> foundExpert = expertDao.findByEmail(email);
@@ -59,7 +62,7 @@ public class ExpertService {
         else
             throw new RuntimeException("no expert found with this email");
     }
-
+*/
 
     //region setter & getter & constructor
     @Autowired

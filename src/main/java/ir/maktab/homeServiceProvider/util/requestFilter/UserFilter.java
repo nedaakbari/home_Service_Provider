@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class UserFilter {
     private Role role;
-    private String name;
+    private String firstName;
     private String email;
     private String lastName;
     private UserRegistrationStatus status;

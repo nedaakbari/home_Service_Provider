@@ -39,9 +39,9 @@ public class OfferService {
     }*/
 
 
-    public void deleteOffer(Offer offer) {
+   /* public void deleteOffer(Offer offer) {
         offerDao.delete(offer);
-    }
+    }*/
 
 /*    public void updateOffer(Offer offer) {
         offerDao.update(offer);
@@ -63,13 +63,13 @@ public class OfferService {
             throw new RuntimeException("no offer for this order Exist yet ");
     }*/
 
-    public Offer findOfferById(int id) {
+   /* public Offer findOfferById(int id) {
         Optional<Offer> found = offerDao.findOfferById(id);
         if (found.isPresent())
             return found.get();
         else
             throw new RuntimeException("no offer found");
-    }
+    }*/
 
 /*    public List<OfferDto> findAllOfferOfOrder(Orders order){
         List<Offer> listOfferOfAnOrder = offerDao.findAllOfferOfAnOrder(order.getId());

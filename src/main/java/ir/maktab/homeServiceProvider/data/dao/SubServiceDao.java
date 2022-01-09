@@ -11,18 +11,18 @@ import java.util.Optional;
 @Repository
 public interface SubServiceDao extends PagingAndSortingRepository<SubService, Integer> {
 
-    //public void save(SubService subService) ;
+  /*  //public void save(SubService subService) ;
     //public void delete(SubService subService) ;
 
     //public List<SubService> findAll() ;
 
- /*   public void update(SubService subService) {
+ *//*   public void update(SubService subService) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(subService);
         transaction.commit();
         session.close();
-    }*/
+    }*//*
 
     @Query(value = "From SubService S JOIN fetch S.main where S.main.id=:id")
     List<SubService> findSubservienceFromMainService(int mainServiceId);
@@ -36,7 +36,7 @@ public interface SubServiceDao extends PagingAndSortingRepository<SubService, In
     @Query(value = "From SubService S JOIN fetch S.experts E where E.id=:id")
     public List<SubService> findSubserivceOfExpert(int expertId);
 
- /*   public List<SubService> findByNameCriteria(String name) {
+ *//*   public List<SubService> findByNameCriteria(String name) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(SubService.class, "s");
@@ -46,7 +46,7 @@ public interface SubServiceDao extends PagingAndSortingRepository<SubService, In
         transaction.commit();
         session.close();
         return subServiceList;
-    }*/
+    }*//*
 
-
+*/
 }

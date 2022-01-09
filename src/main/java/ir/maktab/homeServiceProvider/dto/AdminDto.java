@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class AdminDto {
     private int id;
-    private String name;
+    private String firstName;
     private String email;
     private String lastName;
     private String phoneNumber;
@@ -17,7 +17,7 @@ public class AdminDto {
     public String toString() {
         return "AdminDto{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + firstName + '\'' +
                 ", email='" + email + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

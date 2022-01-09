@@ -13,8 +13,10 @@ import java.util.Optional;
 public class SubServiceService {
     SubServiceDao subServiceDao;
 
-
-    public void saveSubService(SubService subService) {
+    public void saveSubService(SubService subService){
+        subServiceDao.save(subService);
+    }
+   /* public void saveSubService(SubService subService) {
         Optional<SubService> foundSubService = subServiceDao.findByName(subService.getName());
         if (subService.getMain() == null) {
             throw new RuntimeException("❌❌❌ field of mainService can't be empty ❌❌❌");
@@ -35,13 +37,13 @@ public class SubServiceService {
         }
     }
 
-    /*public void updateSubService(SubService subService) {
+    *//*public void updateSubService(SubService subService) {
         subServiceDao.update(subService);
     }
 
     public Iterable<SubService> findAll() {
         return subServiceDao.findAll();
-    }*/
+    }*//*
 
     public SubService findByName(String name) {
         Optional<SubService> found = subServiceDao.findByName(name);
@@ -68,7 +70,7 @@ public class SubServiceService {
     public List<SubService> findSubServiceOfExpert(int expertId) {
         return subServiceDao.findSubserivceOfExpert(expertId);
     }
-
+*/
     //region setter & getter & constructor
     @Autowired
     public SubServiceService(SubServiceDao serviceDao) {
