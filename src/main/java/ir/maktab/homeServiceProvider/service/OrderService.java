@@ -20,26 +20,36 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+public class OrderService implements Services<Orders, OrdersDto, Long> {
     private final OrderMapper mapper;
     private final OrderDao orderDao;
     private final OfferDao offerDao;
 
-    public void saveOrder(Orders orders) {
+    @Override
+    public void save(Orders orders) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
         orderDao.save(orders);
     }
 
-    public void removeOrder(Orders orders) {
+    @Override
+    public void delete(Orders orders) {
         orderDao.delete(orders);
+
     }
 
-    public Orders findOrderById(Long id) {
-        Optional<Orders> foundOrder = orderDao.findById(id);
+    @Override
+    public List<OrdersDto> getAll() {
+        return null;
+    }
+
+    @Override
+    public Orders getById(Long theId) {
+        Optional<Orders> foundOrder = orderDao.findById(theId);
         if (foundOrder.isPresent())
             return foundOrder.get();
         else throw new NotFoundDta("❌❌❌ Error, no order found ❌❌❌ ");
     }
+
 
     /*public List<OrdersDto> findOrdersOfSubService(int subServiceId) {
         List<Orders> orders = orderDao.findOrdersOfSubService(subServiceId);//findOrdersOfSubService
@@ -60,4 +70,6 @@ public class OrderService {
         orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
         offerDao.save(offer);
     }
+
+
 }

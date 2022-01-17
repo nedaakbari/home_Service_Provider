@@ -7,7 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransActionDao extends JpaRepository<TransActions, Long> {
 
-    //public void save(TransAction transAction) ;
-
-    //public List<TransAction> findAll() ;
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +39,8 @@ public class CustomerService implements Services<Customer, CustomerDto, Integer>
 
     @Override
     public List<CustomerDto> getAll() {
-        return null;
+        List<Customer> allCustomer = customerDao.findAll();
+        return allCustomer.stream().map(mapper::customerToDto).collect(Collectors.toList());
     }
 
     @Override

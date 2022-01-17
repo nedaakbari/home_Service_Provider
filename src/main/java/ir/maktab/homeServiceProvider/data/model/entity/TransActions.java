@@ -13,7 +13,7 @@ import java.util.Date;
 public class TransActions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @ManyToOne
     private Customer customer;
     @ManyToOne

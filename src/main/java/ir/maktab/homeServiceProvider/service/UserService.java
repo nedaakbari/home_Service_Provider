@@ -2,23 +2,28 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.UserDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
+import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.dto.mapper.UserMapper;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements Services<User, UserDto,Integer> {
     private final UserMapper mapper;
     private final UserDao userDao;
 
-    public void saveUser(User user) {
+    @Override
+    public void save(User user) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (foundUser.isPresent()) {
             throw new DuplicateData("❌❌❌ Error,user  with these use an pass is already exist ❌❌❌");
@@ -27,9 +32,27 @@ public class UserService {
         }
     }
 
-    public void removeUser(User user) {
+    @Override
+    public void delete(User user) {
         userDao.delete(user);
+
     }
+
+    @Override
+    public List<UserDto> getAll() {
+        return userDao.findAll().stream().map(mapper::entityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public User getById(Integer theId) {
+        Optional<User> foundUser = userDao.findById(theId);
+        if (foundUser.isPresent())
+            return foundUser.get();
+        else
+            throw new NotFoundDta("❌❌❌ Error not found user ❌❌❌");
+    }
+
+
 
     @Transactional
     public void updatePassword(String newPassword, int id) {
@@ -44,23 +67,8 @@ public class UserService {
             throw new NotFoundDta("❌❌❌ Error not found user ❌❌❌");
     }
 
-    public User findUserById(int id) {
-        Optional<User> foundUser = userDao.findById(id);
-        if (foundUser.isPresent())
-            return foundUser.get();
-        else
-            throw new NotFoundDta("❌❌❌ Error not found user ❌❌❌");
-    }
 
 
-    public void deleteUser(User user) {
-        userDao.delete(user);
-    }
-
-
-    public Iterable<User> findAllUser() {
-        return userDao.findAll();
-    }
 
     public boolean isDuplicateEmail(String email) {
         Optional<User> userByEmail = userDao.findByEmail(email);
@@ -69,6 +77,7 @@ public class UserService {
         } else
             return false;
     }
+
 
 
 
