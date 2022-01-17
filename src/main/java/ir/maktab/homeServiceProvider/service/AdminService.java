@@ -31,7 +31,6 @@ public class AdminService implements Services<Admin, AdminDto, Integer> {
     @Override
     public void delete(Admin admin) {
         adminDao.delete(admin);
-
     }
 
     @Override
@@ -55,10 +54,6 @@ public class AdminService implements Services<Admin, AdminDto, Integer> {
         } else
             throw new NotFoundDta("no admin found with these use and pass");
     }
-        /*  public Admin findAminByUseAndPass(Admin admin) {
-        Optional<Admin> found = adminDao.findByUserNameAndPassWord(admin.getUserName(), admin.getPassWord());
-        return found.orElse(null);
-    }*///todo which one is better
 
     @Transactional
     public void UpdatePassword(String newPassword, int id) {
@@ -73,5 +68,9 @@ public class AdminService implements Services<Admin, AdminDto, Integer> {
         else return false;
     }
 
+            /*  public Admin findAminByUseAndPass(Admin admin) {
+        Optional<Admin> found = adminDao.findByUserNameAndPassWord(admin.getUserName(), admin.getPassWord());
+        return found.orElse(null);
+    }*///todo which one is better
 
 }

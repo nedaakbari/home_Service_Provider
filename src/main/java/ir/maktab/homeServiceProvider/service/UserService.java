@@ -35,7 +35,6 @@ public class UserService implements Services<User, UserDto,Integer> {
     @Override
     public void delete(User user) {
         userDao.delete(user);
-
     }
 
     @Override
@@ -52,8 +51,6 @@ public class UserService implements Services<User, UserDto,Integer> {
             throw new NotFoundDta("❌❌❌ Error not found user ❌❌❌");
     }
 
-
-
     @Transactional
     public void updatePassword(String newPassword, int id) {
         userDao.updatePassword(newPassword, id);
@@ -67,9 +64,6 @@ public class UserService implements Services<User, UserDto,Integer> {
             throw new NotFoundDta("❌❌❌ Error not found user ❌❌❌");
     }
 
-
-
-
     public boolean isDuplicateEmail(String email) {
         Optional<User> userByEmail = userDao.findByEmail(email);
         if (userByEmail.isPresent()) {
@@ -78,11 +72,9 @@ public class UserService implements Services<User, UserDto,Integer> {
             return false;
     }
 
-
-
-
-  /*  public List<UserDto> findAllUsersByFilter(UserFilter userFilter) {
+/*  public List<UserDto> findAllUsersByFilter(UserFilter userFilter) {
         return userDao.findUsersByFilter(userFilter);
     }*/
+
 
 }

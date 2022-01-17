@@ -24,6 +24,7 @@ public class OrderService implements Services<Orders, OrdersDto, Long> {
     private final OrderMapper mapper;
     private final OrderDao orderDao;
     private final OfferDao offerDao;
+    private final OfferService offerService;
 
     @Override
     public void save(Orders orders) {
@@ -51,15 +52,15 @@ public class OrderService implements Services<Orders, OrdersDto, Long> {
     }
 
 
-    /*public List<OrdersDto> findOrdersOfSubService(int subServiceId) {
+    public List<OrdersDto> findOrdersOfSubService(int subServiceId) {
         List<Orders> orders = orderDao.findOrdersOfSubService(subServiceId);//findOrdersOfSubService
-        return orders.stream().map(mapper::ordersDto).collect(Collectors.toList());
-    }*/
+        return orders.stream().map(mapper::ordersToDto).collect(Collectors.toList());
+    }
 
-    /*public List<OrdersDto> findOrderOfCustomer(Customer customer) {
+    public List<OrdersDto> findOrderOfCustomer(Customer customer) {
         List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());
-        return orderOfCustomer.stream().map(mapper::ordersDto).collect(Collectors.toList());
-    }*/
+        return orderOfCustomer.stream().map(mapper::ordersToDto).collect(Collectors.toList());
+    }
 
     public void acceptedOffer(Orders orders, Offer offer) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);

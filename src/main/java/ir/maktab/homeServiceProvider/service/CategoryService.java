@@ -20,7 +20,6 @@ public class CategoryService implements Services<Category, CategoryDto, Integer>
     private final CategoryMapper mapper;
     private final CategoryDao categoryDao;
 
-
     @Override
     public void save(Category category) {
         Optional<Category> foundMainService = categoryDao.findByTitle(category.getTitle());

@@ -33,9 +33,9 @@ public class Expert extends User {
     //@EqualsAndHashCode.Include
     @JoinTable(
             joinColumns = {@JoinColumn(name = "expert_id")},
-            inverseJoinColumns = {@JoinColumn(name = "subService_id")}
+            inverseJoinColumns = {@JoinColumn(name = "subCategory_id")}
     )
-    private Set<SubCategory> subServiceList = new HashSet<>();
+    private Set<SubCategory> subCategoryList = new HashSet<>();
 
     @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();

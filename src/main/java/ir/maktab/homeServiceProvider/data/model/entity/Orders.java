@@ -40,10 +40,10 @@ public class Orders {
     private Address address;
 
     @ManyToOne
-    private SubCategory subService;
+    private SubCategory subCategory;
 
     @ManyToOne
-    private Category mainService;
+    private Category category;
 
     @Enumerated(EnumType.STRING)
     private OrderState state;
@@ -69,7 +69,7 @@ public class Orders {
                 ", description='" + description + '\'' +
                 ", workDay=" + workDay +
                 ", address=" + address +
-                ", subService=" + subService.getTitle() +
+                ", subService=" + subCategory.getTitle() +
                 ", state=" + state +
                 ", customer=" + customer +
                 ", expert=" + expert +

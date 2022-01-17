@@ -21,13 +21,11 @@ public class AddressService implements Services<Address, AddressDto, Integer> {
     @Override
     public void save(Address address) {
         addressDao.save(address);
-
     }
 
     @Override
     public void delete(Address address) {
         addressDao.delete(address);
-
     }
 
     @Override

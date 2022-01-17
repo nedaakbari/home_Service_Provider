@@ -7,7 +7,9 @@ import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import ir.maktab.homeServiceProvider.dto.mapper.CustomerMapper;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +19,16 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Getter
 public class CustomerService implements Services<Customer, CustomerDto, Integer> {
     private final CustomerMapper mapper;
     private final CustomerDao customerDao;
+
+   /* @Autowired
+    public CustomerService(CustomerMapper mapper, CustomerDao customerDao) {
+        this.mapper = mapper;
+        this.customerDao = customerDao;
+    }*/
 
     @Override
     public void save(Customer customer) {
@@ -63,6 +72,10 @@ public class CustomerService implements Services<Customer, CustomerDto, Integer>
             return customer.get();
         } else
             throw new RuntimeException("no customer found with these use and pass");
+    }
+
+    public Long getCountOfRecords() {
+        return customerDao.count();
     }
 
 }

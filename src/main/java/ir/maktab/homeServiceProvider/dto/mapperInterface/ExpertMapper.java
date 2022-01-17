@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 public interface ExpertMapper {
     /* @Autowired
      protected SimpleService simpleService;*/
+
     ExpertDto expertToExpertDto(Expert expert);
 
     Expert expertDtoToExpert(ExpertDto expertDto);

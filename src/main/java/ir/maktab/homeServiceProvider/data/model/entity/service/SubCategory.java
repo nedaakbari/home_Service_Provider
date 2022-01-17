@@ -33,12 +33,11 @@ public class SubCategory {
 
     private String description;
 
-    @ManyToMany(mappedBy = "subServiceList", fetch = FetchType.EAGER)//,mappedBy = "subServiceList"
+    @ManyToMany(mappedBy = "subCategoryList", fetch = FetchType.EAGER)//,mappedBy = "subServiceList"
     private Set<Expert> experts = new HashSet<>();
 
-    @OneToMany(mappedBy = "subService", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "subCategory", fetch = FetchType.LAZY)
     private Set<Orders> orders = new HashSet<>();
-    ;
 
     @Override
     public String toString() {

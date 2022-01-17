@@ -1,6 +1,12 @@
 package ir.maktab.homeServiceProvider.view;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
+import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
+import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -12,8 +18,8 @@ public class Insert {
         CustomerService customerService = context.getBean(CustomerService.class);
         ExpertService expertService = context.getBean(ExpertService.class);
         UserService userService = context.getBean(UserService.class);
-        CategoryService mainServiceService = context.getBean(CategoryService.class);
-        SubCategoryService subServiceService = context.getBean(SubCategoryService.class);
+        CategoryService categoryService = context.getBean(CategoryService.class);
+        SubCategoryService subCategoryService = context.getBean(SubCategoryService.class);
         AdminService adminService = context.getBean(AdminService.class);
         OrderService orderService = context.getBean(OrderService.class);
         OfferService offerService = context.getBean(OfferService.class);
@@ -21,41 +27,42 @@ public class Insert {
         // Mapper mapper=context.getBean(Mapper.class);
 
 
+
 /**
  *save an expert customer admin mainService
  */
         ////////////// save customer
 
-      /*  Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
-                .password("Nima@12").status(UserRegistrationStatus.WAITING_FOR_CONFIRM)
+        Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
+                .password("Nima@12")
                 .phoneNumber("9398745644").email("nimaAskari@gmail.com").build();
-        customerService.saveCustomer(nima);
+        customerService.save(nima);
 
         Customer neda = Customer.builder().firstName("neda").lastName("akbari").role(Role.CUSTOMER).username("neda_ak")
                 .password("Neda@137").status(UserRegistrationStatus.WAITING_FOR_CONFIRM)
                 .phoneNumber("09370730398").email("neda@gmail.com").build();
-        customerService.saveCustomer(neda);
+        customerService.save(neda);
 
 
         Expert sara = Expert.builder().firstName("sara").lastName("saraee").email("sara@gmail.com")
                 .phoneNumber("09370000000").username("sara@").password("sara_111").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
-        expertService.saveExpert(sara);
+        expertService.save(sara);
 
         Expert nader = Expert.builder().firstName("nader").lastName("naderi").email("nader@gmail.com")
                 .phoneNumber("09360000000").username("nader_").password("nader_22").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
-        expertService.saveExpert(nader);
+        expertService.save(nader);
 
         Expert ashkan = Expert.builder().firstName("ashkan").lastName("ashkani").email("ashkan@gmail.com")
                 .phoneNumber("09350000000").username("ashkan_").password("ashkan@7").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
-        expertService.saveExpert(ashkan);
+        expertService.save(ashkan);
 
         Expert sana = Expert.builder().firstName("sana").lastName("sanaee").email("sana@gmail.com")
                 .phoneNumber("09340000000").username("sana_").password("sana@747").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
-        expertService.saveExpert(sana);
+        expertService.save(sana);
 
 
         /////////save admin
@@ -65,37 +72,37 @@ public class Insert {
         Admin sanaz = Admin.builder().firstName("sanaz").lastName("salehi")
                 .userName("admin2").passWord("admin456").build();
 
-        adminService.saveAdmin(mehran);
-        adminService.saveAdmin(sanaz);
+        adminService.save(mehran);
+        adminService.save(sanaz);
 
         /////////////save mainservice
-        MainService mainService = new MainService();
+        Category category = new Category();
         String name = "building decoration";
         String replace = name.toUpperCase().replace(" ", "_");
-        mainService.setTitle(replace);
+        category.setTitle(replace);
 
-        MainService mainService2 = new MainService();
-        mainService2.setTitle("BUILDING_FACILITIES");
+        Category category2 = new Category();
+        category2.setTitle("BUILDING_FACILITIES");
 
-        MainService mainService3 = new MainService();
-        mainService3.setTitle("VEHICLES");
+        Category category3 = new Category();
+        category3.setTitle("VEHICLES");
 
-        MainService mainService4 = new MainService();
-        mainService4.setTitle("MOVING_HELP");
+        Category category4 = new Category();
+        category4.setTitle("MOVING_HELP");
 
-        MainService mainService5 = new MainService();
-        mainService5.setTitle("HOME_APPLIANCES");
+        Category category5 = new Category();
+        category5.setTitle("HOME_APPLIANCES");
 
-        MainService mainService6 = new MainService();
-        mainService6.setTitle("HOME_CLEANING_AND_HYGIENE");
+        Category category6 = new Category();
+        category6.setTitle("HOME_CLEANING_AND_HYGIENE");
 
-        mainServiceService.saveMainService(mainService);
-        mainServiceService.saveMainService(mainService2);
-        mainServiceService.saveMainService(mainService3);
-        mainServiceService.saveMainService(mainService4);
-        mainServiceService.saveMainService(mainService5);
-        mainServiceService.saveMainService(mainService6);
-*/
+        categoryService.save(category);
+        categoryService.save(category4);
+        categoryService.save(category2);
+        categoryService.save(category3);
+        categoryService.save(category5);
+        categoryService.save(category6);
+
         /**
          * find a mainServiceDao by Name
          */
@@ -110,7 +117,7 @@ public class Insert {
         kitchenAppliances.setDescription("clean detail of home");
         kitchenAppliances.setName("kitchenAppliances");
         kitchenAppliances.setBaseAmount(170000);
-        subServiceService.saveSubService(kitchenAppliances);
+        subCategoryService.saveSubService(kitchenAppliances);
 
         SubService laundry = new SubService();
         //laundry.setMainService(MainServices.HOME_APPLIANCES);
@@ -118,7 +125,7 @@ public class Insert {
         laundry.setDescription("we laundry your packet");
         laundry.setName("laundry");
         laundry.setBaseAmount(100000);
-        subServiceService.saveSubService(laundry);
+        subCategoryService.saveSubService(laundry);
 
         SubService audioAndVideoEquipment = new SubService();
         // audioAndVideoEquipment.setMainService(MainServices.HOME_APPLIANCES);
@@ -126,7 +133,7 @@ public class Insert {
         audioAndVideoEquipment.setDescription("audio And Video Equipment");
         audioAndVideoEquipment.setBaseAmount(150000);
         audioAndVideoEquipment.setName("audioAndVideoEquipment");
-        subServiceService.saveSubService(audioAndVideoEquipment);
+        subCategoryService.saveSubService(audioAndVideoEquipment);
 
 
         SubService cleaning = new SubService();
@@ -135,7 +142,7 @@ public class Insert {
         cleaning.setDescription("Leave the cleaning of your house to us");
         cleaning.setName("cleaning");
         cleaning.setBaseAmount(140000);
-        subServiceService.saveSubService(cleaning);
+        subCategoryService.saveSubService(cleaning);
 
         SubService laundryAndCarWash = new SubService();
         // laundryAndCarWash.setMainService(MainServices.HOME_CLEANING_AND_HYGIENE);
@@ -143,7 +150,7 @@ public class Insert {
         laundryAndCarWash.setName("laundryAndCarWash");
         laundryAndCarWash.setDescription("We will deliver your cars clean from the first day");
         laundryAndCarWash.setBaseAmount(130000);
-        subServiceService.saveSubService(laundryAndCarWash);
+        subCategoryService.saveSubService(laundryAndCarWash);
 
         SubService carpetAndUpholstery = new SubService();
         // carpetAndUpholstery.setMainService(MainServices.HOME_CLEANING_AND_HYGIENE);
@@ -151,7 +158,7 @@ public class Insert {
         carpetAndUpholstery.setName("carpetAndUpholstery");
         carpetAndUpholstery.setDescription("Clean carpets softer sofas");
         carpetAndUpholstery.setBaseAmount(120000);
-        subServiceService.saveSubService(carpetAndUpholstery);
+        subCategoryService.saveSubService(carpetAndUpholstery);
 
         SubService homeSpraying = new SubService();
         // homeSpraying.setMainService(MainServices.HOME_CLEANING_AND_HYGIENE);
@@ -159,7 +166,7 @@ public class Insert {
         homeSpraying.setName("homeSpraying");
         homeSpraying.setDescription("Clean the house from any insects");
         homeSpraying.setBaseAmount(110000);
-        subServiceService.saveSubService(homeSpraying);*/
+        subCategoryService.saveSubService(homeSpraying);*/
 
         /**
          * update a customer=>  add to creditCart
@@ -206,10 +213,10 @@ public class Insert {
         mainServiceService.findAll().forEach(System.out::println);
 
 //پیدا کردن همه سابسرویس ها
-         subServiceService.findAll().forEach(System.out::println);
+         subCategoryService.findAll().forEach(System.out::println);
 
         //پیدا کرندن ساب سرویس با نامش
-        SubService byName = subServiceService.findByName("kitchenAppliances ".trim());
+        SubService byName = subCategoryService.findByName("kitchenAppliances ".trim());
         System.out.println(byName);
 
         //پیدا کردن اکسپرت از نامش
@@ -237,7 +244,7 @@ public class Insert {
         allUsersByFilter.forEach(System.out::println);*/
 
         /*UserFilter userFilter = new UserFilter();
-        SubService laundry = subServiceService.findByName("laundry");
+        SubService laundry = subCategoryService.findByName("laundry");
         userFilter.setSubService(laundry);
         expertService.findAllUsersByFilter(userFilter).forEach(System.out::println);//todo*/
 
@@ -253,11 +260,11 @@ public class Insert {
         MainService home_appliances = mainServiceService.findByName("HOME_APPLIANCES");
         //میخواد همه زیر خدمت های این خدمت اصلی رو ببینه
         //home_appliances.getSubServiceList().forEach(System.out::println);//این شکلی باید فچ تایپش رو ایگر کنی
-        subServiceService.findSubservienceFromMainService(home_appliances.getId()).forEach(System.out::println);
+        subCategoryService.findSubservienceFromMainService(home_appliances.getId()).forEach(System.out::println);
         System.out.println("***********************************8888");
          //انتخاب کنه
-        SubService byName = subServiceService.findByName("kitchenAppliances ".trim());
-        SubService laundry = subServiceService.findById(2);
+        SubService byName = subCategoryService.findByName("kitchenAppliances ".trim());
+        SubService laundry = subCategoryService.findById(2);
         System.out.println(laundry);
         System.out.println("***********************************8888");
         //به اکسپرت ها اضافه میشه
@@ -265,21 +272,21 @@ public class Insert {
         experts.add(sara);
         experts.add(nader);
         laundry.setExperts(experts);
-        subServiceService.updateSubService(laundry);
+        subCategoryService.updateSubService(laundry);
 
         MainService home_cleaning_and_hygiene = mainServiceService.findByName("HOME_CLEANING_AND_HYGIENE");
         //میخواد همه زیر خدمت های این خدمت اصلی رو ببینه
-        subServiceService.findSubservienceFromMainService(home_cleaning_and_hygiene.getId()).forEach(System.out::println);
+        subCategoryService.findSubservienceFromMainService(home_cleaning_and_hygiene.getId()).forEach(System.out::println);
          //انتخاب کنه
         //SubService byName = serviceDao.findByName("kitchenAppliances ".trim());
-        SubService spray = subServiceService.findById(7);
+        SubService spray = subCategoryService.findById(7);
         System.out.println(spray);
         //به اکسپرت ها اضافه میشه
         Set<Expert> experts = spray.getExperts();
         experts.add( ashkan);
         experts.add(nader);
         spray.setExperts(experts);
-        subServiceService.updateSubService(spray);
+        subCategoryService.updateSubService(spray);
 
         //sara=> subservice2 => laundry
         //nader=> subservice2 => laundry  subService7 =>spray
@@ -289,14 +296,14 @@ public class Insert {
 
         //میخوام ببینم نادر چه خدمت هایی داره
         //nader.getSubServiceList().forEach(System.out::println);//no session نمیخوام ایگر کنمش
-        // subServiceService.findSubserivceOfExpert(nader.getId()).forEach(System.out::println);
+        // subCategoryService.findSubserivceOfExpert(nader.getId()).forEach(System.out::println);
 
         //میخوام ببینم سارا چه خدمت هایی داره
-        // subServiceService.findSubserivceOfExpert(sara.getId()).forEach(System.out::println);
+        // subCategoryService.findSubserivceOfExpert(sara.getId()).forEach(System.out::println);
 
         //میخوام ببینم چه اکسپرت هایی داخل laundry خدمت میکنن
         /*Mapper mapper=new Mapper();//todo qualifier error
-        SubService laundry = subServiceService.findByName("homeSpraying");
+        SubService laundry = subCategoryService.findByName("homeSpraying");
         Set<Expert> experts = laundry.getExperts();
         List<ExpertDto> collect = experts.stream().map(mapper::expertDto).collect(Collectors.toList());
         collect.forEach(System.out::println);*/
@@ -304,7 +311,7 @@ public class Insert {
         //میخوام نادر رو از لاندی حذف کنم
        /* experts.remove(nader);
         laundry.setExperts(experts);
-        subServiceService.updateSubService(laundry);*/
+        subCategoryService.updateSubService(laundry);*/
 
         //جستجو حوزه تخصصی متخصصان
         /*Mapper mapper=new Mapper();
@@ -322,10 +329,10 @@ public class Insert {
         MainService byId = mainServiceService.findById(6);
         System.out.println("******** " + byId);
         //کدوم زیر خدمت رو از این خدمت میخوای؟
-        subServiceService.findSubservienceFromMainService(byId.getId()).forEach(System.out::println);
+        subCategoryService.findSubservienceFromMainService(byId.getId()).forEach(System.out::println);
         System.out.println("******** " + byId);
         //یکی از زیر خدمت ها رو انتخاب کنه
-        SubService homeSpraying = subServiceService.findById(7);
+        SubService homeSpraying = subCategoryService.findById(7);
         System.out.println("******** " + homeSpraying);
 
         Address address = new Address();
@@ -351,10 +358,10 @@ public class Insert {
         MainService main = mainServiceService.findById(5);
         System.out.println("************** ");
         //از کدوم خدمت؟
-        subServiceService.findSubservienceFromMainService(main.getId()).forEach(System.out::println);
+        subCategoryService.findSubservienceFromMainService(main.getId()).forEach(System.out::println);
         System.out.println("************** ");
         //کدوم زیر خدمت رو میخوای لیست سفارشاش رو ببینی؟؟
-        SubService homeSpray = subServiceService.findById(7);
+        SubService homeSpray = subCategoryService.findById(7);
         orderService.findOrdersOfSubService(homeSpray.getId()).forEach(System.out::println);
         System.out.println("*******************************************888");
         Orders orderByID = orderService.findOrderByID(1);*/
