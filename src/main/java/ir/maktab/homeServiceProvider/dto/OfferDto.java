@@ -2,7 +2,6 @@ package ir.maktab.homeServiceProvider.dto;
 
 import lombok.*;
 
-import java.time.LocalTime;
 import java.util.Date;
 
 @Getter

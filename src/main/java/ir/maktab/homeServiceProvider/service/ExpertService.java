@@ -2,15 +2,15 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.ExpertDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.dto.mapper.ExpertMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
+@RequiredArgsConstructor
 public class ExpertService {
-
+    private final ExpertMapper mapper;
     private final ExpertDao expertDao;
 
     public void saveExpert(Expert expert) {
@@ -31,11 +31,4 @@ public class ExpertService {
     }*/
 
 
-    //region setter & getter & constructor
-    @Autowired
-    public ExpertService(ExpertDao expertDao) {
-        this.expertDao = expertDao;
-    }
-
-    //endregion
 }

@@ -1,11 +1,12 @@
 package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.TransActionDao;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-
+@RequiredArgsConstructor
 public class TransActionService {
     private final TransActionDao transActionDao;
 
@@ -17,15 +18,4 @@ public class TransActionService {
         return transActionDao.findAll();
     }*/
 
-    //region getter & setter & constructor
-    @Autowired
-    public TransActionService(TransActionDao transActionDao) {
-        this.transActionDao = transActionDao;
-    }
-
-    public TransActionDao getTransActionDao() {
-        return transActionDao;
-    }
-
-    //endregion
 }

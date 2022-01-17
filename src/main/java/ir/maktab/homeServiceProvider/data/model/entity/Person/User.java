@@ -2,7 +2,6 @@ package ir.maktab.homeServiceProvider.data.model.entity.Person;
 
 import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,7 +57,6 @@ public class User {
     private Date registerDate;
 
     private Long creditCart;
-
 
 
     @Override

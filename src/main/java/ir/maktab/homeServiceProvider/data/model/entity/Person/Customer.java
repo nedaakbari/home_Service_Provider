@@ -2,9 +2,10 @@ package ir.maktab.homeServiceProvider.data.model.entity.Person;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Comment;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
-import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
-import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class Customer extends User {
     private Set<Orders> ordersList = new HashSet<>();
 
     @OneToMany(mappedBy = "customer")
-    private List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @Override
     public String toString() {

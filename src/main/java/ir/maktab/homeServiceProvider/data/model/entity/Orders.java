@@ -52,11 +52,11 @@ public class Orders {
     @JoinColumn(nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "orders",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "orders", fetch = FetchType.LAZY)
     private Set<Offer> offers = new HashSet<>();
 
     @ManyToOne
-    private Expert expert;
+    private Expert expert;//اکسپرتی که انتخاب میشه هست
 
     private Double score;
 
@@ -78,7 +78,6 @@ public class Orders {
                 ", comment='" + comment + '\'' +
                 '}';
     }
-
 
 
 }

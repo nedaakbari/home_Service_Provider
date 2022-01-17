@@ -1,49 +1,26 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
+
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SubCategoryDao extends JpaRepository<SubCategory, Integer> {
 
-  /*  //public void save(SubService subService) ;
-    //public void delete(SubService subService) ;
-
-    //public List<SubService> findAll() ;
-
- *//*   public void update(SubService subService) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(subService);
-        transaction.commit();
-        session.close();
-    }*//*
-
-    @Query(value = "From SubService S JOIN fetch S.main where S.main.id=:id")
-    List<SubService> findSubservienceFromMainService(int mainServiceId);
-
     //"From SubService S where S.name=:name"
-    Optional<SubService> findByName(String name);
+    Optional<SubCategory> findByTitle(String title);
 
-    //"From SubService S where S.id=:id"
-    public Optional<SubService> findById(int id);
+    //@Query(value = "From SubCategory S JOIN fetch S.category where S.category.id=:id")// ؟؟؟نیازی به این هست؟؟؟
+    List<SubCategory> findSubCategoryByCategoryTitle(int categoryId);
 
-    @Query(value = "From SubService S JOIN fetch S.experts E where E.id=:id")
-    public List<SubService> findSubserivceOfExpert(int expertId);
+    @Query(value = "From SubCategory S JOIN fetch S.experts E where E.id=:id")
+    public List<SubCategory> findSubCategoryOfExpert(int expertId);
 
- *//*   public List<SubService> findByNameCriteria(String name) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Criteria criteria = session.createCriteria(SubService.class, "s");
-        criteria.setFetchMode("experts", FetchMode.EAGER);
-        criteria.add(Restrictions.eq("s.name", name));
-        List<SubService> subServiceList = criteria.list();
-        transaction.commit();
-        session.close();
-        return subServiceList;
-    }*//*
+    //public void update(SubCategory subCategory) {}
 
-*/
 }

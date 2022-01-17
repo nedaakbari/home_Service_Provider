@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 
 
 public class ImageWrapper {
-    private static int maxFileSize =5000000;
+    private static int maxFileSize = 5000000;
 
     public static void saveImage(String picName, Expert expert) {
         File file = new File("C:\\image\\" + picName + "");

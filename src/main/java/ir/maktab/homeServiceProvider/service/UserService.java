@@ -2,17 +2,20 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.UserDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
+import ir.maktab.homeServiceProvider.dto.mapper.UserMapper;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
+    private final UserMapper mapper;
     private final UserDao userDao;
 
     public void saveUser(User user) {
@@ -73,12 +76,4 @@ public class UserService {
         return userDao.findUsersByFilter(userFilter);
     }*/
 
-    //region setter & getter & constructor
-    @Autowired
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-
-    //endregion &
 }

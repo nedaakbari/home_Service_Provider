@@ -2,11 +2,15 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.CategoryDao;
 import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
+import ir.maktab.homeServiceProvider.dto.mapper.CategoryMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
+    private final CategoryMapper mapper;
     private final CategoryDao categoryDao;
 
     public void saveMainService(Category category) {
@@ -38,7 +42,7 @@ public class CategoryService {
         mainServiceDao.update(mainService);
     }*//*
 
-*//*    public List<MainService> findAllMainService() {
+     *//*    public List<MainService> findAllMainService() {
         List<MainService> all = mainServiceDao.findAll();
         if (all.size() != 0) {
             return all;
@@ -65,13 +69,4 @@ public class CategoryService {
     public Iterable<MainService> findAll() {
         return mainServiceDao.findAll();
     }*/
-
-    //region getter & setter & constructor
-    @Autowired
-    public CategoryService(CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
-    }
-
-
-    //endregion
 }

@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.dto;
 
+
 import lombok.*;
 
 @Getter
@@ -8,8 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CategoryDto {
+public class AddressDto {
     private int id;
-    private String name;
-    private String description;
+    private String city;
+    private String street;
+    private String zipCode;
 }

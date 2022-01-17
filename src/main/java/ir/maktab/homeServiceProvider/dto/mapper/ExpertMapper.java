@@ -2,7 +2,10 @@ package ir.maktab.homeServiceProvider.dto.mapper;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class ExpertMapper {
     public ExpertDto expertDto(Expert expert) {
         return ExpertDto.builder()

@@ -4,32 +4,35 @@ import ir.maktab.homeServiceProvider.data.dao.OfferDao;
 import ir.maktab.homeServiceProvider.data.dao.OrderDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
-import ir.maktab.homeServiceProvider.dto.mapper.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
+import ir.maktab.homeServiceProvider.dto.OfferDto;
+import ir.maktab.homeServiceProvider.dto.mapper.OfferMapper;
+import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OfferService {
-    Mapper mapper = new Mapper();
-   private final OfferDao offerDao;
-    OrderDao orderDao;
+    private final OfferMapper mapper;
+    private final OfferDao offerDao;
+    private final OrderDao orderDao;
 
-    public void saveOffer(Offer offer) {
-        offerDao.save(offer);
-    }
-
-/*
-    public void saveOffer(Offer offer, Orders orders) {
+    /*public void saveOffer(Offer offer, Orders orders) {
         Expert expert = offer.getExpert();
-        Set<SubService> subServiceList = expert.getSubServiceList();
-        SubService orderSubService = orders.getSubService();
-        boolean isExist = subServiceList.stream().allMatch(subService -> subService.getName().equalsIgnoreCase(orderSubService.getName()));
+        Set<SubCategory> subCategoryList = expert.getSubServiceList();
+        SubCategory orderSubService = orders.getSubService();
+        boolean isExist = subCategoryList.stream().allMatch(subCategory -> subCategory.getTitle().equalsIgnoreCase(orderSubService.getTitle()));
         if (isExist) {
-            long baseAmount = orders.getSubService().getBaseAmount();
-            long offerPrice = offer.getProposedPriceOffer();
+            Double baseAmount = orders.getSubService().getBaseAmount();
+            Double offerPrice = offer.getProposedPrice();
             if (offerPrice > baseAmount) {
                 List<Offer> list = offerDao.findAllOfferOfAnOrder(orders.getId());
                 if (list == null) {
@@ -44,51 +47,42 @@ public class OfferService {
     }*/
 
 
-   /* public void deleteOffer(Offer offer) {
+    public void deleteOffer(Offer offer) {
         offerDao.delete(offer);
-    }*/
+    }
 
 /*    public void updateOffer(Offer offer) {
         offerDao.update(offer);
     }*/
 
-  /*  public List<Offer> findAllOffer() {
+    public List<Offer> findAllOffer() {
         List<Offer> all = offerDao.findAll();
         if (all.size() != 0) {
             return all;
         } else
-            throw new RuntimeException("no offer Exist yet");
-    }*/
+            throw new NotFoundDta("no offer Exist yet");
+    }
 
-/*    public List<Offer> findAllOfferOfAnOrder(int OrderId) {
+    /*public List<Offer> findAllOfferOfAnOrder(int OrderId) {
         List<Offer> all = offerDao.findAllOfferOfAnOrder(OrderId);
         if (all.size() != 0) {
             return all;
         } else
-            throw new RuntimeException("no offer for this order Exist yet ");
+            throw new NotFoundDta("no offer for this order Exist yet ");
     }*/
 
-   /* public Offer findOfferById(int id) {
-        Optional<Offer> found = offerDao.findOfferById(id);
+    public Offer findOfferById(Long id) {
+        Optional<Offer> found = offerDao.findById(id);
         if (found.isPresent())
             return found.get();
         else
-            throw new RuntimeException("no offer found");
-    }*/
+            throw new NotFoundDta("no offer found");
+    }
 
-/*    public List<OfferDto> findAllOfferOfOrder(Orders order){
+   /* public List<OfferDto> findAllOfferOfOrder(Orders order) {
         List<Offer> listOfferOfAnOrder = offerDao.findAllOfferOfAnOrder(order.getId());
         return listOfferOfAnOrder.stream().map(mapper::offerDto).collect(Collectors.toList());
     }*/
 
 
-    //region setter & getter & constructor
-    @Autowired
-    public OfferService(OfferDao offerDao, OrderDao orderDao) {
-        this.offerDao = offerDao;
-        this.orderDao = orderDao;
-    }
-
-
-    //endregion
 }

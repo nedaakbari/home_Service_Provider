@@ -2,20 +2,20 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.CustomerDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.dto.mapper.CustomerMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl {
-
+    private final CustomerMapper mapper;
     private final CustomerDao customerDao;
 
     public void saveCustomer(Customer customer) {
-       // customer.setStatus(UserRegistrationStatus.NEW);
+        // customer.setStatus(UserRegistrationStatus.NEW);
         customerDao.save(customer);
     }
 
@@ -25,7 +25,7 @@ public class CustomerServiceImpl {
 
     @Transactional
     public void UpdatePassword(String newPassword, int id) {
-        customerDao.UpdatePassword(newPassword, id);
+        customerDao.updatePassword(newPassword, id);
     }
 /*
     public void saveCustomer(Customer customer) {
@@ -64,13 +64,4 @@ public class CustomerServiceImpl {
         return customerDao.findAll();
     }
 */
-
-    //region setter & getter & constructor
-    @Autowired
-    public CustomerServiceImpl(CustomerDao customerDao) {
-        this.customerDao = customerDao;
-    }
-
-
-    //endregion
 }

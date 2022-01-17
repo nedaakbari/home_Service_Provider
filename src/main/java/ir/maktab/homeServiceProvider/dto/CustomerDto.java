@@ -4,6 +4,7 @@ import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStat
 import lombok.*;
 
 import java.util.Date;
+
 @Getter
 @Setter
 @Builder

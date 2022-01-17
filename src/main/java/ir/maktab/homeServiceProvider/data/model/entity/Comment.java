@@ -15,8 +15,8 @@ import javax.persistence.*;
 public class Comment {
     @Id
     private Long id;
-/*    @Column(nullable = false)
-    private Double rate;*/
+    /*    @Column(nullable = false)
+        private Double rate;*/
     @Column(length = 150)
     private String comment;
 

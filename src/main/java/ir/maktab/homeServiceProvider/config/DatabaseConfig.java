@@ -25,14 +25,15 @@ import java.util.Properties;
 public class DatabaseConfig {
     @Autowired
     private Environment environment;
+    //private final Environment environment;
 
     @Bean
     DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getProperty("db.driver"));
-        dataSource.setUrl(environment.getProperty("db.url"));
-        dataSource.setPassword(environment.getProperty("db.password"));
-        dataSource.setUsername(environment.getProperty("db.user"));
+        dataSource.setDriverClassName(environment.getRequiredProperty("db.driver"));
+        dataSource.setUrl(environment.getRequiredProperty("db.url"));
+        dataSource.setPassword(environment.getRequiredProperty("db.password"));
+        dataSource.setUsername(environment.getRequiredProperty("db.user"));//getRequiredProperty بجای property استفاده میکنیم که اکسپشن بده
         return dataSource;
     }
 
@@ -56,7 +57,7 @@ public class DatabaseConfig {
         jpaProperties.put("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
         //jpaProperties.put("hibernate.ejb.naming_strategy", environment.getRequiredProperty("hibernate.ejb.naming_strategy"));
         jpaProperties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-        // jpaProperties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+        jpaProperties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
 
         return jpaProperties;
     }

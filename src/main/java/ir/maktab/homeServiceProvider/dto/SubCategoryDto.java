@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class SubCategoryDto {
-    private String name;
+    private String title;
     private Double basePrice;
     private String description;
     private Category category;

@@ -20,7 +20,7 @@ public class Category {
     @NotNull(message = "title cannot be null")
     private String title;
 
-    @OneToMany( mappedBy = "main",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "main", fetch = FetchType.LAZY)
     private Set<SubCategory> subServiceList = new HashSet<>();
 
     @Override

@@ -2,77 +2,70 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.SubCategoryDao;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.dto.mapper.SubCategoryMapper;
+import ir.maktab.homeServiceProvider.exception.DuplicateData;
+import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class SubCategoryService {
+    private final SubCategoryMapper mapper;
     private final SubCategoryDao subCategoryDao;
 
-    public void saveSubService(SubCategory subCategory) {
-        subCategoryDao.save(subCategory);
+    public void deleteSubService(SubCategory subCategory) {
+        subCategoryDao.delete(subCategory);
     }
 
-    /* public void saveSubService(SubService subService) {
-         Optional<SubService> foundSubService = subServiceDao.findByName(subService.getName());
-         if (subService.getMain() == null) {
-             throw new RuntimeException("❌❌❌ field of mainService can't be empty ❌❌❌");
-         }
-         if (foundSubService.isPresent()) {
-             throw new RuntimeException("❌❌❌ this subService is already exist ❌❌❌");
-         } else {
-             subServiceDao.save(subService);
-         }
-     }
-
-     public void deleteSubService(SubService subService) {
-         Optional<SubService> foundSubService = subServiceDao.findByName(subService.getName());
-         if (foundSubService.isPresent()) {
-             subServiceDao.delete(subService);
-         } else {
-             throw new RuntimeException("❌❌❌ this subService is not exist ❌❌❌");
-         }
-     }
-
-     *//*public void updateSubService(SubService subService) {
-        subServiceDao.update(subService);
+    public void saveSubCategory(SubCategory subCategory) {
+        Optional<SubCategory> foundSubService = subCategoryDao.findByTitle(subCategory.getTitle());
+        if (foundSubService.isPresent()) {
+            throw new DuplicateData("❌❌❌ this subService is already exist ❌❌❌");
+        } else {
+            subCategoryDao.save(subCategory);
+        }
     }
 
-    public Iterable<SubService> findAll() {
-        return subServiceDao.findAll();
-    }*//*
+  /*  @Transactional
+    public void updateSubService(SubCategory subCategory) {
+        subCategoryDao.update(subCategory);
+    }*/
 
-    public SubService findByName(String name) {
-        Optional<SubService> found = subServiceDao.findByName(name);
+    public List<SubCategory> findAll() {
+        return subCategoryDao.findAll();
+    }
+
+    public SubCategory findByTitle(String title) {
+        Optional<SubCategory> found = subCategoryDao.findByTitle(title);
         if (found.isPresent()) {
             return found.get();
         } else {
-            throw new RuntimeException("❌❌❌ this subService is not exist ❌❌❌");
+            throw new NotFoundDta("❌❌❌ this subCategory is not exist ❌❌❌");
         }
     }
 
-    public List<SubService> findSubservienceFromMainService(int id) {
-        return subServiceDao.findSubservienceFromMainService(id);
+    public List<SubCategory> findSubservienceFromCategory(int categoryId) {
+        return subCategoryDao.findSubCategoryByCategoryTitle(categoryId);
     }
 
-    public SubService findById(int id) {
-        Optional<SubService> foundService = subServiceDao.findById(id);
+    public SubCategory findById(int id) {
+        Optional<SubCategory> foundService = subCategoryDao.findById(id);
         if (foundService.isPresent()) {
             return foundService.get();
         } else {
-            throw new RuntimeException("❌❌❌ this subService is not exist ❌❌❌");
+            throw new NotFoundDta("❌❌❌ this subService is not exist ❌❌❌");
         }
     }
 
-    public List<SubService> findSubServiceOfExpert(int expertId) {
-        return subServiceDao.findSubserivceOfExpert(expertId);
-    }
-*/
-    //region setter & getter & constructor
-    @Autowired
-    public SubCategoryService(SubCategoryDao subCategoryDao) {
-        this.subCategoryDao = subCategoryDao;
+    public List<SubCategory> findSubServiceOfExpert(int expertId) {
+        return subCategoryDao.findSubCategoryOfExpert(expertId);
     }
 
-    //endregion
 }

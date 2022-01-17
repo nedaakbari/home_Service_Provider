@@ -1,12 +1,9 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -30,11 +27,11 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
 
     @Modifying
     @Query(value = "UPDATE Customer c set c.password =:password where c.id=:id")
-    void UpdatePassword(@Param("password") String password, @Param("id") int id);
+    void updatePassword(@Param("password") String password, @Param("id") int id);
 
 
     @Modifying
     @Query(value = "UPDATE Customer c set c.creditCart =:creditCart where c.id=:id")
-    void UpdateCreditCart(@Param("creditCart") Long creditCart, @Param("id") int id);
+    void updateCreditCart(@Param("creditCart") Long creditCart, @Param("id") int id);
 
 }

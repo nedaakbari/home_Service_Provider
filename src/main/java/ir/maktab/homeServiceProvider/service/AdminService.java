@@ -2,19 +2,21 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.AdminDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.dto.mapper.AdminMapper;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AdminService {
-
+    private final AdminMapper mapper;
     private final AdminDao adminDao;
 
     public void saveAdmin(Admin admin) {
@@ -34,7 +36,7 @@ public class AdminService {
 
     @Transactional
     public void UpdatePassword(String newPassword, int id) {
-        adminDao.UpdatePassword(newPassword, id);
+        adminDao.updatePassword(newPassword, id);
     }
 
     public Admin findAminByUseAndPass(String username, String password) {
@@ -62,12 +64,9 @@ public class AdminService {
     }
 
 
-    //region setter & getter & constructor
-
-    @Autowired
+   /* @Autowired
     public AdminService(AdminDao adminDao) {
         this.adminDao = adminDao;
-    }
+    }*/
 
-    //endregion
 }

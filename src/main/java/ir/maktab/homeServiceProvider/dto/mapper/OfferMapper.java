@@ -2,7 +2,10 @@ package ir.maktab.homeServiceProvider.dto.mapper;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.dto.OfferDto;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class OfferMapper {
     public OfferDto offerDto(Offer offer) {
         return OfferDto.builder()
