@@ -4,11 +4,13 @@ import ir.maktab.homeServiceProvider.data.model.entity.Address;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.dto.AddressDto;
 import ir.maktab.homeServiceProvider.dto.OrdersDto;
+import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class AddressMapper {
+
     public AddressDto addressToDto(Address address) {
         return AddressDto.builder()
                 .id(address.getId())
@@ -19,7 +21,7 @@ public class AddressMapper {
 
     }
 
-    public Address dtoToaddress(AddressDto addressDto) {
+    public Address dtoToAddress(AddressDto addressDto) {
         return Address.builder()
                 .id(addressDto.getId())
                 .city(addressDto.getCity())

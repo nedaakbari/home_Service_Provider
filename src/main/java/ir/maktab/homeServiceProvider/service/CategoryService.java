@@ -2,71 +2,75 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.CategoryDao;
 import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
+import ir.maktab.homeServiceProvider.dto.CategoryDto;
 import ir.maktab.homeServiceProvider.dto.mapper.CategoryMapper;
+import ir.maktab.homeServiceProvider.exception.DuplicateData;
+import ir.maktab.homeServiceProvider.exception.NotFoundDta;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
-public class CategoryService {
+public class CategoryService implements Services<Category, CategoryDto, Integer> {
     private final CategoryMapper mapper;
     private final CategoryDao categoryDao;
 
-    public void saveMainService(Category category) {
-        categoryDao.save(category);
+
+    @Override
+    public void save(Category category) {
+        Optional<Category> foundMainService = categoryDao.findByTitle(category.getTitle());
+        if (foundMainService.isPresent()) {
+            throw new DuplicateData("❌❌❌ this main service is already exist ❌❌❌");
+        } else {
+            categoryDao.save(category);
+        }
     }
 
-    public void removeMainService(Category category) {
+    @Override
+    public void delete(Category category) {
         categoryDao.delete(category);
     }
-  /*  public void saveMainService(MainService mainService) {
-        Optional<MainService> foundMainService = mainServiceDao.findByName(mainService.getName());
-        if (foundMainService.isPresent()) {
-            throw new RuntimeException("❌❌❌ this main service is already exist ❌❌❌");
-        } else {
-            mainServiceDao.save(mainService);
-        }
-    }
 
-    public void deleteMainService(MainService mainService) {
-        Optional<MainService> foundMainService = mainServiceDao.findByName(mainService.getName());
-        if (foundMainService.isPresent()) {
-            mainServiceDao.delete(mainService);
-        } else {
-            throw new RuntimeException("❌❌❌ there is no  main service with this info ❌❌❌");
-        }
-    }
-
-   *//* public void updateMainService(MainService mainService) {
-        mainServiceDao.update(mainService);
-    }*//*
-
-     *//*    public List<MainService> findAllMainService() {
-        List<MainService> all = mainServiceDao.findAll();
+    @Override
+    public List<CategoryDto> getAll() {
+        List<Category> all = categoryDao.findAll();
         if (all.size() != 0) {
-            return all;
+            return all.stream().map(mapper::categoryToDto).collect(Collectors.toList());
         } else
-            throw new RuntimeException("no mainService Exist");
-    }*//*
-
-    public MainService findByName(String name) {
-        Optional<MainService> main = mainServiceDao.findByName(name);
-        if (main.isPresent()) {
-            return main.get();
-        } else
-            throw new RuntimeException("there is no mainService With this name");
+            throw new NotFoundDta("❌❌❌ no mainService Exist  ❌❌❌");
     }
 
-    public MainService findById(int mainId) {
-        Optional<MainService> main = mainServiceDao.findById(mainId);
-        if (main.isPresent()) {
-            return main.get();
-        } else
-            throw new RuntimeException("there is no mainService With this id");
+    @Override
+    public Category getById(Integer theId) {
+
+        return null;
     }
 
-    public Iterable<MainService> findAll() {
-        return mainServiceDao.findAll();
+
+/*   public void updateMainService(MainService mainService) {
+        mainServiceDao.update(mainService);
     }*/
+
+
+    public Category findByTitle(String title) {
+        Optional<Category> main = categoryDao.findByTitle(title);
+        if (main.isPresent()) {
+            return main.get();
+        } else
+            throw new NotFoundDta("there is no Category With this title");
+    }
+
+    public Category findById(int mainId) {
+        Optional<Category> main = categoryDao.findById(mainId);
+        if (main.isPresent()) {
+            return main.get();
+        } else
+            throw new NotFoundDta("there is no Category With this id");
+    }
+
 }

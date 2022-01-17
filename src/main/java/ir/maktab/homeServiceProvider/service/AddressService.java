@@ -3,11 +3,9 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.data.dao.AddressDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Address;
 import ir.maktab.homeServiceProvider.dto.AddressDto;
-import ir.maktab.homeServiceProvider.dto.OfferDto;
 import ir.maktab.homeServiceProvider.dto.mapper.AddressMapper;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

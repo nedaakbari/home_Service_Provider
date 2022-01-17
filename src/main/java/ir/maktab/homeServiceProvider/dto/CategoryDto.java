@@ -10,6 +10,6 @@ import lombok.*;
 @ToString
 public class CategoryDto {
     private int id;
-    private String name;
+    private String title;
     private String description;
 }

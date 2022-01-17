@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.data.model.entity.Person;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,9 @@ public class Admin {
     private String firstName;
 
     private String lastName;
+
+    @Email(regexp = "^(.+)@(.+)$", message = "Invalid email pattern")
+    private String email;
 
 
 }
