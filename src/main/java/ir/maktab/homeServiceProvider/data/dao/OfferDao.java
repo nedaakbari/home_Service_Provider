@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,15 +9,14 @@ import java.util.Optional;
 
 //@Lazy
 @Repository
-public interface OfferDao extends PagingAndSortingRepository<Offer, Integer> {
-/*
-
+public interface OfferDao extends JpaRepository<Offer, Long> {
     //public void save(Offer offer) ;
     //public void delete(Offer offer) ;
     //List<Offer> findAll() ;
 
+    //"From Offer o where o.id=:id"
+    Optional<Offer> findOfferById(int id);
 
- */
 /*   public void update(Offer offer) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -27,7 +27,7 @@ public interface OfferDao extends PagingAndSortingRepository<Offer, Integer> {
 
 
 
-    */
+     */
 /*public List<Offer> findAllOfferOfAnOrder(int OrderId) {//is exist
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -40,9 +40,8 @@ public interface OfferDao extends PagingAndSortingRepository<Offer, Integer> {
     }*//*
 
 
-    //"From Offer o where o.id=:id"
-    Optional<Offer> findOfferById(int id);
-*/
+
+     */
 
 
 }

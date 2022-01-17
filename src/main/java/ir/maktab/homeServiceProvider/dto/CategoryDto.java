@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.dto;
 
+import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
 import lombok.*;
 
 @Getter
@@ -8,11 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AdminDto {
+public class CategoryDto {
     private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-
+    private String name;
+    private String description;
 }

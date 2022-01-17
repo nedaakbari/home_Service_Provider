@@ -1,38 +1,34 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface ExpertDao extends PagingAndSortingRepository<Expert,Integer> {
+public interface ExpertDao extends JpaRepository<Expert, Integer> {
+
+    //void save(Expert expert)
+    //void delete(Expert expert)
+    // List<Expert> findAll()
+
+    //"From Expert E Where E.email = :email"
+    Optional<Expert> findByEmail(String email);
+
+    //"From Expert E Where E.password = :password and  E.username=:username"
+    Optional<Expert> findByUsernameAndPassword(String userName, String password);
+
+
     @Modifying
     @Query(value = "UPDATE Expert e set e.password =:password where e.id=:id")
     void UpdatePassword(@Param("password") String password, @Param("id") int id);
 
 
- //void save(Expert expert)
-//void delete(Expert expert)
-    // List<Expert> findAll()
-  /*  public void update(Expert expert) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(expert);
-        transaction.commit();
-        session.close();
-    }*/
 
-
-//"From Expert E Where E.password = :password and  E.username=:username"
-   // Optional<Expert> findByUsernameAndPassword(String userName, String password);
-
-//"From Expert E Where E.email = :email"
-  //  Optional<Expert> findByEmail(String email) ;
 
    /* public List<ExpertDto> findAllExpertsByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();

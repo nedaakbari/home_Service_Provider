@@ -10,15 +10,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ExpertDto {
+public class CustomerDto {
     private int id;
     private String firstName;
-    private String email;
     private String lastName;
+    private String email;
     private String phoneNumber;
     private UserRegistrationStatus status;
     private Date registerDate;
     private long creditCart;
-    private double score;
 
 }

@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -11,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface AdminDao extends PagingAndSortingRepository<Admin, Integer> {
+public interface AdminDao extends JpaRepository<Admin, Integer> {
+
     //"From Admin A Where A.passWord = :password and  A.userName=:username"
     Optional<Admin> findByUserNameAndPassWord(String userName, String password);
 

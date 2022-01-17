@@ -2,11 +2,16 @@ package ir.maktab.homeServiceProvider.dto;
 
 import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
-import lombok.Builder;
+import lombok.*;
 
 import java.util.Date;
 
+@Getter
+@Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class UserDto {
     private int id;
     private Role role;
@@ -18,18 +23,4 @@ public class UserDto {
     private long creditCart;
     private String email;
 
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "id=" + id +
-                ", role=" + role +
-                ", firstName='" + firstName + '\'' +
-                ", family='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", status=" + status +
-                ", registerDate=" + registerDate +
-                ", creditCart=" + creditCart +
-                ", email= " + email +
-                '}';
-    }
 }

@@ -2,7 +2,10 @@ package ir.maktab.homeServiceProvider.data.model.entity;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OfferStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,10 +13,13 @@ import java.util.Date;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private OfferStatus status;

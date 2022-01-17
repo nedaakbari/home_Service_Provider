@@ -57,7 +57,7 @@ public class User {
     @CreationTimestamp
     private Date registerDate;
 
-    private long creditCart;
+    private Long creditCart;
 
 
 

@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 //@Lazy
 @Repository
-public interface OrderDao extends PagingAndSortingRepository<Orders, Integer> {
+public interface OrderDao extends JpaRepository<Orders, Long> {
 
    /* //public void save(Orders order);
     //public void delete(Orders order) ;

@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -10,33 +11,23 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserDao extends PagingAndSortingRepository<User, Integer> {
-    Optional<User> findByUsernameAndPassword(String username, String password);
-
-    @Modifying
-    @Query(value = "UPDATE User u set u.password =:password where u.id=:id")
-    void updatePassword(@Param("password") String password, @Param("id") int id);
-
-    Optional<User> findByEmail(String email);
-}
-
-/*
-
-
-
-
+public interface UserDao extends JpaRepository<User, Integer> {
 
     //"From User U Where U.password = :password and  U.username=:username")
     Optional<User> findByUsernameAndPassword(String userName, String password);
 
     //"From User U Where U.email = :email"
-    Optional<User> findUserByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     //"From User U Where U.id = :id"
-     Optional<User> findUserById(int id);
+    Optional<User> findById(int id);
 
+    @Modifying
+    @Query(value = "UPDATE User u set u.password =:password where u.id=:id")
+    void updatePassword(@Param("password") String password, @Param("id") int id);
 
-   */
+}
+
 /* public List<UserDto> findUsersByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

@@ -1,37 +1,22 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalTime;
+import java.util.Date;
 
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class OfferDto {
-    private int id;
+    private Long id;
     private String description;
-    private int duringTime;
-    private long proposedPriceOffer;
-    private LocalTime startWorkTime;
+    private Double duringTime;
+    private Double proposedPriceOffer;
+    private Date startWorkTime;
 
-    public OfferDto(int id, String description, int duringTime, long proposedPriceOffer, LocalTime startWorkTime) {
-        this.id = id;
-        this.description = description;
-        this.duringTime = duringTime;
-        this.proposedPriceOffer = proposedPriceOffer;
-        this.startWorkTime = startWorkTime;
-    }
 
-    @Override
-    public String toString() {
-        return "OfferDto{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", duringTime=" + duringTime +
-                ", proposedPriceOffer=" + proposedPriceOffer +
-                ", startWorkTime=" + startWorkTime +
-                '}';
-    }
 }
