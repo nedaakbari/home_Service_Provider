@@ -9,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class Insert {
     public static void main(String[] args) throws Exception {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-        CustomerServiceImpl customerService = context.getBean(CustomerServiceImpl.class);
+        CustomerService customerService = context.getBean(CustomerService.class);
         ExpertService expertService = context.getBean(ExpertService.class);
         UserService userService = context.getBean(UserService.class);
         CategoryService mainServiceService = context.getBean(CategoryService.class);
