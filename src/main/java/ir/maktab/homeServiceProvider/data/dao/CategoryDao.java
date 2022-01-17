@@ -1,13 +1,11 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
-import ir.maktab.homeServiceProvider.data.model.entity.service.MainService;
+import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface MainServiceDao extends PagingAndSortingRepository<MainService, Integer> {
+public interface CategoryDao extends PagingAndSortingRepository<Category, Integer> {
 
    /* //void save
     // void delete(MainService mainService)

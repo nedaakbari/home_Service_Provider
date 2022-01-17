@@ -12,22 +12,16 @@ import java.util.Optional;
 
 @Repository
 public interface AdminDao extends PagingAndSortingRepository<Admin, Integer> {
-
-    @Modifying
-    @Query(value = "UPDATE Admin a set a.passWord =:password where a.id=:id")
-    void UpdatePassword(@Param("password") String password,@Param("id") int id);
-
-
-   /* @Transactional
-    @Modifying
-    @Query(value = "UPDATE Admin a SET a.passWord =:passWord WHERE a.id =:id")
-    void updatePasswordById(@Param("passWord") String passWord, @Param("id") int id);*/
-
     //"From Admin A Where A.passWord = :password and  A.userName=:username"
     Optional<Admin> findByUserNameAndPassWord(String userName, String password);
 
+    // @Transactional
+    @Modifying
+    @Query(value = "UPDATE Admin a set a.passWord =:password where a.id=:id")
+    void UpdatePassword(@Param("password") String password, @Param("id") int id);
 
-/*    public List<AdminDto> findAdminsByFilter(UserFilter filter) {
+
+    /*public List<AdminDto> findAdminsByFilter(UserFilter filter) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(Admin.class, "a");

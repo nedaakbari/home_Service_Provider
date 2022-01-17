@@ -19,12 +19,15 @@ public class Comment {
     private Double rate;*/
     @Column(length = 150)
     private String comment;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Customer customer;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Expert expert;
+
     @OneToOne
     Orders order;
 }

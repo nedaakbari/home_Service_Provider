@@ -1,22 +1,20 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.dao.MainServiceDao;
-import ir.maktab.homeServiceProvider.data.model.entity.service.MainService;
+import ir.maktab.homeServiceProvider.data.dao.CategoryDao;
+import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class MainServiceService {
-    private final MainServiceDao mainServiceDao;
+public class CategoryService {
+    private final CategoryDao categoryDao;
 
-    public void saveMainService(MainService mainService) {
-        mainServiceDao.save(mainService);
+    public void saveMainService(Category category) {
+        categoryDao.save(category);
     }
 
-    public void removeMainService(MainService mainService) {
-        mainServiceDao.delete(mainService);
+    public void removeMainService(Category category) {
+        categoryDao.delete(category);
     }
   /*  public void saveMainService(MainService mainService) {
         Optional<MainService> foundMainService = mainServiceDao.findByName(mainService.getName());
@@ -70,8 +68,8 @@ public class MainServiceService {
 
     //region getter & setter & constructor
     @Autowired
-    public MainServiceService(MainServiceDao mainServiceDao) {
-        this.mainServiceDao = mainServiceDao;
+    public CategoryService(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
     }
 
 

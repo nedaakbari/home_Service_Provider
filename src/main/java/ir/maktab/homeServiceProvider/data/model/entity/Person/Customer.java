@@ -23,8 +23,10 @@ import java.util.Set;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class Customer extends User {
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private Set<Orders> ordersList = new HashSet<>();
+
     @OneToMany(mappedBy = "customer")
     private List<Comment> comments=new ArrayList<>();
 

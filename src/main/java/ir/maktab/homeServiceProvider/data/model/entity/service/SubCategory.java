@@ -2,31 +2,34 @@ package ir.maktab.homeServiceProvider.data.model.entity.service;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Setter
 @Getter
 @EqualsAndHashCode
-public class SubService {
+public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
-    private MainService main;
+    //@JoinColumn(nullable = false)
+    @NotNull(message = "title cannot be null")
+    private Category main;
+
     @Column(unique = true)
     private String title;
+
     private Double baseAmount;
+
     private String description;
 
     @ManyToMany(mappedBy = "subServiceList",fetch = FetchType.EAGER)//,mappedBy = "subServiceList"

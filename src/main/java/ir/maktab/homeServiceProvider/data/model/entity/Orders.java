@@ -2,8 +2,8 @@ package ir.maktab.homeServiceProvider.data.model.entity;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.model.entity.service.MainService;
-import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
+import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,29 +24,42 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private Double agreedPrice;//قیمت پذیرفته شده برای این سفارش
+
     @Column(length = 300)
     private String description;
+
     @CreationTimestamp
     private Date orderRegistration;//تایمی که سفارش ثبت میشه
+
     @Temporal(TemporalType.DATE)
     private Date workDay;//تایمی که میخواد انجام بشه
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;
+
     @ManyToOne
-    private SubService subService;
+    private SubCategory subService;
+
     @ManyToOne
-    private MainService mainService;
+    private Category mainService;
+
     @Enumerated(EnumType.STRING)
     private OrderState state;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Customer customer;
+
     @OneToMany(mappedBy = "orders",fetch = FetchType.LAZY)
     private Set<Offer> offers = new HashSet<>();
+
     @ManyToOne
     private Expert expert;
+
     private Double score;
+
     private String comment;
 
     @Override

@@ -1,15 +1,6 @@
 package ir.maktab.homeServiceProvider.view;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
-import ir.maktab.homeServiceProvider.data.model.entity.Orders;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
-import ir.maktab.homeServiceProvider.data.model.entity.service.MainService;
-import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
-import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
-import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -21,8 +12,8 @@ public class Insert {
         CustomerService customerService = context.getBean(CustomerService.class);
         ExpertService expertService = context.getBean(ExpertService.class);
         UserService userService = context.getBean(UserService.class);
-        MainServiceService mainServiceService = context.getBean(MainServiceService.class);
-        SubServiceService subServiceService = context.getBean(SubServiceService.class);
+        CategoryService mainServiceService = context.getBean(CategoryService.class);
+        SubCategoryService subServiceService = context.getBean(SubCategoryService.class);
         AdminService adminService = context.getBean(AdminService.class);
         OrderService orderService = context.getBean(OrderService.class);
         OfferService offerService = context.getBean(OfferService.class);

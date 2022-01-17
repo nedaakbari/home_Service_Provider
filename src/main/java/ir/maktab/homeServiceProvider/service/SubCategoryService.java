@@ -1,20 +1,16 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.dao.SubServiceDao;
-import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
+import ir.maktab.homeServiceProvider.data.dao.SubCategoryDao;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class SubServiceService {
-    private final SubServiceDao subServiceDao;
+public class SubCategoryService {
+    private final SubCategoryDao subCategoryDao;
 
-    public void saveSubService(SubService subService) {
-        subServiceDao.save(subService);
+    public void saveSubService(SubCategory subCategory) {
+        subCategoryDao.save(subCategory);
     }
 
     /* public void saveSubService(SubService subService) {
@@ -74,8 +70,8 @@ public class SubServiceService {
 */
     //region setter & getter & constructor
     @Autowired
-    public SubServiceService(SubServiceDao serviceDao) {
-        this.subServiceDao = serviceDao;
+    public SubCategoryService(SubCategoryDao subCategoryDao) {
+        this.subCategoryDao = subCategoryDao;
     }
 
     //endregion

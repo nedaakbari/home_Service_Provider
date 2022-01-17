@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.util.requestFilter;
 
-import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import lombok.Getter;
@@ -14,5 +14,5 @@ public class UserFilter {
     private String email;
     private String lastName;
     private UserRegistrationStatus status;
-    private SubService subService;
+    private SubCategory subService;
 }

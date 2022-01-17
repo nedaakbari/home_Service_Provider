@@ -1,15 +1,11 @@
 package ir.maktab.homeServiceProvider.data.dao;
 
-import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
-import org.springframework.data.jpa.repository.Query;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-
 @Repository
-public interface SubServiceDao extends PagingAndSortingRepository<SubService, Integer> {
+public interface SubCategoryDao extends PagingAndSortingRepository<SubCategory, Integer> {
 
   /*  //public void save(SubService subService) ;
     //public void delete(SubService subService) ;

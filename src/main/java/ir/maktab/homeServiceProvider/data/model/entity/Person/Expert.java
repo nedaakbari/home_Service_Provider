@@ -2,9 +2,7 @@ package ir.maktab.homeServiceProvider.data.model.entity.Person;
 
 import ir.maktab.homeServiceProvider.data.model.entity.Comment;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
-import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
-import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
-import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -22,10 +20,16 @@ public class Expert extends User {
     @Lob
     @Column(columnDefinition = "BLOB", length = 300000)
     private byte[] image;
+
     private Double Score;
-    @ManyToMany( fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
+
+    @ManyToMany( fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد//fetch = FetchType.LAZY
     //@EqualsAndHashCode.Include
-    private Set<SubService> subServiceList = new HashSet<>();
+    @JoinTable(
+            joinColumns = {@JoinColumn(name = "expert_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subService_id")}
+    )
+    private Set<SubCategory> subServiceList = new HashSet<>();
 
     @OneToMany(mappedBy = "expert",fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();

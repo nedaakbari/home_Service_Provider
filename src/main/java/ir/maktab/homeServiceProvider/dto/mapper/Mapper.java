@@ -1,13 +1,7 @@
 package ir.maktab.homeServiceProvider.dto.mapper;
 
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
-import ir.maktab.homeServiceProvider.dto.OfferDto;
-import ir.maktab.homeServiceProvider.dto.OrdersDto;
-import ir.maktab.homeServiceProvider.dto.SubServiceDto;
-import ir.maktab.homeServiceProvider.data.model.entity.Offer;
-import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.model.entity.service.SubService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 

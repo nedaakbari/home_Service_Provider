@@ -1,39 +1,33 @@
 package ir.maktab.homeServiceProvider.data.model.entity.Person;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String userName;
-    private String passWord;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
 
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", passWord='" + passWord + '\'' +
-                ", name='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
+    @NotNull(message = "userName cannot be null")
+    private String userName;
+
+    @NotNull(message = "passWord cannot be null")
+    private String passWord;
+
+    private String firstName;
+
+    private String lastName;
+
+
 }

@@ -14,18 +14,26 @@ public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
+
     private Double proposedPrice;
+
     private String description;
+
     private Double duringTime;
+
     @Temporal(TemporalType.TIME)
     private Date startWorkTime;
+
     @CreationTimestamp
     private Date submissionDate;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Expert expert;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Orders orders;

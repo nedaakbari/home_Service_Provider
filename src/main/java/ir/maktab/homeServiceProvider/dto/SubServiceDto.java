@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.data.model.entity.service.MainService;
+import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ public class SubServiceDto {
     private String name;
     private Long basePrice;
     private String description;
-    private MainService mainService;
+    private Category mainService;
 
     @Override
     public String toString() {
