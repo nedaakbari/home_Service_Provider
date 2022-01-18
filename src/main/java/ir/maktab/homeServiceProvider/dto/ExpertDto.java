@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.dto;
 
+import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import lombok.*;
 
@@ -12,14 +13,15 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class ExpertDto {
-    private int id;
     private String firstName;
-    private String email;
     private String lastName;
+    private String email;
     private String phoneNumber;
+    private String username;
+    private String password;
     private UserRegistrationStatus status;
+    private Role role;
     private Date registerDate;
-    private long creditCart;
-    private double score;
+    private Long creditCart;
 
 }
