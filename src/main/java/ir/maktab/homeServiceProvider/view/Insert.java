@@ -4,6 +4,7 @@ import ir.maktab.homeServiceProvider.config.SpringConfig;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
@@ -39,12 +40,10 @@ public class Insert {
 
 
 /**
-*save an expert customer admin mainService
+ *save an expert customer admin mainService
  * */
-
         ////////////// save customer
-
-        Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
+       /* Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
                 .password("Nima@12")
                 .phoneNumber("9398745644").email("nimaAskari@gmail.com").build();
         customerService.save(nima);
@@ -114,9 +113,9 @@ public class Insert {
         categoryService.save(category5);
         categoryService.save(category6);
 
-     /**
-      *  find a mainServiceDao by Name
-      *  */
+   *//*  *
+         *  find a mainServiceDao by Name
+         **//*
 
         Category home_appliances = categoryService.findByTitle("HOME_APPLIANCES");
         Category home_cleaning_and_hygiene = categoryService.findByTitle("HOME_CLEANING_AND_HYGIENE");
@@ -177,132 +176,155 @@ public class Insert {
         homeSpraying.setTitle("homeSpraying");
         homeSpraying.setDescription("Clean the house from any insects");
         homeSpraying.setBaseAmount(110000.0);
-        subCategoryService.save(homeSpraying);
+        subCategoryService.save(homeSpraying);*/
 
-        /**
-         * update a customer=>  add to creditCart
-         * change password
-         */
+     /**
+         * update a customer=> add to creditCart
+         * change password*/
+//روش اول
+
         //ابدیت کردن پسورد
+       /* Customer neda_ak = customerService.findCustomerByUseAndPass("neda_ak", "Neda@137");
+        customerService.updatePassword("Neda@222",neda_ak.getId());
+        //neda_ak.setCreditCart(200000.0);
 
-        /*Customer neda_ak = customerService.findCustomerByUseAndPass("neda_ak", "Neda@137");
-        neda_ak.setPassword("Neda@222");
-        neda_ak.setCreditCart(200000);
-        customerService.updateCustomer(neda_ak);*/
+        //ابدیت کردن کردیت کارت یوزر
+        User nima = userService.findUserByUseAndPass("nima_", "Nima@12");
+        nima.setCreditCart(300000.00);
+        userService.updateCreditCart(nima);
 
-        //ابدیت کردن یوزر
-        /*User nima = userService.findUserByUseAndPass("nima_", "Nima@12");
-        nima.setCreditCart(300000);
-        userService.saveUser(nima);*/
-
-        /*User sara =  userService.findUserById(3);
-        userService.updatePassword("sara_222",3);*/
+        User sara =  userService.getById(3);
+        userService.updatePassword("sara_222",sara.getId());*/
 
         //دیلیت کردن کاستومر
-        /* customerDao.delete(neda_ak);*/
+         //customerDao.delete(neda_ak);
+//روش دوم
+        // ابدیت کردن پسورد و کردیت کارت کاستومر
+       /* Customer neda_ak = customerService.findCustomerByUseAndPass("neda_ak", "Neda@137");
+        customerService.updatePassword("Neda@222",neda_ak);
+        customerService.updateCreditCart(200000.0,neda_ak);
 
+
+        //ابدیت کردن کردیت کارت یوزر
+        User nima1 = userService.findUserByUseAndPass("nima_", "Nima@12");
+        userService.updateCreditCart(300000.00,nima1);
+
+        Expert sara1 =  expertService.getById(3);
+        userService.updatePassword("sara_222",sara1);*/
+
+        //دیلیت کردن کاستومر
+         //customerDao.delete(neda_ak);
         /**
          * find all => customer
          * find all => user
          * find all => expert
          * with all field
          */
-        /*adminService.findAll().forEach(System.out::println);
+        adminService.getAll().forEach(System.out::println);
         System.out.println("**********************");
-        customerService.findAll().forEach(System.out::println);
+        customerService.getAll().forEach(System.out::println);
         System.out.println("**************************************");
-        expertService.findAll().forEach(System.out::println);
+        expertService.getAll().forEach(System.out::println);
         System.out.println("**************************************");
-        userService.findAllUser().forEach(System.out::println);*/
-
+        userService.getAll().forEach(System.out::println);
 
 //پیدا کردن مین سرویس از طریق اسمش
-         /*MainService HOME_APPLIANCES = mainServiceService.findByName("HOME_APPLIANCES".trim());
-         MainService HOME_CLEANING_AND_HYGIENE = mainServiceService.findByName("HOME_CLEANING_AND_HYGIENE".trim());
+        Category HOME_APPLIANCES = categoryService.findByTitle("HOME_APPLIANCES".trim());
+        Category HOME_CLEANING_AND_HYGIENE = categoryService.findByTitle("HOME_CLEANING_AND_HYGIENE".trim());
+        System.out.println(HOME_APPLIANCES);
+        System.out.println(HOME_CLEANING_AND_HYGIENE);
 
 //پیدا کردن همه مین سرویس ها
-        mainServiceService.findAll().forEach(System.out::println);
+        categoryService.getAll().forEach(System.out::println);
 
-//پیدا کردن همه سابسرویس ها
-         subCategoryService.findAll().forEach(System.out::println);
-
-        //پیدا کرندن ساب سرویس با نامش
-        SubService byName = subCategoryService.findByName("kitchenAppliances ".trim());
+        //پیدا کردن ساب سرویس با نامش
+        SubCategory byName = subCategoryService.findByTitle("kitchenAppliances ".trim());
         System.out.println(byName);
 
-        //پیدا کردن اکسپرت از نامش
-        Expert nader = expertService.findExpertByUseAndPass("nader_", "nader_22");
-        Expert ashkan = expertService.findExpertByUseAndPass("ashkan_", "ashkan@7");
-        Expert sara = expertService.findExpertByUseAndPass("sara@", "sara_111");
+//پیدا کردن همه سابسرویس ها
+        subCategoryService.getAll().forEach(System.out::println);
 
-        System.out.println(nader);
-        System.out.println(ashkan);
-        System.out.println(sara);*/
+        //پیدا کردن اکسپرت از نامش
+        Expert nader1 = expertService.findExpertByUseAndPass("nader_", "nader_22");
+        Expert ashkan1 = expertService.findExpertByUseAndPass("ashkan_", "ashkan@7");
+        Expert sara2 = expertService.findExpertByUseAndPass("sara@", "sara_111");
+        //Expert sara2 = expertService.findExpertByUseAndPass("sara@", "sara_222");
+
+
+        System.out.println(nader1);
+        System.out.println(ashkan1);
+        System.out.println(sara2);
+        //System.out.println(sara2);
 
         /**
          * filter
-         */
+         *//*
         //فیلتر با رول
-        /*UserFilter userFilter = new UserFilter();
+        *//*UserFilter userFilter = new UserFilter();
         userFilter.setRole(Role.EXPERT);
         List<UserDto> allUsersByFilter = userService.findAllUsersByFilter(userFilter);
-        allUsersByFilter.forEach(System.out::println);*/
+        allUsersByFilter.forEach(System.out::println);*//*
 // و فامیل فیلتر با اسم
-       /* UserFilter userFilter = new UserFilter();
+       *//* UserFilter userFilter = new UserFilter();
         userFilter.setName("nima");
         userFilter.setLastName("askari");
         List<UserDto> allUsersByFilter = userService.findAllUsersByFilter(userFilter);
-        allUsersByFilter.forEach(System.out::println);*/
+        allUsersByFilter.forEach(System.out::println);*//*
 
-        /*UserFilter userFilter = new UserFilter();
+        *//*UserFilter userFilter = new UserFilter();
         SubService laundry = subCategoryService.findByName("laundry");
         userFilter.setSubService(laundry);
-        expertService.findAllUsersByFilter(userFilter).forEach(System.out::println);//todo*/
+        expertService.findAllUsersByFilter(userFilter).forEach(System.out::println);//todo*//*
 
 
         ////اضافه کردن اکسپرت به زیرتخصص ها
 
-        /*Expert nader = expertService.findExpertByUseAndPass("nader_", "nader_22");
-        Expert ashkan = expertService.findExpertByUseAndPass("ashkan_", "ashkan@7");
-        Expert sara = expertService.findExpertByUseAndPass("sara@", "sara_111");*/
+        Expert nader5 = expertService.findExpertByUseAndPass("nader_", "nader_22");
+        Expert ashkan5 = expertService.findExpertByUseAndPass("ashkan_", "ashkan@7");
+        Expert sara5 = expertService.findExpertByUseAndPass("sara@", "sara_222");
 
-        /*
+        System.out.println(nader5);
+        System.out.println(ashkan5);
+        System.out.println(sara5);
+
+
         //1 اول متخصص وارد مین سرویس میشه
-        MainService home_appliances = mainServiceService.findByName("HOME_APPLIANCES");
+        Category home_appliances1 = categoryService.findByTitle("HOME_APPLIANCES");
+        System.out.println(home_appliances1);
         //میخواد همه زیر خدمت های این خدمت اصلی رو ببینه
         //home_appliances.getSubServiceList().forEach(System.out::println);//این شکلی باید فچ تایپش رو ایگر کنی
-        subCategoryService.findSubservienceFromMainService(home_appliances.getId()).forEach(System.out::println);
+        subCategoryService.findSubservienceOfACategory(home_appliances1.getId()).forEach(System.out::println);
         System.out.println("***********************************8888");
          //انتخاب کنه
-        SubService byName = subCategoryService.findByName("kitchenAppliances ".trim());
-        SubService laundry = subCategoryService.findById(2);
-        System.out.println(laundry);
-        System.out.println("***********************************8888");
-        //به اکسپرت ها اضافه میشه
-        Set<Expert> experts = laundry.getExperts();
-        experts.add(sara);
-        experts.add(nader);
-        laundry.setExperts(experts);
-        subCategoryService.updateSubService(laundry);
+        //SubCategory byName = subCategoryService.findByTitle("kitchenAppliances ".trim());
+        SubCategory laundry1 = subCategoryService.getById(2);
+        System.out.println(laundry1);
+        System.out.println("***********************************8888");*/
+        //expertService.addExpertToSubCategory(nader5,laundry1);
+     /*   //به اکسپرت ها اضافه میشه
+        expertService.addExpertToSubCategory(nader,laundry);
+        expertService.addExpertToSubCategory(sara,laundry);*/
 
-        MainService home_cleaning_and_hygiene = mainServiceService.findByName("HOME_CLEANING_AND_HYGIENE");
+
+
+       /* Category home_cleaning_and_hygiene = categoryService.findByTitle("HOME_CLEANING_AND_HYGIENE");
         //میخواد همه زیر خدمت های این خدمت اصلی رو ببینه
         subCategoryService.findSubservienceFromMainService(home_cleaning_and_hygiene.getId()).forEach(System.out::println);
          //انتخاب کنه
         //SubService byName = serviceDao.findByName("kitchenAppliances ".trim());
-        SubService spray = subCategoryService.findById(7);
+        SubCategory spray = subCategoryService.getById(7);
         System.out.println(spray);
         //به اکسپرت ها اضافه میشه
         Set<Expert> experts = spray.getExperts();
         experts.add( ashkan);
         experts.add(nader);
         spray.setExperts(experts);
-        subCategoryService.updateSubService(spray);
+        subCategoryService.updateSubService(spray);*/
 
         //sara=> subservice2 => laundry
         //nader=> subservice2 => laundry  subService7 =>spray
         //ashkan =>subService7 =>spray
-*/
+
 
 
         //میخوام ببینم نادر چه خدمت هایی داره

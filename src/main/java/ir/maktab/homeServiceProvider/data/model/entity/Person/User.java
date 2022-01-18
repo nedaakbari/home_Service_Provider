@@ -14,6 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -56,7 +57,7 @@ public class User {
     @CreationTimestamp
     private Date registerDate;
 
-    private Long creditCart;
+    private Double creditCart;
 
 
     @Override
@@ -71,5 +72,18 @@ public class User {
                 ", role=" + role +
                 ", registerDate=" + registerDate +
                 ", creditCart=" + creditCart;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, username, password);
     }
 }

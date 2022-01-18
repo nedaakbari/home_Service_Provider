@@ -20,31 +20,27 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService {
-    private final ModelMapper mapper;
+public class OrderServiceImpl /*implements OrderService*/ {
+    private  ModelMapper mapper =new ModelMapper();
     private final OrderDao orderDao;
-    private final OfferDao offerDao;
-    private final OfferServiceImpl offerService;
+    private final OfferDao offerService;
+    //private final OfferServiceImpl offerService;
 
-    @Override
     public void save(Orders orders) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
         orderDao.save(orders);
     }
 
-    @Override
     public void delete(Orders orders) {
         orderDao.delete(orders);
     }
 
-    @Override
     public List<OrdersDto> getAll() {
         return orderDao.findAll().stream()
                 .map(orders -> mapper.map(orders,OrdersDto.class))
                 .collect(Collectors.toList());
     }
 
-    @Override
     public Orders getById(Long theId) {
         Optional<Orders> foundOrder = orderDao.findById(theId);
         if (foundOrder.isPresent())
@@ -66,11 +62,11 @@ public class OrderServiceImpl implements OrderService {
     public void acceptedOffer(Orders orders, Offer offer) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);
         offer.setStatus(OfferStatus.ACCEPTED);
-        offerDao.updateOfferStatus(OfferStatus.REJECTED, offer.getId());
+        offerService.updateOfferStatus(OfferStatus.REJECTED, offer.getId());
         orders.setExpert(offer.getExpert());
         orders.setAgreedPrice(offer.getProposedPrice());
         orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
-        offerDao.save(offer);
+        offerService.save(offer);
     }
 
 }

@@ -31,10 +31,10 @@ public class Orders {
     private String description;
 
     @CreationTimestamp
-    private Date orderRegistration;//تایمی که سفارش ثبت میشه
+    private Date orderRegistrationDate;//تایمی که سفارش ثبت میشه
 
     @Temporal(TemporalType.DATE)
-    private Date workDay;//تایمی که میخواد انجام بشه
+    private Date workDay;//تایمی که کاستومر میخواد انجام بشه
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;
@@ -61,6 +61,14 @@ public class Orders {
     private Double score;
 
     private String comment;
+
+    private long codeNumber = makeRandomNumber();//کد رهگیری
+
+    public long makeRandomNumber() {
+        long leftLimit = 100000000000000L;
+        long rightLimit = 1000000000000000L;
+        return leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+    }
 
     @Override
     public String toString() {

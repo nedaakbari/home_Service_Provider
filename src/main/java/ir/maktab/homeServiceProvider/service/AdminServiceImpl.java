@@ -20,28 +20,24 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdminServiceImpl implements AdminService {
-    private final ModelMapper mapper;
+public class AdminServiceImpl /*implements AdminService*/ {
+    private  ModelMapper mapper=new ModelMapper();
     private final AdminDao adminDao;
 
-    @Override
     public void save(Admin admin) {
         adminDao.save(admin);
     }
 
-    @Override
     public void delete(Admin admin) {
         adminDao.delete(admin);
     }
 
-    @Override
     public List<AdminDto> getAll() {
         return adminDao.findAll().stream()
                 .map(admin -> mapper.map(admin, AdminDto.class))
                 .collect(Collectors.toList());
     }
 
-    @Override
     public Admin getById(Integer theId) {
         Optional<Admin> found = adminDao.findById(theId);
         if (found.isPresent())
@@ -49,7 +45,6 @@ public class AdminServiceImpl implements AdminService {
         else throw new NotFoundDta("no admin found ");
     }
 
-    @Override
     public Admin findAminByUseAndPass(String username, String password) {
         Optional<Admin> admin = adminDao.findByUserNameAndPassWord(username, password);
         if (admin.isPresent()) {
@@ -58,7 +53,6 @@ public class AdminServiceImpl implements AdminService {
             throw new NotFoundDta("no admin found with these use and pass");
     }
 
-    @Override
     @Transactional
     public void UpdatePassword(String newPassword, int id) {
         adminDao.updatePassword(newPassword, id);

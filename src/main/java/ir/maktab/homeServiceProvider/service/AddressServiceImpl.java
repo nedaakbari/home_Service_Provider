@@ -18,29 +18,25 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AddressServiceImpl implements AddressService {
-    private final ModelMapper mapper;
+public class AddressServiceImpl /*implements AddressService*/ {
+    private  ModelMapper mapper=new ModelMapper();
     private final AddressDao addressDao;
 
-    @Override
     public void save(AddressDto addressDto) {
         Address address = mapper.map(addressDto, Address.class);
         addressDao.save(address);
     }
 
-    @Override
     public void delete(Address address) {
         addressDao.delete(address);
     }
 
-    @Override
     public List<AddressDto> getAll() {
         return addressDao.findAll().stream()
                 .map(address -> mapper.map(address, AddressDto.class))
                 .collect(Collectors.toList());
     }
 
-    @Override
     public Address getById(Integer theId) {
         Optional<Address> found = addressDao.findById(theId);
         if (found.isPresent())

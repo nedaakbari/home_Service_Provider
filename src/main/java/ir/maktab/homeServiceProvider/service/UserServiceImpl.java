@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.UserDao;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
@@ -18,11 +19,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-    private final ModelMapper mapper;
+public class UserServiceImpl /*implements UserService*/ {
+    private ModelMapper mapper = new ModelMapper();
     private final UserDao userDao;
 
-    @Override
     public void save(User user) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (foundUser.isPresent()) {
@@ -32,18 +32,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
     public void delete(User user) {
         userDao.delete(user);
     }
 
-    @Override
     public List<UserDto> getAll() {
         return userDao.findAll().stream()
                 .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
-    @Override
     public User getById(Integer theId) {
         Optional<User> foundUser = userDao.findById(theId);
         if (foundUser.isPresent())
@@ -52,10 +49,29 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundDta("❌❌❌ Error not found user ❌❌❌");
     }
 
-    @Transactional
+  /*  @Transactional
     public void updatePassword(String newPassword, int id) {
         userDao.updatePassword(newPassword, id);
+    }*/
+
+    public void updatePassword(String newPassword, User user) {
+        user.setPassword(newPassword);
+        userDao.save(user);
     }
+
+    public void updateCreditCart(double amount, User user) {
+        user.setCreditCart(amount);
+        userDao.save(user);
+    }
+
+    public void updateUser(User user) {
+        userDao.save(user);
+    }
+
+ /*   @Transactional
+    public void updateCreditCart(Double amount,int id) {
+        userDao.updateCreditCart(amount,id);
+    }*/ //todo which one is better?
 
     public User findUserByUseAndPass(String userName, String password) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(userName, password);

@@ -4,6 +4,7 @@ import ir.maktab.homeServiceProvider.data.dao.OfferDao;
 import ir.maktab.homeServiceProvider.data.dao.OrderDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.dto.OfferDto;
@@ -11,6 +12,7 @@ import ir.maktab.homeServiceProvider.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.OfferService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,17 +22,16 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OfferServiceImpl implements OfferService {
-    private final ModelMapper mapper;
+public class OfferServiceImpl/* implements OfferService */{
+    private  ModelMapper mapper =new ModelMapper();
     private final OfferDao offerDao;
-    private final OrderServiceImpl orderService;
+    private final OrderDao orderService;
+    //private final OrderServiceImpl orderService;
 
-    @Override
     public void save(Offer offer) {
         offerDao.save(offer);
     }
 
-    @Override
     public void saveOffer(Offer offer, Orders orders) {
         Set<SubCategory> subCategoryList = offer.getExpert().getSubCategoryList();
         SubCategory orderSubCategory = orders.getSubCategory();
@@ -52,12 +53,10 @@ public class OfferServiceImpl implements OfferService {
             throw new RuntimeException("This field is not your specialty ");
     }
 
-    @Override
     public void delete(Offer offer) {
         offerDao.delete(offer);
     }
 
-    @Override
     public List<OfferDto> getAll() {
         List<Offer> all = offerDao.findAll();
         if (all.size() != 0) {
@@ -68,7 +67,6 @@ public class OfferServiceImpl implements OfferService {
             throw new NotFoundDta("no offer Exist yet");
     }
 
-    @Override
     public Offer getById(Long theId) {
         Optional<Offer> found = offerDao.findById(theId);
         if (found.isPresent())
@@ -77,22 +75,43 @@ public class OfferServiceImpl implements OfferService {
             throw new NotFoundDta("no offer found");
     }
 
-/*    public void updateOffer(Offer offer) {
-        offerDao.update(offer);
-    }*/
 
-    public List<Offer> findAllOfferOfAnOrder(Long OrderId) {
+    public List<OfferDto> findAllOfferOfAnOrder(Long OrderId) {
         List<Offer> all = offerDao.findAllOfferOfAnOrder(OrderId);
         if (all.size() != 0) {
-            return all;
+            return all.stream()
+                    .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
         } else
             throw new NotFoundDta("no offer for this order Exist yet ");
     }
 
     public List<OfferDto> findAllOfferOfOrder(Orders order) {
-        List<Offer> listOfferOfAnOrder = offerDao.findAllOfferOfAnOrder(order.getId());
-        return null;
-        // return listOfferOfAnOrder.stream().map(mapper::offerDto).collect(Collectors.toList());
+       return offerDao.findAllOfferOfAnOrder(order.getId()).stream()
+               .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
+    }
+
+    public Orders addOfferToOrder(Offer offer) {
+        Set<SubCategory> expertServices = offer.getExpert().getSubCategoryList();
+        SubCategory subService = offer.getOrders().getSubCategory();
+        if (expertServices.contains(subService) && subService.getBaseAmount() <= offer.getProposedPrice()) {
+            offerDao.save(offer)
+            Orders order = savedOffer.getOrder();
+            order.setOrderStatus(OrderStatus.WAITING_FOR_EXPERT_SELECTION);
+            order.getOffers().add(offer);
+            orderRepository.save(order);
+            return order;
+        } else {
+            throw new NotMatchException("your offer is not match for this Order!");
+        }
+    }
+
+    public List<Offer> findByOrder(Orders order) {
+        return offerRepository.findByOrder(order, Sort.by("expert.score", "proposedPrice").descending());
+    }
+
+    public Offer findByOrderAndExpert(Orders order, Expert expert) {
+        Optional<Offer> offer = offerDao.findByOrderAndExpert(order, expert);
+        return offer.orElseThrow(() -> new EntityNotExistException("offer not found!"));
     }
 
 

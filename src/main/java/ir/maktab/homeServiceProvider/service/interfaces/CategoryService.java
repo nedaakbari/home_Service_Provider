@@ -22,10 +22,8 @@ public interface CategoryService {
 
     List<CategoryDto> getAll();
 
-    Category getById(Integer theId);
-
     Category findByTitle(String title);
 
-    Category findById(int mainId);
+    Category findById(int theId);
 
 }

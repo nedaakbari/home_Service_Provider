@@ -12,22 +12,14 @@ import java.util.Optional;
 @Repository
 public interface ExpertDao extends JpaRepository<Expert, Integer> {
 
-    //void save(Expert expert)
-    //void delete(Expert expert)
-    // List<Expert> findAll()
-
-    //"From Expert E Where E.email = :email"
     Optional<Expert> findByEmail(String email);
 
-    //"From Expert E Where E.password = :password and  E.username=:username"
     Optional<Expert> findByUsernameAndPassword(String userName, String password);
 
 
-    @Modifying
+   /* @Modifying
     @Query(value = "UPDATE Expert e set e.password =:password where e.id=:id")
-    void updatePassword(@Param("password") String password, @Param("id") int id);
-
-
+    void updatePassword(@Param("password") String password, @Param("id") int id);*/
 
 
    /* public List<ExpertDto> findAllExpertsByFilter(UserFilter filter) {

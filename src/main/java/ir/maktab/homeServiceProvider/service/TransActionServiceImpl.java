@@ -13,27 +13,23 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class TransActionServiceImpl implements TransActionService {
-    private final ModelMapper mapper;
+public class TransActionServiceImpl /*implements TransActionService*/ {
+    private  ModelMapper mapper =new ModelMapper();
     private final TransActionDao transActionDao;
 
-    @Override
     public void save(TransActions transActions) {
         transActionDao.save(transActions);
     }
 
-    @Override
     public void delete(TransActions transActions) {
         transActionDao.delete(transActions);
     }
 
-    @Override
     public List<TransActionDto> getAll() {
         return transActionDao.findAll().stream()
                 .map(transActions -> mapper.map(transActions,TransActionDto.class)).collect(Collectors.toList());
     }
 
-    @Override
     public TransActions getById(Long theId) {
         return null;
     }

@@ -1,26 +1,27 @@
 package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.SubCategoryDao;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import ir.maktab.homeServiceProvider.service.interfaces.SubCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SubCategoryServiceImpl implements SubCategoryService {
-    private final ModelMapper mapper;
+public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
+    private ModelMapper mapper = new ModelMapper();
     private final SubCategoryDao subCategoryDao;
 
-    @Override
     public void save(SubCategory subCategory) {
         Optional<SubCategory> foundSubService = subCategoryDao.findByTitle(subCategory.getTitle());
         if (foundSubService.isPresent()) {
@@ -30,19 +31,16 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         }
     }
 
-    @Override
     public void delete(SubCategory subCategory) {
         subCategoryDao.delete(subCategory);
     }
 
-    @Override
     public List<SubCategoryDto> getAll() {
-         return subCategoryDao.findAll().stream()
-                 .map(subCategory -> mapper.map(subCategory,SubCategoryDto.class))
-                 .collect(Collectors.toList());
+        return subCategoryDao.findAll().stream()
+                .map(subCategory -> mapper.map(subCategory, SubCategoryDto.class))
+                .collect(Collectors.toList());
     }
 
-    @Override
     public SubCategory getById(Integer theId) {
         Optional<SubCategory> foundService = subCategoryDao.findById(theId);
         if (foundService.isPresent()) {
@@ -51,12 +49,6 @@ public class SubCategoryServiceImpl implements SubCategoryService {
             throw new NotFoundDta("❌❌❌ this subService is not exist ❌❌❌");
         }
     }
-
-
-  /*  @Transactional
-    public void updateSubService(SubCategory subCategory) {
-        subCategoryDao.update(subCategory);
-    }*/
 
 
     public SubCategory findByTitle(String title) {
@@ -68,14 +60,33 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         }
     }
 
-    public List<SubCategory> findSubservienceFromCategory(int categoryId) {
-        return subCategoryDao.findSubCategoryByCategoryTitle(categoryId);
+    public List<SubCategory> findSubservienceOfACategory(int categoryId) {
+        return subCategoryDao.findSubCategoryByCategoryId(categoryId);
     }
-
 
     public List<SubCategory> findSubServiceOfExpert(int expertId) {
         return subCategoryDao.findSubCategoryOfExpert(expertId);
     }
 
+    public void addExpertToSubCategory(Expert expert, SubCategory subCategory) {
+        Set<Expert> experts = subCategory.getExperts();
+        experts.add(expert);
+        subCategory.setExperts(experts);
+        subCategoryDao.save(subCategory);
+    }
+
+    public void removeExpertFromCategory(Expert expert, SubCategory subCategory) {
+        Set<Expert> experts = subCategory.getExperts();
+        experts.remove(expert);
+        subCategory.setExperts(experts);
+        subCategoryDao.save(subCategory);
+    }
+
+    public List<ExpertDto> findSubCategoryExpertsBySubCategoryTitle(String title) {
+        SubCategory subCategory = findByTitle(title);
+        Set<Expert> experts = subCategory.getExperts();
+        return experts.stream()
+                .map(item -> mapper.map(item, ExpertDto.class)).collect(Collectors.toList());
+    }
 
 }

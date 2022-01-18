@@ -30,7 +30,7 @@ public interface OfferService {
 
     Offer getById(Long theId);
 
-    List<Offer> findAllOfferOfAnOrder(Long OrderId);
+    List<OfferDto> findAllOfferOfAnOrder(Long OrderId);
 
     List<OfferDto> findAllOfferOfOrder(Orders order);
 

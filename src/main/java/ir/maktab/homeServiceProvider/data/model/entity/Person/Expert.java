@@ -10,10 +10,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -22,19 +19,19 @@ import java.util.Set;
 @NoArgsConstructor
 //@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true)
-public class Expert extends User {
+public class Expert extends User implements Comparable<Expert>{
     @Lob
     @Column(columnDefinition = "BLOB", length = 300000)
     private byte[] image;
 
-    private Double Score;
+    private Double score;
 
     @ManyToMany(fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد//fetch = FetchType.LAZY
     //@EqualsAndHashCode.Include
-    @JoinTable(
+    /*@JoinTable(
             joinColumns = {@JoinColumn(name = "expert_id")},
             inverseJoinColumns = {@JoinColumn(name = "subCategory_id")}
-    )
+    )*/
     private Set<SubCategory> subCategoryList = new HashSet<>();
 
     @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)
@@ -45,8 +42,34 @@ public class Expert extends User {
 
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Expert expert = (Expert) o;
+        return Arrays.equals(image, expert.image) && Objects.equals(score, expert.score) && Objects.equals(subCategoryList, expert.subCategoryList);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(super.hashCode(), score, subCategoryList);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
+    }
+
+    @Override
+    public int compareTo(Expert o) {
+        if (this.score == o.score)
+            return Double.compare(this.score, o.score);
+        else if (this.score < o.score)
+            return 1;
+        else return -1;
+    }
+
+
+    @Override
     public String toString() {
-        return "Expert => " + super.toString() + " Score=" + Score;
+        return "Expert => " + super.toString() + " Score=" + score;
     }
 
 }

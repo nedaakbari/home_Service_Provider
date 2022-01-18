@@ -23,5 +23,7 @@ public class ExpertDto {
     private Role role;
     private Date registerDate;
     private Long creditCart;
+    private byte[] image;
+    private Double Score;
 
 }
