@@ -1,36 +1,50 @@
 package ir.maktab.homeServiceProvider.view;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
+import ir.maktab.homeServiceProvider.data.dao.*;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.Optional;
+
 
 public class Insert {
     public static void main(String[] args) throws Exception {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        /*AddressDao addressDao = context.getBean(AddressDao.class);
+        AddressService bean = context.getBean(AddressService.class);
+        AdminDao adminService = context.getBean(AdminDao.class);
+        CustomerDao customerService = context.getBean(CustomerDao.class);
+        ExpertDao expertService = context.getBean(ExpertDao.class);
+        UserDao userService = context.getBean(UserDao.class);
+        CategoryDao categoryService = context.getBean(CategoryDao.class);
+        SubCategoryDao subCategoryService = context.getBean(SubCategoryDao.class);
+        OrderDao orderService = context.getBean(OrderDao.class);
+        OfferDao offerService = context.getBean(OfferDao.class);*/
+        AdminService adminService = context.getBean(AdminService.class);
         CustomerService customerService = context.getBean(CustomerService.class);
         ExpertService expertService = context.getBean(ExpertService.class);
         UserService userService = context.getBean(UserService.class);
         CategoryService categoryService = context.getBean(CategoryService.class);
         SubCategoryService subCategoryService = context.getBean(SubCategoryService.class);
-        AdminService adminService = context.getBean(AdminService.class);
         OrderService orderService = context.getBean(OrderService.class);
         OfferService offerService = context.getBean(OfferService.class);
         TransActionService transActionService = context.getBean(TransActionService.class);
         // Mapper mapper=context.getBean(Mapper.class);
 
 
-
 /**
- *save an expert customer admin mainService
- */
+*save an expert customer admin mainService
+ * */
+
         ////////////// save customer
 
         Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
@@ -67,10 +81,10 @@ public class Insert {
 
         /////////save admin
         Admin mehran = Admin.builder().firstName("mehran").lastName("ebadi")
-                .userName("admin1").passWord("admin123").build();
+                .userName("admin1").passWord("admin123").email("").build();
 
         Admin sanaz = Admin.builder().firstName("sanaz").lastName("salehi")
-                .userName("admin2").passWord("admin456").build();
+                .userName("admin2").passWord("admin456").email("").build();
 
         adminService.save(mehran);
         adminService.save(sanaz);
@@ -103,70 +117,70 @@ public class Insert {
         categoryService.save(category5);
         categoryService.save(category6);
 
-        /**
-         * find a mainServiceDao by Name
-         */
+     /**
+      *  find a mainServiceDao by Name
+      *  */
 
-       /* MainService home_appliances = mainServiceService.findByName("HOME_APPLIANCES");
-        MainService home_cleaning_and_hygiene = mainServiceService.findByName("HOME_CLEANING_AND_HYGIENE");
+        Category home_appliances = categoryService.findByTitle("HOME_APPLIANCES");
+        Category home_cleaning_and_hygiene = categoryService.findByTitle("HOME_CLEANING_AND_HYGIENE");
 
         // /////////// save subServices
-        SubService kitchenAppliances = new SubService();
+        SubCategory kitchenAppliances = new SubCategory();
         // kitchenAppliances.setMainService(MainServices.HOME_APPLIANCES);
-        kitchenAppliances.setMain(home_appliances);
+        kitchenAppliances.setCategory(home_appliances);
         kitchenAppliances.setDescription("clean detail of home");
-        kitchenAppliances.setName("kitchenAppliances");
-        kitchenAppliances.setBaseAmount(170000);
-        subCategoryService.saveSubService(kitchenAppliances);
+        kitchenAppliances.setTitle("kitchenAppliances");
+        kitchenAppliances.setBaseAmount(170000.0);
+        subCategoryService.save(kitchenAppliances);
 
-        SubService laundry = new SubService();
+        SubCategory laundry =new SubCategory();
         //laundry.setMainService(MainServices.HOME_APPLIANCES);
-        laundry.setMain(home_appliances);
+        laundry.setCategory(home_appliances);
         laundry.setDescription("we laundry your packet");
-        laundry.setName("laundry");
-        laundry.setBaseAmount(100000);
-        subCategoryService.saveSubService(laundry);
+        laundry.setTitle("laundry");
+        laundry.setBaseAmount(100000.0);
+        subCategoryService.save(laundry);
 
-        SubService audioAndVideoEquipment = new SubService();
+        SubCategory audioAndVideoEquipment = new SubCategory();
         // audioAndVideoEquipment.setMainService(MainServices.HOME_APPLIANCES);
-        audioAndVideoEquipment.setMain(home_appliances);
+        audioAndVideoEquipment.setCategory(home_appliances);
         audioAndVideoEquipment.setDescription("audio And Video Equipment");
-        audioAndVideoEquipment.setBaseAmount(150000);
-        audioAndVideoEquipment.setName("audioAndVideoEquipment");
-        subCategoryService.saveSubService(audioAndVideoEquipment);
+        audioAndVideoEquipment.setBaseAmount(150000.0);
+        audioAndVideoEquipment.setTitle("audioAndVideoEquipment");
+        subCategoryService.save(audioAndVideoEquipment);
 
 
-        SubService cleaning = new SubService();
+        SubCategory cleaning = new SubCategory();
         // cleaning.setMainService(MainServices.HOME_CLEANING_AND_HYGIENE);
-        cleaning.setMain(home_cleaning_and_hygiene);
+        cleaning.setCategory(home_cleaning_and_hygiene);
         cleaning.setDescription("Leave the cleaning of your house to us");
-        cleaning.setName("cleaning");
-        cleaning.setBaseAmount(140000);
-        subCategoryService.saveSubService(cleaning);
+        cleaning.setTitle("cleaning");
+        cleaning.setBaseAmount(140000.0);
+        subCategoryService.save(cleaning);
 
-        SubService laundryAndCarWash = new SubService();
+        SubCategory laundryAndCarWash = new SubCategory();
         // laundryAndCarWash.setMainService(MainServices.HOME_CLEANING_AND_HYGIENE);
-        laundryAndCarWash.setMain(home_cleaning_and_hygiene);
-        laundryAndCarWash.setName("laundryAndCarWash");
+        laundryAndCarWash.setCategory(home_cleaning_and_hygiene);
+        laundryAndCarWash.setTitle("laundryAndCarWash");
         laundryAndCarWash.setDescription("We will deliver your cars clean from the first day");
-        laundryAndCarWash.setBaseAmount(130000);
-        subCategoryService.saveSubService(laundryAndCarWash);
+        laundryAndCarWash.setBaseAmount(130000.0);
+        subCategoryService.save(laundryAndCarWash);
 
-        SubService carpetAndUpholstery = new SubService();
+        SubCategory carpetAndUpholstery = new SubCategory();
         // carpetAndUpholstery.setMainService(MainServices.HOME_CLEANING_AND_HYGIENE);
-        carpetAndUpholstery.setMain(home_cleaning_and_hygiene);
-        carpetAndUpholstery.setName("carpetAndUpholstery");
+        carpetAndUpholstery.setCategory(home_cleaning_and_hygiene);
+        carpetAndUpholstery.setTitle("carpetAndUpholstery");
         carpetAndUpholstery.setDescription("Clean carpets softer sofas");
-        carpetAndUpholstery.setBaseAmount(120000);
-        subCategoryService.saveSubService(carpetAndUpholstery);
+        carpetAndUpholstery.setBaseAmount(120000.0);
+        subCategoryService.save(carpetAndUpholstery);
 
-        SubService homeSpraying = new SubService();
+        SubCategory homeSpraying = new SubCategory();
         // homeSpraying.setMainService(MainServices.HOME_CLEANING_AND_HYGIENE);
-        homeSpraying.setMain(home_cleaning_and_hygiene);
-        homeSpraying.setName("homeSpraying");
+        homeSpraying.setCategory(home_cleaning_and_hygiene);
+        homeSpraying.setTitle("homeSpraying");
         homeSpraying.setDescription("Clean the house from any insects");
-        homeSpraying.setBaseAmount(110000);
-        subCategoryService.saveSubService(homeSpraying);*/
+        homeSpraying.setBaseAmount(110000.0);
+        subCategoryService.save(homeSpraying);
 
         /**
          * update a customer=>  add to creditCart

@@ -18,31 +18,32 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements Services<User, UserDto,Integer> {
+public class UserService /*implements Services<User, UserDto,Integer>*/ {
     private final UserMapper mapper;
     private final UserDao userDao;
 
-    @Override
+    // @Override
     public void save(User user) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (foundUser.isPresent()) {
-            throw new DuplicateData("❌❌❌ Error,user  with these use an pass is already exist ❌❌❌");
+            throw new DuplicateData("❌❌❌ Error,user with these use an pass is already exist ❌❌❌");
         } else {
             userDao.save(user);
         }
     }
 
-    @Override
+    //@Override
     public void delete(User user) {
         userDao.delete(user);
     }
 
-    @Override
+    //@Override
     public List<UserDto> getAll() {
-        return userDao.findAll().stream().map(mapper::entityToDto).collect(Collectors.toList());
+        // return userDao.findAll().stream().map(mapper::entityToDto).collect(Collectors.toList());
+        return null;
     }
 
-    @Override
+    //@Override
     public User getById(Integer theId) {
         Optional<User> foundUser = userDao.findById(theId);
         if (foundUser.isPresent())

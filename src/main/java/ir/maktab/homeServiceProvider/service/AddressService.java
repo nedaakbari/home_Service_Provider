@@ -14,33 +14,31 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AddressService implements Services<Address, AddressDto, Integer> {
+public class AddressService /*implements Services<Address, AddressDto, Integer>*/ {
     private final AddressMapper mapper;
     private final AddressDao addressDao;
 
-    @Override
+    //@Override
     public void save(Address address) {
         addressDao.save(address);
     }
 
-    @Override
+    //@Override
     public void delete(Address address) {
         addressDao.delete(address);
     }
 
-    @Override
+   // @Override
     public List<AddressDto> getAll() {
         List<Address> allAddress = addressDao.findAll();
         return allAddress.stream().map(mapper::addressToDto).collect(Collectors.toList());
     }
 
-    @Override
+    //@Override
     public Address getById(Integer theId) {
         Optional<Address> found = addressDao.findById(theId);
         if (found.isPresent())
             return found.get();
         else throw new NotFoundDta("not address found");
     }
-
-
 }

@@ -19,27 +19,27 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdminService implements Services<Admin, AdminDto, Integer> {
+public class AdminService /*implements Services<Admin, AdminDto, Integer>*/ {
     private final AdminMapper mapper;
     private final AdminDao adminDao;
 
-    @Override
+   // @Override
     public void save(Admin admin) {
         adminDao.save(admin);
     }
 
-    @Override
+    //@Override
     public void delete(Admin admin) {
         adminDao.delete(admin);
     }
 
-    @Override
+    //@Override
     public List<AdminDto> getAll() {
         List<Admin> allAdmin = adminDao.findAll();
         return allAdmin.stream().map(mapper::adminToDto).collect(Collectors.toList());
     }
 
-    @Override
+   // @Override
     public Admin getById(Integer theId) {
         Optional<Admin> found = adminDao.findById(theId);
         if (found.isPresent())

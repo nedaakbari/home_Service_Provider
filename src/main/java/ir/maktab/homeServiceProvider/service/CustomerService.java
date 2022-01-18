@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Getter
-public class CustomerService implements Services<Customer, CustomerDto, Integer> {
+public class CustomerService /*implements Services<Customer, CustomerDto, Integer>*/ {
     private final CustomerMapper mapper;
     private final CustomerDao customerDao;
 
@@ -30,7 +30,7 @@ public class CustomerService implements Services<Customer, CustomerDto, Integer>
         this.customerDao = customerDao;
     }*/
 
-    @Override
+   // @Override
     public void save(Customer customer) {
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword(customer.getUsername(), customer.getPassword());
         if (foundUser.isPresent()) {
@@ -41,18 +41,18 @@ public class CustomerService implements Services<Customer, CustomerDto, Integer>
         }
     }
 
-    @Override
+   // @Override
     public void delete(Customer customer) {
         customerDao.delete(customer);
     }
 
-    @Override
+  //  @Override
     public List<CustomerDto> getAll() {
         List<Customer> allCustomer = customerDao.findAll();
         return allCustomer.stream().map(mapper::customerToDto).collect(Collectors.toList());
     }
 
-    @Override
+   // @Override
     public Customer getById(Integer theId) {
         Optional<Customer> found = customerDao.findById(theId);
         if (found.isPresent())

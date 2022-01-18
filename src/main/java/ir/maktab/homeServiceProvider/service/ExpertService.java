@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ExpertService implements Services<Expert, ExpertDto, Integer> {
+public class ExpertService /*implements Services<Expert, ExpertDto, Integer>*/ {
     private final ExpertMapper mapper;
     private final ExpertDao expertDao;
 
 
-    @Override
+    //@Override
     public void save(Expert expert) {
         Optional<Expert> foundUser = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
         if (foundUser.isPresent()) {
@@ -34,19 +34,19 @@ public class ExpertService implements Services<Expert, ExpertDto, Integer> {
         }
     }
 
-    @Override
+    //@Override
     public void delete(Expert expert) {
         expertDao.delete(expert);
 
     }
 
-    @Override
+    //@Override
     public List<ExpertDto> getAll() {
         List<Expert> all = expertDao.findAll();
         return all.stream().map(mapper::expertDto).collect(Collectors.toList());
     }
 
-    @Override
+    //@Override
     public Expert getById(Integer theId) {
         Optional<Expert> found = expertDao.findById(theId);
         if (found.isPresent())

@@ -20,30 +20,29 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService implements Services<Orders, OrdersDto, Long> {
+public class OrderService /*implements Services<Orders, OrdersDto, Long>*/ {
     private final OrderMapper mapper;
     private final OrderDao orderDao;
     private final OfferDao offerDao;
     private final OfferService offerService;
 
-    @Override
+   // @Override
     public void save(Orders orders) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
         orderDao.save(orders);
     }
 
-    @Override
+    //@Override
     public void delete(Orders orders) {
         orderDao.delete(orders);
-
     }
 
-    @Override
+   // @Override
     public List<OrdersDto> getAll() {
         return null;
     }
 
-    @Override
+    //@Override
     public Orders getById(Long theId) {
         Optional<Orders> foundOrder = orderDao.findById(theId);
         if (foundOrder.isPresent())
@@ -71,6 +70,5 @@ public class OrderService implements Services<Orders, OrdersDto, Long> {
         orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
         offerDao.save(offer);
     }
-
 
 }

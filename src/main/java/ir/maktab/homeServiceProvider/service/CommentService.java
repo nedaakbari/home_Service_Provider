@@ -14,27 +14,27 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService implements Services<Comment, CommentDto, Long> {
+public class CommentService /*implements Services<Comment, CommentDto, Long>*/ {
     private final CommentMapper mapper;
     private final CommentDao commentDao;
 
-    @Override
+   // @Override
     public void save(Comment comment) {
         commentDao.save(comment);
     }
 
-    @Override
+   // @Override
     public void delete(Comment comment) {
         commentDao.delete(comment);
     }
 
-    @Override
+   // @Override
     public List<CommentDto> getAll() {
         List<Comment> allComments = commentDao.findAll();
         return allComments.stream().map(mapper::commentToDto).collect(Collectors.toList());
     }
 
-    @Override
+   // @Override
     public Comment getById(Long theId) {
         Optional<Comment> found = commentDao.findById(theId);
         if (found.isPresent())

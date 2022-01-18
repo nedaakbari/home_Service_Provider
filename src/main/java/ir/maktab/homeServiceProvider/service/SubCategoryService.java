@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SubCategoryService implements Services<SubCategory, SubCategoryDto, Integer> {
+public class SubCategoryService /*implements Services<SubCategory, SubCategoryDto, Integer>*/ {
     private final SubCategoryMapper mapper;
     private final SubCategoryDao subCategoryDao;
 
-    @Override
+    //@Override
     public void save(SubCategory subCategory) {
         Optional<SubCategory> foundSubService = subCategoryDao.findByTitle(subCategory.getTitle());
         if (foundSubService.isPresent()) {
@@ -29,17 +29,17 @@ public class SubCategoryService implements Services<SubCategory, SubCategoryDto,
         }
     }
 
-    @Override
+   // @Override
     public void delete(SubCategory subCategory) {
         subCategoryDao.delete(subCategory);
     }
 
-    @Override
+    //@Override
     public List<SubCategoryDto> getAll() {
         return subCategoryDao.findAll().stream().map(mapper::entityToDto).collect(Collectors.toList());
     }
 
-    @Override
+    //@Override
     public SubCategory getById(Integer theId) {
         Optional<SubCategory> foundService = subCategoryDao.findById(theId);
         if (foundService.isPresent()) {

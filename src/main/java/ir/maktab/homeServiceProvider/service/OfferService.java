@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OfferService implements Services<Offer, OfferDto, Long> {
+public class OfferService /*implements Services<Offer, OfferDto, Long>*/ {
     private final OfferMapper mapper;
     private final OfferDao offerDao;
     private final OrderDao orderDao;
 
 
-    @Override
+    //@Override
     public void save(Offer offer) {
         offerDao.save(offer);
     }
@@ -51,12 +51,12 @@ public class OfferService implements Services<Offer, OfferDto, Long> {
             throw new RuntimeException("This field is not your specialty ");
     }
 
-    @Override
+   // @Override
     public void delete(Offer offer) {
         offerDao.delete(offer);
     }
 
-    @Override
+   // @Override
     public List<OfferDto> getAll() {
         List<Offer> all = offerDao.findAll();
         if (all.size() != 0) {
@@ -65,7 +65,7 @@ public class OfferService implements Services<Offer, OfferDto, Long> {
             throw new NotFoundDta("no offer Exist yet");
     }
 
-    @Override
+    //@Override
     public Offer getById(Long theId) {
         Optional<Offer> found = offerDao.findById(theId);
         if (found.isPresent())

@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService implements Services<Category, CategoryDto, Integer> {
+public class CategoryService /*implements Services<Category, CategoryDto, Integer>*/ {
     private final CategoryMapper mapper;
     private final CategoryDao categoryDao;
 
-    @Override
+   // @Override
     public void save(Category category) {
         Optional<Category> foundMainService = categoryDao.findByTitle(category.getTitle());
         if (foundMainService.isPresent()) {
@@ -30,12 +30,12 @@ public class CategoryService implements Services<Category, CategoryDto, Integer>
         }
     }
 
-    @Override
+    //@Override
     public void delete(Category category) {
         categoryDao.delete(category);
     }
 
-    @Override
+    //@Override
     public List<CategoryDto> getAll() {
         List<Category> all = categoryDao.findAll();
         if (all.size() != 0) {
@@ -44,7 +44,7 @@ public class CategoryService implements Services<Category, CategoryDto, Integer>
             throw new NotFoundDta("❌❌❌ no mainService Exist  ❌❌❌");
     }
 
-    @Override
+   // @Override
     public Category getById(Integer theId) {
 
         return null;
