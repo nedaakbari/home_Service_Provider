@@ -16,9 +16,11 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Order;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,8 +28,6 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl /*implements OrderService*/ {
     private ModelMapper mapper = new ModelMapper();
     private final OrderDao orderDao;
-    //private final OfferDao offerService;
-    //private final OfferServiceImpl offerService;
 
     public void save(Orders orders) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
@@ -50,7 +50,7 @@ public class OrderServiceImpl /*implements OrderService*/ {
         orders.setAddress(address);
         orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
         orderDao.save(orders);
-    }*/
+    }*/ //todo which one is better?
 
     public void delete(Orders orders) {
         orderDao.delete(orders);
@@ -80,14 +80,21 @@ public class OrderServiceImpl /*implements OrderService*/ {
         return orderOfCustomer.stream().map(item->mapper.map(item,OrdersDto.class)).collect(Collectors.toList());
     }
 
-/*    public void acceptedOffer(Orders orders, Offer offer) {
-        orders.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);
-        offer.setStatus(OfferStatus.ACCEPTED);
-        offerService.updateOfferStatus(OfferStatus.REJECTED, offer.getId());
-        orders.setExpert(offer.getExpert());
-        orders.setAgreedPrice(offer.getProposedPrice());
-        orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
-        offerService.save(offer);
-    }*/
+    public Offer findAcceptedOfferOfOrder(Orders order) {
+        Offer acceptedOffer = null;
+        if (order.getState().equals(OrderState.PAID)) {
+            Set<Offer> offers = order.getOffers();
+            for (Offer offer : offers) {
+                if (offer.getStatus().equals(OfferStatus.ACCEPTED)) {
+                    acceptedOffer = offer;
+                }
+            }
+            return acceptedOffer;
+        } else {
+            throw new RuntimeException("Order not Paid!");
+        }
+    }
+
+
 
 }

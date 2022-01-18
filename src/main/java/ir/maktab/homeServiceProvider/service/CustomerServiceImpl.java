@@ -26,10 +26,8 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl /*implements CustomerService*/ {
     private ModelMapper mapper = new ModelMapper();
     private final CustomerDao customerDao;
-    private final OrderServiceImpl orderService;
-    private final OfferServiceImpl offerService;
-    //private final OrderDao orderService;
-    //private final OfferDao offerService;
+/*    private final OrderServiceImpl orderService;
+    private final OfferServiceImpl offerService;*/
 
     public void save(Customer customer) {
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword(customer.getUsername(), customer.getPassword());
@@ -73,38 +71,7 @@ public class CustomerServiceImpl /*implements CustomerService*/ {
         if (customer.isPresent()) {
             return customer.get();
         } else
-            throw new RuntimeException("no customer found with these use and pass");
-    }
-
-    public Long getCountOfRecords() {
-        return customerDao.count();
-    }
-
-    public void acceptOfferForOrder(Orders order, Offer choiceOffer) {
-        order.setExpert(choiceOffer.getExpert());
-        order.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
-        order.setAgreedPrice(choiceOffer.getProposedPrice());
-        orderService.save(order);
-        Offer acceptedOffer = offerService.findByOrderAndExpert(order, choiceOffer.getExpert());
-        Set<Offer> offers = order.getOffers();
-        for (Offer offer : offers) {
-            if (offer.equals(acceptedOffer)) {
-                offer.setStatus(OfferStatus.ACCEPTED);
-            } else {
-                offer.setStatus(OfferStatus.REJECTED);
-            }
-            offerService.save(offer);
-        }
-    }
-
-    public void acceptedOffer(Orders orders, Offer offer) {
-        orders.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);
-        offer.setStatus(OfferStatus.ACCEPTED);
-        offerService.updateOfferStatus(OfferStatus.REJECTED, offer.getId());
-        orders.setExpert(offer.getExpert());
-        orders.setAgreedPrice(offer.getProposedPrice());
-        orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
-        offerService.save(offer);
+            throw new NotFoundDta("no customer found with these use and pass");
     }
 
 }

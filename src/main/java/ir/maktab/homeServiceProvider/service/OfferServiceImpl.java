@@ -9,6 +9,7 @@ import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OfferStatus;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.dto.OfferDto;
+import ir.maktab.homeServiceProvider.exception.EntityNotExistException;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.OfferService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,6 @@ public class OfferServiceImpl/* implements OfferService */{
     private  ModelMapper mapper =new ModelMapper();
     private final OfferDao offerDao;
     private final SubCategoryServiceImpl service;
-    //private final OrderDao orderService;
     private final OrderServiceImpl orderService;
 
     public void save(Offer offer) {
@@ -59,6 +59,35 @@ public class OfferServiceImpl/* implements OfferService */{
         } else
             throw new RuntimeException("This field is not your specialty ");
     }
+
+    public void acceptOfferForOrder(Orders order, Offer choiceOffer) {
+        order.setExpert(choiceOffer.getExpert());
+        order.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
+        order.setAgreedPrice(choiceOffer.getProposedPrice());
+        orderService.save(order);
+        Offer acceptedOffer = offerDao.findByOrdersAndExpert(order, choiceOffer.getExpert()).get();//findByOrderAndExpert
+        Set<Offer> offers = order.getOffers();
+        for (Offer offer : offers) {
+            if (offer.equals(acceptedOffer)) {
+                offer.setStatus(OfferStatus.ACCEPTED);
+            } else {
+                offer.setStatus(OfferStatus.REJECTED);
+            }
+            offerDao.save(offer);
+        }
+    }
+
+    public void acceptedOffer(Orders orders, Offer offer) {
+        orders.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);
+        offer.setStatus(OfferStatus.ACCEPTED);
+        offerService.updateOfferStatus(OfferStatus.REJECTED, offer.getId());
+        orders.setExpert(offer.getExpert());
+        orders.setAgreedPrice(offer.getProposedPrice());
+        orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
+        offerService.save(offer);
+    }
+
+
 
     public void delete(Offer offer) {
         offerDao.delete(offer);
@@ -97,16 +126,22 @@ public class OfferServiceImpl/* implements OfferService */{
                .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
     }
 
-  /*
-
-    public List<Offer> findByOrder(Orders order) {
-        return offerRepository.findByOrder(order, Sort.by("expert.score", "proposedPrice").descending());
+    public List<OfferDto> sortByPrice(Orders order) {
+        return offerDao.findByOrders(order, Sort.by("proposedPrice").ascending()).stream()
+                .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
+    }
+    public List<OfferDto> sortByScore(Orders order) {
+        return offerDao.findByOrders(order, Sort.by("expert.score").descending()).stream()
+                .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
+    }
+    public Offer findByOrderAndExpert(Orders order, Expert expert) {
+        Optional<Offer> offer = offerDao.findByOrdersAndExpert(order, expert);
+        return offer.get();
+       // return offer.orElseThrow(() -> new EntityNotExistException("offer not found!"));
     }
 
-    public Offer findByOrderAndExpert(Orders order, Expert expert) {
-        Optional<Offer> offer = offerDao.findByOrderAndExpert(order, expert);
-        return offer.orElseThrow(() -> new EntityNotExistException("offer not found!"));
-    }*/
+
+
 
 
 }

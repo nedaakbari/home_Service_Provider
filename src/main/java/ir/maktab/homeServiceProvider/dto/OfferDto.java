@@ -14,7 +14,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+//@ToString
 public class OfferDto {
 
     private OfferStatus status;
@@ -22,8 +22,17 @@ public class OfferDto {
     private String description;
     private Double duringTime;
     private Date startWorkTime;
-    private Date submissionDate;
     private ExpertDto expert;
-    private OrdersDto orders;
 
+    @Override
+    public String toString() {
+        return "OfferDto{" +
+                "status=" + status +
+                ", proposedPrice=" + proposedPrice +
+                ", description='" + description + '\'' +
+                ", duringTime=" + duringTime +
+                ", startWorkTime=" + startWorkTime +
+                ", expert=" + expert.getFirstName() + expert.getLastName()+expert.getScore()+
+                '}';
+    }
 }

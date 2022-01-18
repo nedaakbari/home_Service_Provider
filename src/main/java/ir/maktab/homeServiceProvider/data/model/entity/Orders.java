@@ -34,7 +34,7 @@ public class Orders {
     @Temporal(TemporalType.DATE)
     private Date doWorkDate;//تاریخانجامکار که کاستومر میخواد انجام بشه
 
-    private Double proposePrice;//قیمت پیشنهادی مشتری
+    private Double proposedPrice;//قیمت پیشنهادی مشتری
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;

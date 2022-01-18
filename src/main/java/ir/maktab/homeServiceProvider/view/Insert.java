@@ -85,7 +85,7 @@ public class Insert {
                 .phoneNumber("09340000000").username("sana_").password("sana@747").role(Role.EXPERT)
                 .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.save(sana);
-
+.setScore(40.0)
 
         /////////save admin
         Admin mehran = Admin.builder().firstName("mehran").lastName("ebadi")
@@ -400,6 +400,16 @@ public class Insert {
         orders.setDoWorkDate(date);
         orderService.save(orders);*/
 
+        Orders orders2 = new Orders();
+        orders2.setCustomer(neda);
+        orders2.setProposePrice(150000.0);
+        orders2.setSubCategory(laundry);
+        orders2.setDescription("i want done this very well");
+        orders2.setAddress(address);
+        Date date = DateUtil.convertStringToDate("2022-01-09");
+        orders2.setDoWorkDate(date);
+        orderService.save(orders2);
+
 /**
  *متخصص بره لیست سفارش ها رو ببینه و اگر توی تخصصش بود بتونه پیشنهاد بده و کمتر از پایه هم پیشنهاد نده
  */
@@ -460,13 +470,17 @@ public class Insert {
         Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
         System.out.println(neda);
         //neda.getOrdersList();//این باید فچ تایپش رو تغییر بدم
-        orderService.findOrderOfCustomer(neda).forEach(System.out::println);
+        orderService.findOrderOfCustomer(neda).forEach(System.out::println);//بدون ترتیب
         System.out.println("which order do you wanna check offers?");
         Orders orderByID1 = orderService.getById(1L);
         //orderByID.getOffers().forEach(System.out::println); باید فچ تایپش رو تغییر بدم
         List<OfferDto> allOfferOfOrder = offerService.findAllOfferOfOrder(orderByID);
         allOfferOfOrder.forEach(System.out::println);
 
+        System.out.println("************* sortByScore ********************88");
+        offerService.sortByScore(orderByID1).forEach(System.out::println);
+        System.out.println("**************** sortByPrice *****************88");
+        offerService.sortByPrice(orderByID1).forEach(System.out::println);
 /**
  *یکی از اینا رو انتخاب میکنه
  */
