@@ -4,12 +4,12 @@ import ir.maktab.homeServiceProvider.data.dao.CustomerDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
-import ir.maktab.homeServiceProvider.dto.mapper.CustomerMapper;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.interfaces.CustomerService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Getter
-public class CustomerService /*implements Services<Customer, CustomerDto, Integer>*/ {
-    private final CustomerMapper mapper;
+public class CustomerServiceImpl implements CustomerService {
+    private final ModelMapper mapper;
     private final CustomerDao customerDao;
 
    /* @Autowired
@@ -30,7 +30,7 @@ public class CustomerService /*implements Services<Customer, CustomerDto, Intege
         this.customerDao = customerDao;
     }*/
 
-   // @Override
+    @Override
     public void save(Customer customer) {
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword(customer.getUsername(), customer.getPassword());
         if (foundUser.isPresent()) {
@@ -41,18 +41,19 @@ public class CustomerService /*implements Services<Customer, CustomerDto, Intege
         }
     }
 
-   // @Override
+   @Override
     public void delete(Customer customer) {
         customerDao.delete(customer);
     }
 
-  //  @Override
+    @Override
     public List<CustomerDto> getAll() {
-        List<Customer> allCustomer = customerDao.findAll();
-        return allCustomer.stream().map(mapper::customerToDto).collect(Collectors.toList());
+        return customerDao.findAll().stream()
+                .map(customer -> mapper.map(customer,CustomerDto.class))
+                .collect(Collectors.toList());
     }
 
-   // @Override
+   @Override
     public Customer getById(Integer theId) {
         Optional<Customer> found = customerDao.findById(theId);
         if (found.isPresent())

@@ -8,10 +8,10 @@ import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OfferStatus;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.dto.OrdersDto;
-import ir.maktab.homeServiceProvider.dto.mapper.OrderMapper;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.interfaces.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,29 +20,31 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService /*implements Services<Orders, OrdersDto, Long>*/ {
-    private final OrderMapper mapper;
+public class OrderServiceImpl implements OrderService {
+    private final ModelMapper mapper;
     private final OrderDao orderDao;
     private final OfferDao offerDao;
-    private final OfferService offerService;
+    private final OfferServiceImpl offerService;
 
-   // @Override
+    @Override
     public void save(Orders orders) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
         orderDao.save(orders);
     }
 
-    //@Override
+    @Override
     public void delete(Orders orders) {
         orderDao.delete(orders);
     }
 
-   // @Override
+    @Override
     public List<OrdersDto> getAll() {
-        return null;
+        return orderDao.findAll().stream()
+                .map(orders -> mapper.map(orders,OrdersDto.class))
+                .collect(Collectors.toList());
     }
 
-    //@Override
+    @Override
     public Orders getById(Long theId) {
         Optional<Orders> foundOrder = orderDao.findById(theId);
         if (foundOrder.isPresent())
@@ -53,12 +55,12 @@ public class OrderService /*implements Services<Orders, OrdersDto, Long>*/ {
 
     public List<OrdersDto> findOrdersOfSubService(int subServiceId) {
         List<Orders> orders = orderDao.findOrdersOfSubService(subServiceId);//findOrdersOfSubService
-        return orders.stream().map(mapper::ordersToDto).collect(Collectors.toList());
+         return orders.stream().map(item -> mapper.map(item,OrdersDto.class)).collect(Collectors.toList());
     }
 
     public List<OrdersDto> findOrderOfCustomer(Customer customer) {
         List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());
-        return orderOfCustomer.stream().map(mapper::ordersToDto).collect(Collectors.toList());
+        return orderOfCustomer.stream().map(item->mapper.map(item,OrdersDto.class)).collect(Collectors.toList());
     }
 
     public void acceptedOffer(Orders orders, Offer offer) {

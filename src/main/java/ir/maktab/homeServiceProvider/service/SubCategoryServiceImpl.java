@@ -3,10 +3,11 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.data.dao.SubCategoryDao;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
-import ir.maktab.homeServiceProvider.dto.mapper.SubCategoryMapper;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.interfaces.SubCategoryService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +16,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SubCategoryService /*implements Services<SubCategory, SubCategoryDto, Integer>*/ {
-    private final SubCategoryMapper mapper;
+public class SubCategoryServiceImpl implements SubCategoryService {
+    private final ModelMapper mapper;
     private final SubCategoryDao subCategoryDao;
 
-    //@Override
+    @Override
     public void save(SubCategory subCategory) {
         Optional<SubCategory> foundSubService = subCategoryDao.findByTitle(subCategory.getTitle());
         if (foundSubService.isPresent()) {
@@ -29,17 +30,19 @@ public class SubCategoryService /*implements Services<SubCategory, SubCategoryDt
         }
     }
 
-   // @Override
+    @Override
     public void delete(SubCategory subCategory) {
         subCategoryDao.delete(subCategory);
     }
 
-    //@Override
+    @Override
     public List<SubCategoryDto> getAll() {
-        return subCategoryDao.findAll().stream().map(mapper::entityToDto).collect(Collectors.toList());
+         return subCategoryDao.findAll().stream()
+                 .map(subCategory -> mapper.map(subCategory,SubCategoryDto.class))
+                 .collect(Collectors.toList());
     }
 
-    //@Override
+    @Override
     public SubCategory getById(Integer theId) {
         Optional<SubCategory> foundService = subCategoryDao.findById(theId);
         if (foundService.isPresent()) {

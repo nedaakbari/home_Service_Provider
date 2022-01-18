@@ -13,8 +13,9 @@ import java.util.Date;
 @ToString
 public class OrdersDto {
     private Long id;
-    private Address address;
+    private AddressDto addressDto;
     //private double proposedPrice;
     private String description;
     private Date workDay;
+    private CustomerDto customerDto;
 }

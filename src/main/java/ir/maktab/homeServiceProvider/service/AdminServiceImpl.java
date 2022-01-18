@@ -5,10 +5,11 @@ import ir.maktab.homeServiceProvider.data.model.entity.Address;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.dto.AddressDto;
 import ir.maktab.homeServiceProvider.dto.AdminDto;
-import ir.maktab.homeServiceProvider.dto.mapper.AdminMapper;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.interfaces.AddressService;
+import ir.maktab.homeServiceProvider.service.interfaces.AdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,27 +20,28 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdminService /*implements Services<Admin, AdminDto, Integer>*/ {
-    private final AdminMapper mapper;
+public class AdminServiceImpl implements AdminService {
+    private final ModelMapper mapper;
     private final AdminDao adminDao;
 
-   // @Override
+    @Override
     public void save(Admin admin) {
         adminDao.save(admin);
     }
 
-    //@Override
+    @Override
     public void delete(Admin admin) {
         adminDao.delete(admin);
     }
 
-    //@Override
+    @Override
     public List<AdminDto> getAll() {
-        List<Admin> allAdmin = adminDao.findAll();
-        return allAdmin.stream().map(mapper::adminToDto).collect(Collectors.toList());
+        return adminDao.findAll().stream()
+                .map(admin -> mapper.map(admin, AdminDto.class))
+                .collect(Collectors.toList());
     }
 
-   // @Override
+    @Override
     public Admin getById(Integer theId) {
         Optional<Admin> found = adminDao.findById(theId);
         if (found.isPresent())
@@ -47,6 +49,7 @@ public class AdminService /*implements Services<Admin, AdminDto, Integer>*/ {
         else throw new NotFoundDta("no admin found ");
     }
 
+    @Override
     public Admin findAminByUseAndPass(String username, String password) {
         Optional<Admin> admin = adminDao.findByUserNameAndPassWord(username, password);
         if (admin.isPresent()) {
@@ -55,6 +58,7 @@ public class AdminService /*implements Services<Admin, AdminDto, Integer>*/ {
             throw new NotFoundDta("no admin found with these use and pass");
     }
 
+    @Override
     @Transactional
     public void UpdatePassword(String newPassword, int id) {
         adminDao.updatePassword(newPassword, id);

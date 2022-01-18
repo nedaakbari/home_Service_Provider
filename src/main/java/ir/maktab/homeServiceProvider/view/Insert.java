@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.view;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
-import ir.maktab.homeServiceProvider.data.dao.*;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
@@ -12,8 +11,6 @@ import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStat
 import ir.maktab.homeServiceProvider.service.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.Optional;
 
 
 public class Insert {
@@ -29,15 +26,15 @@ public class Insert {
         SubCategoryDao subCategoryService = context.getBean(SubCategoryDao.class);
         OrderDao orderService = context.getBean(OrderDao.class);
         OfferDao offerService = context.getBean(OfferDao.class);*/
-        AdminService adminService = context.getBean(AdminService.class);
-        CustomerService customerService = context.getBean(CustomerService.class);
-        ExpertService expertService = context.getBean(ExpertService.class);
-        UserService userService = context.getBean(UserService.class);
-        CategoryService categoryService = context.getBean(CategoryService.class);
-        SubCategoryService subCategoryService = context.getBean(SubCategoryService.class);
-        OrderService orderService = context.getBean(OrderService.class);
-        OfferService offerService = context.getBean(OfferService.class);
-        TransActionService transActionService = context.getBean(TransActionService.class);
+        AdminServiceImpl adminService = context.getBean(AdminServiceImpl.class);
+        CustomerServiceImpl customerService = context.getBean(CustomerServiceImpl.class);
+        ExpertServiceImpl expertService = context.getBean(ExpertServiceImpl.class);
+        UserServiceImpl userService = context.getBean(UserServiceImpl.class);
+        CategoryServiceImpl categoryService = context.getBean(CategoryServiceImpl.class);
+        SubCategoryServiceImpl subCategoryService = context.getBean(SubCategoryServiceImpl.class);
+        OrderServiceImpl orderService = context.getBean(OrderServiceImpl.class);
+        OfferServiceImpl offerService = context.getBean(OfferServiceImpl.class);
+        TransActionServiceImpl transActionService = context.getBean(TransActionServiceImpl.class);
         // Mapper mapper=context.getBean(Mapper.class);
 
 
@@ -81,10 +78,10 @@ public class Insert {
 
         /////////save admin
         Admin mehran = Admin.builder().firstName("mehran").lastName("ebadi")
-                .userName("admin1").passWord("admin123").email("").build();
+                .userName("admin1").passWord("admin123").email("mehran@gmail.com").build();
 
         Admin sanaz = Admin.builder().firstName("sanaz").lastName("salehi")
-                .userName("admin2").passWord("admin456").email("").build();
+                .userName("admin2").passWord("admin456").email("sanaz@gmail.com").build();
 
         adminService.save(mehran);
         adminService.save(sanaz);

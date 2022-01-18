@@ -3,11 +3,11 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.data.dao.UserDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.dto.UserDto;
-import ir.maktab.homeServiceProvider.dto.mapper.UserMapper;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserService /*implements Services<User, UserDto,Integer>*/ {
-    private final UserMapper mapper;
+public class UserServiceImpl implements UserService {
+    private final ModelMapper mapper;
     private final UserDao userDao;
 
-    // @Override
+    @Override
     public void save(User user) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (foundUser.isPresent()) {
@@ -32,18 +32,18 @@ public class UserService /*implements Services<User, UserDto,Integer>*/ {
         }
     }
 
-    //@Override
+    @Override
     public void delete(User user) {
         userDao.delete(user);
     }
 
-    //@Override
+    @Override
     public List<UserDto> getAll() {
-        // return userDao.findAll().stream().map(mapper::entityToDto).collect(Collectors.toList());
-        return null;
+        return userDao.findAll().stream()
+                .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
-    //@Override
+    @Override
     public User getById(Integer theId) {
         Optional<User> foundUser = userDao.findById(theId);
         if (foundUser.isPresent())

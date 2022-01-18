@@ -7,9 +7,10 @@ import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.dto.OfferDto;
-import ir.maktab.homeServiceProvider.dto.mapper.OfferMapper;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.interfaces.OfferService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,17 +20,17 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OfferService /*implements Services<Offer, OfferDto, Long>*/ {
-    private final OfferMapper mapper;
+public class OfferServiceImpl implements OfferService {
+    private final ModelMapper mapper;
     private final OfferDao offerDao;
-    private final OrderDao orderDao;
+    private final OrderServiceImpl orderService;
 
-
-    //@Override
+    @Override
     public void save(Offer offer) {
         offerDao.save(offer);
     }
 
+    @Override
     public void saveOffer(Offer offer, Orders orders) {
         Set<SubCategory> subCategoryList = offer.getExpert().getSubCategoryList();
         SubCategory orderSubCategory = orders.getSubCategory();
@@ -42,7 +43,7 @@ public class OfferService /*implements Services<Offer, OfferDto, Long>*/ {
                 List<Offer> list = offerDao.findAllOfferOfAnOrder(orders.getId());
                 if (list == null) {
                     orders.setState(OrderState.WAITING_FOR_SELECT_AN_EXPERT);
-                    orderDao.save(orders);
+                    orderService.save(orders);
                 }
                 offerDao.save(offer);
             } else
@@ -51,21 +52,23 @@ public class OfferService /*implements Services<Offer, OfferDto, Long>*/ {
             throw new RuntimeException("This field is not your specialty ");
     }
 
-   // @Override
+    @Override
     public void delete(Offer offer) {
         offerDao.delete(offer);
     }
 
-   // @Override
+    @Override
     public List<OfferDto> getAll() {
         List<Offer> all = offerDao.findAll();
         if (all.size() != 0) {
-            return all.stream().map(mapper::offerDto).collect(Collectors.toList());
+            return all.stream()
+                    .map(offer -> mapper.map(offer, OfferDto.class))
+                    .collect(Collectors.toList());
         } else
             throw new NotFoundDta("no offer Exist yet");
     }
 
-    //@Override
+    @Override
     public Offer getById(Long theId) {
         Optional<Offer> found = offerDao.findById(theId);
         if (found.isPresent())
@@ -88,7 +91,8 @@ public class OfferService /*implements Services<Offer, OfferDto, Long>*/ {
 
     public List<OfferDto> findAllOfferOfOrder(Orders order) {
         List<Offer> listOfferOfAnOrder = offerDao.findAllOfferOfAnOrder(order.getId());
-        return listOfferOfAnOrder.stream().map(mapper::offerDto).collect(Collectors.toList());
+        return null;
+        // return listOfferOfAnOrder.stream().map(mapper::offerDto).collect(Collectors.toList());
     }
 
 

@@ -9,8 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AddressDto {
-    private int id;
+public class AddressDto {//address order offer comment
     private String city;
     private String street;
     private String zipCode;

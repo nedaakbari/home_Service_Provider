@@ -5,10 +5,11 @@ import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
-import ir.maktab.homeServiceProvider.dto.mapper.ExpertMapper;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.interfaces.ExpertService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ExpertService /*implements Services<Expert, ExpertDto, Integer>*/ {
-    private final ExpertMapper mapper;
+public class ExpertServiceImpl implements ExpertService {
+    private final ModelMapper mapper;
     private final ExpertDao expertDao;
 
-
-    //@Override
+    @Override
     public void save(Expert expert) {
         Optional<Expert> foundUser = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
         if (foundUser.isPresent()) {
@@ -34,19 +34,20 @@ public class ExpertService /*implements Services<Expert, ExpertDto, Integer>*/ {
         }
     }
 
-    //@Override
+    @Override
     public void delete(Expert expert) {
         expertDao.delete(expert);
 
     }
 
-    //@Override
+    @Override
     public List<ExpertDto> getAll() {
-        List<Expert> all = expertDao.findAll();
-        return all.stream().map(mapper::expertDto).collect(Collectors.toList());
+        return  expertDao.findAll().stream()
+                .map(expert -> mapper.map(expert, ExpertDto.class))
+                .collect(Collectors.toList());
     }
 
-    //@Override
+    @Override
     public Expert getById(Integer theId) {
         Optional<Expert> found = expertDao.findById(theId);
         if (found.isPresent())

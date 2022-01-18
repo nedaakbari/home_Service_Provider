@@ -1,4 +1,5 @@
-package ir.maktab.homeServiceProvider.dto.mapperInterface;
+/*
+package ir.maktab.homeServiceProvider.dto.mapper;
 
 import ir.maktab.homeServiceProvider.data.model.entity.TransActions;
 import ir.maktab.homeServiceProvider.dto.TransActionDto;
@@ -10,3 +11,4 @@ public interface TransActionMapper {
 
     TransActions DtoToEntity(TransActionDto transActionDto);
 }
+*/

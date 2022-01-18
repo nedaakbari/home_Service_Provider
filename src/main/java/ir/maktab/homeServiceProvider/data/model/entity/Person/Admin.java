@@ -30,7 +30,8 @@ public class Admin {
 
     private String lastName;
 
-    @Email(regexp = "^(.+)@(.+)$", message = "Invalid email pattern")
+    @Email(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*" +
+            "@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Invalid email pattern")
     private String email;
 
 

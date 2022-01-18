@@ -69,7 +69,7 @@ public class Orders {
                 ", description='" + description + '\'' +
                 ", workDay=" + workDay +
                 ", address=" + address +
-                ", subService=" + subCategory.getTitle() +
+                ", subCategory=" + subCategory/*.getTitle()*/ +
                 ", state=" + state +
                 ", customer=" + customer +
                 ", expert=" + expert +
