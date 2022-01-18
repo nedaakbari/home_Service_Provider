@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -60,7 +61,7 @@ public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
         }
     }
 
-    public List<SubCategory> findSubservienceOfACategory(int categoryId) {
+    public List<SubCategory> findSubservienceOfACategory(int categoryId) {//پیدا کردن همه زیرخدمت های یک خدمت
         return subCategoryDao.findSubCategoryByCategoryId(categoryId);
     }
 
@@ -68,15 +69,21 @@ public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
         return subCategoryDao.findSubCategoryOfExpert(expertId);
     }
 
+    public Set<ExpertDto> findExpertsOfASubCategory(int categoryId) {
+        return subCategoryDao.findExpertsOfASubCategory(categoryId).stream()
+                .map(expert -> mapper.map(expert, ExpertDto.class))
+                .collect(Collectors.toSet());
+    }
+
     public void addExpertToSubCategory(Expert expert, SubCategory subCategory) {
-        Set<Expert> experts = subCategory.getExperts();
+        Set<Expert> experts = subCategoryDao.findExpertsOfASubCategory(subCategory.getId());
         experts.add(expert);
         subCategory.setExperts(experts);
         subCategoryDao.save(subCategory);
     }
 
     public void removeExpertFromCategory(Expert expert, SubCategory subCategory) {
-        Set<Expert> experts = subCategory.getExperts();
+        Set<Expert> experts = subCategoryDao.findExpertsOfASubCategory(subCategory.getId());
         experts.remove(expert);
         subCategory.setExperts(experts);
         subCategoryDao.save(subCategory);

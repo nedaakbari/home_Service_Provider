@@ -26,12 +26,8 @@ public class Expert extends User implements Comparable<Expert>{
 
     private Double score;
 
-    @ManyToMany(fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد//fetch = FetchType.LAZY
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "experts")//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد//fetch = FetchType.LAZY
     //@EqualsAndHashCode.Include
-    /*@JoinTable(
-            joinColumns = {@JoinColumn(name = "expert_id")},
-            inverseJoinColumns = {@JoinColumn(name = "subCategory_id")}
-    )*/
     private Set<SubCategory> subCategoryList = new HashSet<>();
 
     @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)

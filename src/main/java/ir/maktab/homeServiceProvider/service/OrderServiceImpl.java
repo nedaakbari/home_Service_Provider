@@ -2,9 +2,11 @@ package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.dao.OfferDao;
 import ir.maktab.homeServiceProvider.data.dao.OrderDao;
+import ir.maktab.homeServiceProvider.data.model.entity.Address;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OfferStatus;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.dto.OrdersDto;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,9 +24,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl /*implements OrderService*/ {
-    private  ModelMapper mapper =new ModelMapper();
+    private ModelMapper mapper = new ModelMapper();
     private final OrderDao orderDao;
-    private final OfferDao offerService;
+    //private final OfferDao offerService;
     //private final OfferServiceImpl offerService;
 
     public void save(Orders orders) {
@@ -31,13 +34,31 @@ public class OrderServiceImpl /*implements OrderService*/ {
         orderDao.save(orders);
     }
 
+    public void update(Orders orders) {
+        orderDao.save(orders);
+    }
+
+
+/*    public void save(SubCategory subCategory, double proposePrice, String description, Address address,
+                     Date workDate) {
+
+        Orders orders = new Orders();
+        orders.setDoWorkDate(workDate);
+        orders.setSubCategory(subCategory);
+        orders.setProposePrice(proposePrice);
+        orders.setDescription(description);
+        orders.setAddress(address);
+        orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
+        orderDao.save(orders);
+    }*/
+
     public void delete(Orders orders) {
         orderDao.delete(orders);
     }
 
     public List<OrdersDto> getAll() {
         return orderDao.findAll().stream()
-                .map(orders -> mapper.map(orders,OrdersDto.class))
+                .map(orders -> mapper.map(orders, OrdersDto.class))
                 .collect(Collectors.toList());
     }
 
@@ -59,7 +80,7 @@ public class OrderServiceImpl /*implements OrderService*/ {
         return orderOfCustomer.stream().map(item->mapper.map(item,OrdersDto.class)).collect(Collectors.toList());
     }
 
-    public void acceptedOffer(Orders orders, Offer offer) {
+/*    public void acceptedOffer(Orders orders, Offer offer) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);
         offer.setStatus(OfferStatus.ACCEPTED);
         offerService.updateOfferStatus(OfferStatus.REJECTED, offer.getId());
@@ -67,6 +88,6 @@ public class OrderServiceImpl /*implements OrderService*/ {
         orders.setAgreedPrice(offer.getProposedPrice());
         orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
         offerService.save(offer);
-    }
+    }*/
 
 }

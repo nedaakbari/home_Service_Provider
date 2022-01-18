@@ -118,4 +118,8 @@ public class ExpertServiceImpl /*implements ExpertService*/ {
     }
 
 
+        public List<Expert> findExpertsOfASubCategory(int subId) {
+        return expertDao.findExpertsOfASubCategory(subId);
+    }
+
 }

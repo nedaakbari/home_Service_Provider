@@ -18,14 +18,8 @@ public interface CustomerDao extends JpaRepository<Customer, Integer> {
 
     Optional<Customer> findByUsernameAndPassword(String userName, String password);
 
-
-    /*@Modifying
-    @Query(value = "UPDATE Customer c set c.password =:password where c.id=:id")
-    void updatePassword(@Param("password") String password, @Param("id") int id);
-
-
-    @Modifying
-    @Query(value = "UPDATE Customer c set c.creditCart =:creditCart where c.id=:id")
-    void updateCreditCart(@Param("creditCart") Long creditCart, @Param("id") int id);*/
-
+   /* @Modifying
+    @Query("update Customer c set c.password=:newPassword where c.username=:username and c.password=:password")
+    void updateCustomerPassword(@Param("username") String username, @Param("password") String password, @Param("newPassword") String newPassword);
+*/
 }

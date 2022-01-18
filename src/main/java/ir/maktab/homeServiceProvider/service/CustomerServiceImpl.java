@@ -4,35 +4,32 @@ import ir.maktab.homeServiceProvider.data.dao.CustomerDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OfferStatus;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import ir.maktab.homeServiceProvider.service.interfaces.CustomerService;
-import ir.maktab.homeServiceProvider.service.interfaces.OrderService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Order;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Getter
+@RequiredArgsConstructor
 public class CustomerServiceImpl /*implements CustomerService*/ {
     private ModelMapper mapper = new ModelMapper();
     private final CustomerDao customerDao;
     private final OrderServiceImpl orderService;
     private final OfferServiceImpl offerService;
+    //private final OrderDao orderService;
+    //private final OfferDao offerService;
 
     public void save(Customer customer) {
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword(customer.getUsername(), customer.getPassword());
@@ -83,17 +80,18 @@ public class CustomerServiceImpl /*implements CustomerService*/ {
         return customerDao.count();
     }
 
-    public void acceptOfferForOrder(Orders order, Expert expert) {
-        order.setExpert(expert);
+    public void acceptOfferForOrder(Orders order, Offer choiceOffer) {
+        order.setExpert(choiceOffer.getExpert());
         order.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
+        order.setAgreedPrice(choiceOffer.getProposedPrice());
         orderService.save(order);
-        Offer acceptedOffer = offerService.findByOrderAndExpert(order, expert);
+        Offer acceptedOffer = offerService.findByOrderAndExpert(order, choiceOffer.getExpert());
         Set<Offer> offers = order.getOffers();
         for (Offer offer : offers) {
             if (offer.equals(acceptedOffer)) {
-                offer.setOfferStatus(OfferStatus.ACCEPTED);
+                offer.setStatus(OfferStatus.ACCEPTED);
             } else {
-                offer.setOfferStatus(OfferStatus.REJECTED);
+                offer.setStatus(OfferStatus.REJECTED);
             }
             offerService.save(offer);
         }

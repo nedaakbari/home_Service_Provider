@@ -25,16 +25,16 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double agreedPrice;//قیمت پذیرفته شده برای این سفارش
+    @CreationTimestamp
+    private Date orderRegistrationDate;//تایمی که سفارش ثبت میشه
 
     @Column(length = 300)
     private String description;
 
-    @CreationTimestamp
-    private Date orderRegistrationDate;//تایمی که سفارش ثبت میشه
-
     @Temporal(TemporalType.DATE)
-    private Date workDay;//تایمی که کاستومر میخواد انجام بشه
+    private Date doWorkDate;//تاریخانجامکار که کاستومر میخواد انجام بشه
+
+    private Double proposePrice;//قیمت پیشنهادی مشتری
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;
@@ -58,6 +58,8 @@ public class Orders {
     @ManyToOne
     private Expert expert;//اکسپرتی که انتخاب میشه هست
 
+    private Double agreedPrice;//قیمت پذیرفته شده برای این سفارش
+
     private Double score;
 
     private String comment;
@@ -75,17 +77,16 @@ public class Orders {
         return "Orders{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", workDay=" + workDay +
+                ", doWorkDate=" + doWorkDate +
                 ", address=" + address +
                 ", subCategory=" + subCategory/*.getTitle()*/ +
                 ", state=" + state +
                 ", customer=" + customer +
                 ", expert=" + expert +
                 ", score=" + score +
-                // ", agreedPrice= "+agreedPrice+
+                 ", agreedPrice= "+agreedPrice+
                 ", comment='" + comment + '\'' +
                 '}';
     }
-
 
 }

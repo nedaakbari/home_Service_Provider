@@ -27,9 +27,9 @@ public interface OfferDao extends JpaRepository<Offer, Long> {
 
     //todo چک کن فقط اونایی نشونش بده که باید انتظار باشن and s.state='')
     @Query(value = "from Offer O join fetch O.orders S where S.id=:id ")
-    List<Offer> findAllOfferOfAnOrder(@Param("id") Long OrderId);//is exist
+    List<Offer> findAllOfferOfAnOrders(@Param("id") Long OrderId);//is exist
 
-    List<Offer> findByOrder(Orders order, Sort firstSort);
+    List<Offer> findByOrders(Orders order, Sort firstSort);
 
-    Optional<Offer> findByOrderAndExpert(Orders order, Expert expert);
+    Optional<Offer> findByOrdersAndExpert(Orders order, Expert expert);
 }

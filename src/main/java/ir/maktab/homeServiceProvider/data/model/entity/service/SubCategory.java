@@ -33,7 +33,11 @@ public class SubCategory {
 
     private String description;
 
-    @ManyToMany(mappedBy = "subCategoryList", fetch = FetchType.LAZY)//,mappedBy = "subServiceList"
+    @ManyToMany(/*mappedBy = "subCategoryList",*/ fetch = FetchType.LAZY)//,mappedBy = "subServiceList"
+    @JoinTable(
+            joinColumns = {@JoinColumn(name = "subCategory_id")},
+            inverseJoinColumns = {@JoinColumn(name = "expert_id")}
+    )
     private Set<Expert> experts = new HashSet<>();
 
     @OneToMany(mappedBy = "subCategory", fetch = FetchType.LAZY)

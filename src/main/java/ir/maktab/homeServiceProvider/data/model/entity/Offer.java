@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -24,17 +25,17 @@ public class Offer {
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
 
-    private Double proposedPrice;
+    private Double proposedPrice;//قیمت پیشنهادی
 
     private String description;
 
-    private Double duringTime;
+    private Double duringTime;//مدت زمان انجام کار
 
     @Temporal(TemporalType.TIME)
-    private Date startWorkTime;
+    private Date startWorkTime;//ساعت شروع کار
 
     @CreationTimestamp
-    private Date submissionDate;
+    private Date submissionDate;//زمان ثبت پیشنهاد
 
     @ManyToOne
     @JoinColumn(nullable = false)

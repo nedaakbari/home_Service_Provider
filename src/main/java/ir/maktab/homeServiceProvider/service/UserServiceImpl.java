@@ -3,13 +3,16 @@ package ir.maktab.homeServiceProvider.service;
 import ir.maktab.homeServiceProvider.data.dao.UserDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
+import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
+import ir.maktab.homeServiceProvider.util.requestFilter.UserFilter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,10 +52,6 @@ public class UserServiceImpl /*implements UserService*/ {
             throw new NotFoundDta("❌❌❌ Error not found user ❌❌❌");
     }
 
-  /*  @Transactional
-    public void updatePassword(String newPassword, int id) {
-        userDao.updatePassword(newPassword, id);
-    }*/
 
     public void updatePassword(String newPassword, User user) {
         user.setPassword(newPassword);
@@ -67,11 +66,6 @@ public class UserServiceImpl /*implements UserService*/ {
     public void updateUser(User user) {
         userDao.save(user);
     }
-
- /*   @Transactional
-    public void updateCreditCart(Double amount,int id) {
-        userDao.updateCreditCart(amount,id);
-    }*/ //todo which one is better?
 
     public User findUserByUseAndPass(String userName, String password) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(userName, password);
@@ -89,9 +83,10 @@ public class UserServiceImpl /*implements UserService*/ {
             return false;
     }
 
-/*  public List<UserDto> findAllUsersByFilter(UserFilter userFilter) {
-        return userDao.findUsersByFilter(userFilter);
-    }*/
-
+  public List<UserDto> findAllUsersByFilter(String firstname, String lastname, String email, Role role) {
+      Specification<User> userSpecification = UserDao.selectByFilter(firstname, lastname, email, role);
+      return userDao.findAll(userSpecification).stream()
+              .map(user->mapper.map(user,UserDto.class)).collect(Collectors.toList());
+  }
 
 }

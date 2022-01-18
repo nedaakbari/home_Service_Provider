@@ -53,11 +53,6 @@ public class AdminServiceImpl /*implements AdminService*/ {
             throw new NotFoundDta("no admin found with these use and pass");
     }
 
-    @Transactional
-    public void UpdatePassword(String newPassword, int id) {
-        adminDao.updatePassword(newPassword, id);
-    }
-
 
     public boolean isExist(String username, String password) {
         Optional<Admin> found = adminDao.findByUserNameAndPassWord(username, password);

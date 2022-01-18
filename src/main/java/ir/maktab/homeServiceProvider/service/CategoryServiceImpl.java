@@ -52,10 +52,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
-/*   public void updateMainService(MainService mainService) {
-        mainServiceDao.update(mainService);
-    }*/
-
     public Category findByTitle(String title) {
         Optional<Category> main = categoryDao.findByTitle(title);
         if (main.isPresent()) {
