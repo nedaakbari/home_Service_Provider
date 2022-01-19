@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.data.model.entity.Person;
 
 import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -79,11 +80,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(email, user.email) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+        return Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, username, password);
+        return Objects.hash(firstName, lastName, email, username, password);
     }
 }

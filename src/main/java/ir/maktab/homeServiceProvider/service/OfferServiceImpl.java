@@ -39,7 +39,7 @@ public class OfferServiceImpl/* implements OfferService */{
 
     public void saveOffer(Offer offer, Orders orders) {
         Expert expert = offer.getExpert();
-        List<SubCategory> subServiceOfExpert = service.findSubServiceOfExpert(expert.getId());
+        Set<SubCategory> subServiceOfExpert = service.findSubServiceOfExpert(expert.getId());
         SubCategory orderSubCategory = orders.getSubCategory();
         boolean isExist = subServiceOfExpert.stream().allMatch(subCategory -> subCategory.getTitle().
                 equalsIgnoreCase(orderSubCategory.getTitle()));

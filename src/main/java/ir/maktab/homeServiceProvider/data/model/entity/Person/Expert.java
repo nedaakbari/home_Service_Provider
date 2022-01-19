@@ -23,10 +23,9 @@ public class Expert extends User implements Comparable<Expert>{
     @Lob
     @Column(columnDefinition = "BLOB", length = 300000)
     private byte[] image;
-
     private Double score;
 
-    @ManyToMany(fetch = FetchType.LAZY)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
+    @ManyToMany(fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
     //@EqualsAndHashCode.Include//,mappedBy = "experts"
     @JoinTable(
             joinColumns = {@JoinColumn(name = "expert_id")},
@@ -49,7 +48,6 @@ public class Expert extends User implements Comparable<Expert>{
             return 1;
         else return -1;
     }
-
 
     @Override
     public String toString() {

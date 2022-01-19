@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 public class ExpertServiceImpl /*implements ExpertService*/ {
     private ModelMapper mapper = new ModelMapper();
     private final ExpertDao expertDao;
+    private final SubCategoryServiceImpl service;
+
 
     public void save(Expert expert) {
         Optional<Expert> foundUser = expertDao.findByUsernameAndPassword(expert.getUsername(), expert.getPassword());
@@ -76,21 +78,26 @@ public class ExpertServiceImpl /*implements ExpertService*/ {
     }
 
     public void addSubCategoryToExpertList(Expert expert, SubCategory subCategory) {
-        //Set<SubCategory> subCategoryList = expert.getSubCategoryList();
-        /*Set<SubCategory> subCategoryList=new HashSet<>();
+       /* Set<SubCategory> subCategoryList=new HashSet<>();
          expertDao.findSubCategoryOfExpert(expert.getId()).stream()
-                 .forEach(category-> subCategoryList.add(category) );*/
-        Set<SubCategory> subCategoryList = expertDao.findSubCategoryOfExpert(expert.getId());
+                 .forEach(category-> subCategoryList.add(category) );
+       // Set<SubCategory> subCategoryList = service.findSubCategoryOfExpert(expert.getId());
         subCategoryList.add(subCategory);
         expert.setSubCategoryList(subCategoryList);
-        expertDao.save(expert);
+        expertDao.save(expert);*/
+
+        //////////////////////////////////////////////////////// whit eager
+        Set<SubCategory> expertList = expert.getSubCategoryList();
+        expertList.add(subCategory);
+        expert.setSubCategoryList(expertList);
+        updateExpert(expert);
     }
 
     public void removeSubCategoryFromExpertList(Expert expert, SubCategory subCategory) {
-        Set<SubCategory> subCategoryList = expert.getSubCategoryList();
-        subCategoryList.remove(subCategory);
-        expert.setSubCategoryList(subCategoryList);
-        expertDao.save(expert);
+        Set<SubCategory> expertList = expert.getSubCategoryList();
+        expertList.remove(subCategory);
+        expert.setSubCategoryList(expertList);
+        updateExpert(expert);
     }
 
     public void updateExpert(Expert expert) {

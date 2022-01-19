@@ -55,7 +55,6 @@ public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
         }
     }
 
-
     public SubCategory findByTitle(String title) {
         Optional<SubCategory> found = subCategoryDao.findByTitle(title);
         if (found.isPresent()) {
@@ -69,15 +68,20 @@ public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
         return subCategoryDao.findSubCategoryByCategoryId(categoryId);
     }
 
-    public List<SubCategory> findSubServiceOfExpert(int expertId) {
+    public Set<SubCategory> findSubServiceOfExpert(int expertId) {
         return subCategoryDao.findSubCategoryOfExpert(expertId);
     }
 
-    public Set<ExpertDto> findExpertsOfASubCategory(int categoryId) {
-        return subCategoryDao.findExpertsOfASubCategory(categoryId).stream()
+    public Set<SubCategory> findSubCategoryOfExpert(int categoryId) {
+        return subCategoryDao.findSubCategoryOfExpert(categoryId);
+                /*.stream()
                 .map(expert -> mapper.map(expert, ExpertDto.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet());*/
     }
+
+    /*public Set<Expert> findSubCategoryOfExpert(int categoryId) {
+        return subCategoryDao.findSubCategoryOfExpert(categoryId);
+    }*/
 
 /*    public void addExpertToSubCategory(Expert expert, SubCategory subCategory) {
         Set<Expert> experts = subCategoryDao.findExpertsOfASubCategory(subCategory.getId());
