@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.view;
 
 import ir.maktab.homeServiceProvider.config.SpringConfig;
-import ir.maktab.homeServiceProvider.data.model.entity.Address;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
@@ -9,13 +8,13 @@ import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OfferStatus;
+import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
+import ir.maktab.homeServiceProvider.dto.OfferDto;
 import ir.maktab.homeServiceProvider.service.*;
-import ir.maktab.homeServiceProvider.util.DateUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 
 public class AddOrder {
@@ -220,7 +219,7 @@ public class AddOrder {
         offerService.saveOffer(naderOffer, orderByID);*/
 
 
-        sara.getSubCategoryList().forEach(System.out::println);
+       /* sara.getSubCategoryList().forEach(System.out::println);
 
         System.out.println(order4);
 
@@ -234,36 +233,37 @@ public class AddOrder {
         offer.setDuringTime(3.15);
         offer.setProposedPrice(1800000.0);
         offerService.saveOffer(offer, order4);
+*/
 
-
+        System.out.println("***************************************8");
         /**
          * الان کاستومر میخواد بیاد ببینه چه پیشنهادهایی برای سفارشش ثبت شده
          */
-       /* Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
-        System.out.println(neda);
-        //neda.getOrdersList();//این باید فچ تایپش رو تغییر بدم
-        orderService.findOrderOfCustomer(neda).forEach(System.out::println);//بدون ترتیب
+
+
+        // nima => order id 3
+
+        // neda =>order id 2 , 4
+        //چه اردرهایی داری؟
+        orderService.findOrderOfCustomer(neda).forEach(System.out::println);
+
         System.out.println("which order do you wanna check offers?");
-        Orders orderByID1 = orderService.getById(1L);
+        Orders orderByID1 = orderService.getById(2L);
+
+        //بدون ترتیب
         //orderByID.getOffers().forEach(System.out::println); باید فچ تایپش رو تغییر بدم
-        List<OfferDto> allOfferOfOrder = offerService.findAllOfferOfOrder(orderByID);
+        List<OfferDto> allOfferOfOrder = offerService.findAllOfferOfAnOrder(orderByID);
         allOfferOfOrder.forEach(System.out::println);
 
         System.out.println("************* sortByScore ********************88");
-        offerService.sortByScore(orderByID1).forEach(System.out::println);
+        offerService.sortByScore(orderByID1).forEach(System.out::println);//todo => pagination i handle with comprator
         System.out.println("**************** sortByPrice *****************88");
-        offerService.sortByPrice(orderByID1).forEach(System.out::println);*/
+        offerService.sortByPrice(orderByID1).forEach(System.out::println);
 /**
- *یکی از اینا رو انتخاب میکنه
- */
-       /* Offer offerById = offerService.getById(1L);
-        offerById.setStatus(OfferStatus.ACCEPTED);//todo where i must handle this?
-        offerService.update(offerById);
-        Expert expert = offerById.getExpert();
-        orderByID.setExpert(expert);
-        orderByID.setAgreedPrice(offerById.getProposedPrice());
-        orderByID.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);//todo where i must handle this?
-        orderService.update(orderByID);*/
+ *یکی از اینا رو انتخاب میکنه*/
+
+        Offer offerById = offerService.getById(2L);
+        offerService.acceptedOffer(orderByID,offerById);
 
 //حالا اکسپرته رفته اونجا تموم شده بعد میخواد امتیاز و نظر بده
         //اکسپرته اردر رو درحال انجام میزنه

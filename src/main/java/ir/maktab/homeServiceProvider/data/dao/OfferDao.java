@@ -21,9 +21,9 @@ import java.util.Optional;
 public interface OfferDao extends JpaRepository<Offer, Long> {
 
     @Modifying
-    @Query(value = "UPDATE Offer o SET o.status = :status WHERE o.id <> :id ")
-    void updateOfferStatus(@Param("status") OfferStatus status, @Param("id") Long id);
-    //UPDATE offer SET STATUS = 'REJECTED' WHERE id <> 1; این تگ کوته مشکلی ایجاد نمیکنه؟  و نمیتونم توی یه کوئری جمعش کنم؟؟؟
+  //  @Query(value = "UPDATE Offer o SET o.status = :status WHERE o.id <> :id ")
+    @Query(value = "UPDATE offer o SET o.status =:status WHERE o.id <> :id And orders_id=:orderId;",nativeQuery = true)
+    void updateOfferStatus(@Param("status") OfferStatus status, @Param("id") Long offerId,@Param("orderId") Long orderId);
 
     //todo چک کن فقط اونایی نشونش بده که باید انتظار باشن and s.state='')
     @Query(value = "from Offer O join fetch O.orders S where S.id=:id ")

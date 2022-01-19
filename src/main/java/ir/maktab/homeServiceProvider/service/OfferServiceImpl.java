@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OfferServiceImpl/* implements OfferService */{
-    private  ModelMapper mapper =new ModelMapper();
+public class OfferServiceImpl/* implements OfferService */ {
+    private ModelMapper mapper = new ModelMapper();
     private final OfferDao offerDao;
     private final SubCategoryServiceImpl service;
     private final OrderServiceImpl orderService;
@@ -55,21 +55,25 @@ public class OfferServiceImpl/* implements OfferService */{
             throw new RuntimeException("This field is not your specialty ");
     }
 
-    public void acceptOfferForOrder(Orders order, Offer choiceOffer) {
+    public void acceptedOffer(Orders order, Offer choiceOffer) {
+        //offerById.setStatus(OfferStatus.ACCEPTED);//todo where i must handle this?
         order.setExpert(choiceOffer.getExpert());
         order.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
         order.setAgreedPrice(choiceOffer.getProposedPrice());
-        orderService.save(order);
-        Offer acceptedOffer = offerDao.findByOrdersAndExpert(order, choiceOffer.getExpert()).get();//findByOrderAndExpert
-        Set<Offer> offers = order.getOffers();
-        for (Offer offer : offers) {
-            if (offer.equals(acceptedOffer)) {
+        orderService.update(order);
+
+        //افرهای این ارد رو پیدا کنیم
+        List<Offer> allOfferOfAnOrder = findAllOfferOfAnOrder(order).stream()
+                .map(offerDto -> mapper.map(offerDto, Offer.class)).collect(Collectors.toList());
+        allOfferOfAnOrder.stream().forEach(offer -> {
+            if (offer.equals(choiceOffer)) {
                 offer.setStatus(OfferStatus.ACCEPTED);
+                offerDao.save(offer);
             } else {
                 offer.setStatus(OfferStatus.REJECTED);
+                offerDao.save(offer);
             }
-            offerDao.save(offer);
-        }
+        });
     }
 
     /*public void acceptedOffer(Orders orders, Offer offer) {
@@ -81,7 +85,6 @@ public class OfferServiceImpl/* implements OfferService */{
         orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
         offerService.save(offer);
     }*/
-
 
 
     public void delete(Offer offer) {
@@ -107,32 +110,29 @@ public class OfferServiceImpl/* implements OfferService */{
     }
 
 
-    public List<OfferDto> findAllOfferOfAnOrder(Long OrderId) {
-        List<Offer> all = offerDao.findAllOfferOfAnOrders(OrderId);
+    public List<OfferDto> findAllOfferOfAnOrder(Orders order) {
+        List<Offer> all = offerDao.findAllOfferOfAnOrders(order.getId());
         if (all.size() != 0) {
             return all.stream()
-                    .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
+                    .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
         } else
             throw new NotFoundDta("no offer for this order Exist yet ");
     }
 
-    public List<OfferDto> findAllOfferOfOrder(Orders order) {
-       return offerDao.findAllOfferOfAnOrders(order.getId()).stream()
-               .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
-    }
-
     public List<OfferDto> sortByPrice(Orders order) {
         return offerDao.findByOrders(order, Sort.by("proposedPrice").ascending()).stream()
-                .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
+                .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
     }
+
     public List<OfferDto> sortByScore(Orders order) {
         return offerDao.findByOrders(order, Sort.by("expert.score").descending()).stream()
-                .map(offer -> mapper.map(offer,OfferDto.class)).collect(Collectors.toList());
+                .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
     }
+
     public Offer findByOrderAndExpert(Orders order, Expert expert) {
         Optional<Offer> offer = offerDao.findByOrdersAndExpert(order, expert);
         return offer.get();
-       // return offer.orElseThrow(() -> new EntityNotExistException("offer not found!"));
+        // return offer.orElseThrow(() -> new EntityNotExistException("offer not found!"));
     }
 
 }
