@@ -30,25 +30,20 @@ public class OfferServiceImpl/* implements OfferService */{
     private final SubCategoryServiceImpl service;
     private final OrderServiceImpl orderService;
 
-    public void save(Offer offer) {
-        offerDao.save(offer);
-    }
     public void update(Offer offer) {
         offerDao.save(offer);
     }
 
     public void saveOffer(Offer offer, Orders orders) {
         Expert expert = offer.getExpert();
-        Set<SubCategory> subServiceOfExpert = service.findSubServiceOfExpert(expert.getId());
+        Set<SubCategory> subServiceOfExpert = expert.getSubCategoryList();
         SubCategory orderSubCategory = orders.getSubCategory();
-        boolean isExist = subServiceOfExpert.stream().allMatch(subCategory -> subCategory.getTitle().
-                equalsIgnoreCase(orderSubCategory.getTitle()));
         if (subServiceOfExpert.contains(orderSubCategory)) {
             Double baseAmount = orders.getSubCategory().getBaseAmount();
             Double offerPrice = offer.getProposedPrice();
             if (offerPrice > baseAmount) {
                 List<Offer> list = offerDao.findAllOfferOfAnOrders(orders.getId());
-                if (list == null) {
+                if (list.size() == 0) {
                     orders.setState(OrderState.WAITING_FOR_SELECT_AN_EXPERT);
                     orderService.update(orders);
                 }

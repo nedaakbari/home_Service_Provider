@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.data.model.entity.Person;
 
+import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
 
@@ -34,5 +35,6 @@ public class Admin {
             "@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Invalid email pattern")
     private String email;
 
+    //private Role role;
 
 }

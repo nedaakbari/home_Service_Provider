@@ -13,16 +13,4 @@ public enum OrderState {
     STARTED,
     DONE,
     PAID
-
-
-
-
-/*    WAITING_FOR_EXPERT_SUGGESTION("Waiting for expert suggestions"),
-    WAITING_FOR_SELECT_AN_EXPERT("Waiting for specialist selection"),
-    WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE("Waiting for the expert to come to your place"),
-    STARTED("started"),
-    DONE("done"),
-    PAID("paid");
-
-    String name;*/
 }

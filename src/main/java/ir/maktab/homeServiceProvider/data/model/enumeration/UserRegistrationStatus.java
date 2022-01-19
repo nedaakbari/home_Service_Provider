@@ -10,9 +10,4 @@ public enum UserRegistrationStatus {
     NEW,
     WAITING_FOR_CONFIRM,
     CONFIRMED
-
-   /* NEW("new"),
-    WAITING_FOR_CONFIRM("waiting for confirmation"),
-    CONFIRMED("confirmed");
-    String name;*/
 }

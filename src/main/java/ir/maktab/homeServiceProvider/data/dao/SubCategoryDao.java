@@ -20,10 +20,4 @@ public interface SubCategoryDao extends JpaRepository<SubCategory, Integer> {
     @Query(value = "From SubCategory S JOIN fetch S.category where S.category.id=:id")// ؟؟؟نیازی به این هست؟؟؟
     List<SubCategory> findSubCategoryByCategoryId(@Param("id") int categoryId);
 
-    // @Query(value = "From SubCategory S JOIN fetch S.experts E where E.id=:id")
-    @Query(value = "From Expert e JOIN fetch e.subCategoryList s where e.id=:id")
-    Set<SubCategory> findSubCategoryOfExpert(@Param("id")int subCategoryId);
-
-   /* @Query(value = "From Expert e JOIN fetch e.subCategoryList s where s.id=:id")// ؟؟؟نیازی به این هست؟؟؟
-    Set<Expert> findExpertsOfASubCategory(@Param("id") int id);*/
 }

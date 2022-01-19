@@ -68,16 +68,12 @@ public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
         return subCategoryDao.findSubCategoryByCategoryId(categoryId);
     }
 
-    public Set<SubCategory> findSubServiceOfExpert(int expertId) {
-        return subCategoryDao.findSubCategoryOfExpert(expertId);
+    public Set<SubCategory> findSubServiceOfExpert(Expert expert) {//پیدا کردن زیر خدمت های یک اکسپرت
+        return expert.getSubCategoryList(); //=>eager
+       // return subCategoryDao.findSubCategoryOfExpert(expert.getId());////=>without eager
     }
 
-    public Set<SubCategory> findSubCategoryOfExpert(int categoryId) {
-        return subCategoryDao.findSubCategoryOfExpert(categoryId);
-                /*.stream()
-                .map(expert -> mapper.map(expert, ExpertDto.class))
-                .collect(Collectors.toSet());*/
-    }
+
 
     /*public Set<Expert> findSubCategoryOfExpert(int categoryId) {
         return subCategoryDao.findSubCategoryOfExpert(categoryId);

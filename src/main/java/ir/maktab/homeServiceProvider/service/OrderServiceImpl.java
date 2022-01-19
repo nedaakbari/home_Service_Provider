@@ -31,6 +31,8 @@ public class OrderServiceImpl /*implements OrderService*/ {
 
     public void save(Orders orders) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
+       /* orders.setAddress(address);
+        orders.setCustomer(customer);*/ //todo it must save here?
         orderDao.save(orders);
     }
 
@@ -72,12 +74,12 @@ public class OrderServiceImpl /*implements OrderService*/ {
 
     public List<OrdersDto> findOrdersOfSubService(int subServiceId) {
         List<Orders> orders = orderDao.findOrdersOfSubService(subServiceId);//findOrdersOfSubService
-         return orders.stream().map(item -> mapper.map(item,OrdersDto.class)).collect(Collectors.toList());
+        return orders.stream().map(item -> mapper.map(item, OrdersDto.class)).collect(Collectors.toList());
     }
 
     public List<OrdersDto> findOrderOfCustomer(Customer customer) {
         List<Orders> orderOfCustomer = orderDao.findOrderOfCustomer(customer.getId());
-        return orderOfCustomer.stream().map(item->mapper.map(item,OrdersDto.class)).collect(Collectors.toList());
+        return orderOfCustomer.stream().map(item -> mapper.map(item, OrdersDto.class)).collect(Collectors.toList());
     }
 
     public Offer findAcceptedOfferOfOrder(Orders order) {
@@ -94,7 +96,6 @@ public class OrderServiceImpl /*implements OrderService*/ {
             throw new RuntimeException("Order not Paid!");
         }
     }
-
 
 
 }

@@ -43,7 +43,6 @@ public class AddSubservice {
         System.out.println(spray);
 
 
-
         //1 اول متخصص وارد مین سرویس میشه
         Category home_appliances1 = categoryService.findByTitle("HOME_APPLIANCES");
         System.out.println(home_appliances1);
@@ -58,32 +57,84 @@ public class AddSubservice {
         System.out.println(laundrys);
         System.out.println("**************** subServiceOfExpert *******************8888");
 
-        /*expertService.addSubCategoryToExpertList(nader,laundry);
+      /*  expertService.addSubCategoryToExpertList(nader,laundry);
         expertService.addSubCategoryToExpertList(ashkan,laundry);
         expertService.addSubCategoryToExpertList(sara,laundry);
         expertService.addSubCategoryToExpertList(sana,laundry);
 
         expertService.addSubCategoryToExpertList(nader,spray);
         expertService.addSubCategoryToExpertList(ashkan,spray);
-        expertService.addSubCategoryToExpertList(sara,spray);
-        expertService.addSubCategoryToExpertList(sara,kitchenAppliances);*/
+        expertService.addSubCategoryToExpertList(sara,spray);*/
+        //expertService.addSubCategoryToExpertList(sara,kitchenAppliances);
 
 ///////////////////////////////////////////////////////////////////////حذف از زیرخدمت
 
-        expertService.removeSubCategoryFromExpertList(sana,laundry);
+          expertService.removeSubCategoryFromExpertList(sana,laundry);
+
+        /////////////////////////////////////////////////////////////////////////////////////
+
+//پیدا کردن زیر خدمت های یک اکسپرت
+        sara.getSubCategoryList().forEach(System.out::println);
+
+//پیدا کردن اکسپرت های  یک زیرخدمت
+      // expertService.findExpertsOfASubCategory(2).forEach(System.out::println);
+
+
+        /////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
 
 
-        /*Set<SubCategory> subServiceOfExpert = subCategoryService.findSubServiceOfExpert(nader.getId());
-        System.out.println(subServiceOfExpert);
-        System.out.println("***********************************8888");
-        //naders.getSubCategoryList().forEach(System.out::println);
+
+       /* //naders.getSubCategoryList().forEach(System.out::println);
         System.out.println("************** expertsOfASubCategory *********************8888");
         List<Expert> expertsOfASubCategory = expertService.findExpertsOfASubCategory(laundry.getId());
         System.out.println(expertsOfASubCategory);*/
+
+
+
+        //اضافه کردن ساب سرویس به اکسپرت
+
+
+         /*subCategoryService.addExpertToSubCategory(sara,laundry);=>exception
+        subCategoryService.removeExpertFromCategory(nader,laundry);==>collection was evicted; nested exception is org.hibernate.HibernateException: collection was evicted
+
+*/
+
+        //sara=> subservice2 => laundry
+        //nader=> subservice2 => laundry  subService7 =>spray
+        //ashkan =>subService7 =>spray
+
+
+        //میخوام ببینم نادر چه خدمت هایی داره
+        //nader.getSubServiceList().forEach(System.out::println);//no session نمیخوام ایگر کنمش
+        // subCategoryService.findSubServiceOfExpert(nader.getId()).forEach(System.out::println);
+/*
+        List<Expert> expertsOfASubCategory = expertService.findExpertsOfASubCategory(laundry.getId());
+        System.out.println(expertsOfASubCategory);*/
+
+        //subCategoryService.findSubServiceOfExpert(nader.getId());
+        //میخوام ببینم سارا چه خدمت هایی داره
+        // subCategoryService.findSubserivceOfExpert(sara.getId()).forEach(System.out::println);
+
+        //میخوام ببینم چه اکسپرت هایی داخل laundry خدمت میکنن
+        /*Mapper mapper=new Mapper();//todo qualifier error
+        SubService laundry = subCategoryService.findByName("homeSpraying");
+        Set<Expert> experts = laundry.getExperts();
+        List<ExpertDto> collect = experts.stream().map(mapper::expertDto).collect(Collectors.toList());
+        collect.forEach(System.out::println);*/
+
+        //میخوام نادر رو از لاندی حذف کنم
+       /* experts.remove(nader);
+        laundry.setExperts(experts);
+        subCategoryService.updateSubService(laundry);*/
+
+        //جستجو حوزه تخصصی متخصصان
+        /*Expert nader = expertService.findByEmail("nader@gmail.com");
+        subCategoryService.findSubServiceOfExpert(nader.getId()).forEach(System.out::println);*/
+
 
 
     }

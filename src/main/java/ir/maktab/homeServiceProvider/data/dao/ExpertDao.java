@@ -19,10 +19,7 @@ public interface ExpertDao extends JpaRepository<Expert, Integer> {
 
     Optional<Expert> findByUsernameAndPassword(String userName, String password);
 
-       @Query(value = "From Expert e JOIN fetch e.subCategoryList s where s.id=:id")// ؟؟؟نیازی به این هست؟؟؟
-       List<Expert> findExpertsOfASubCategory(@Param("id") int id);
+    /*@Query(value = "From Expert e JOIN fetch e.subCategoryList s where s.id=:id")
+    List<Expert> findExpertsOfASubCategory(@Param("id") int id);*///whitOut eager
 
- /*  // @Query(value = "From SubCategory S JOIN fetch S.experts E where E.id=:id")
-   @Query(value = "From Expert e JOIN fetch e.subCategoryList s where e.id=:id")
-   Set<SubCategory> findSubCategoryOfExpert(@Param("id")int subCategoryId);*/
 }
