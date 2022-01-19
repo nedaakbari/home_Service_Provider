@@ -5,14 +5,19 @@ import ir.maktab.homeServiceProvider.data.dao.SubCategoryDao;
 import ir.maktab.homeServiceProvider.data.model.entity.Address;
 import ir.maktab.homeServiceProvider.data.model.entity.Offer;
 import ir.maktab.homeServiceProvider.data.model.entity.Orders;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
 import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
 import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OfferStatus;
 import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
+import ir.maktab.homeServiceProvider.data.model.enumeration.Role;
+import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.dto.OfferDto;
 import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
+import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.service.*;
 import ir.maktab.homeServiceProvider.util.DateUtil;
 import org.springframework.context.ApplicationContext;
@@ -20,10 +25,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class Insert {
@@ -54,7 +56,7 @@ public class Insert {
 /**
  *save an expert customer admin mainService
  * */
-      /*  ////////////// save customer
+        ////////////// save customer
         Customer nima = Customer.builder().firstName("nima").lastName("askari").role(Role.CUSTOMER).username("nima_")
                 .password("Nima@12")
                 .phoneNumber("9398745644").email("nimaAskari@gmail.com").build();
@@ -68,24 +70,24 @@ public class Insert {
 
         Expert sara = Expert.builder().firstName("sara").lastName("saraee").email("sara@gmail.com")
                 .phoneNumber("09370000000").username("sara@").password("sara_111").role(Role.EXPERT)
-                .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
+                .score(70.0).status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.save(sara);
 
         Expert nader = Expert.builder().firstName("nader").lastName("naderi").email("nader@gmail.com")
                 .phoneNumber("09360000000").username("nader_").password("nader_22").role(Role.EXPERT)
-                .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
+                .score(50.0).status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.save(nader);
 
         Expert ashkan = Expert.builder().firstName("ashkan").lastName("ashkani").email("ashkan@gmail.com")
                 .phoneNumber("09350000000").username("ashkan_").password("ashkan@7").role(Role.EXPERT)
-                .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
+                .score(20.0).status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.save(ashkan);
 
         Expert sana = Expert.builder().firstName("sana").lastName("sanaee").email("sana@gmail.com")
                 .phoneNumber("09340000000").username("sana_").password("sana@747").role(Role.EXPERT)
-                .status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
+                .score(40.0).status(UserRegistrationStatus.WAITING_FOR_CONFIRM).build();
         expertService.save(sana);
-.setScore(40.0)
+
 
         /////////save admin
         Admin mehran = Admin.builder().firstName("mehran").lastName("ebadi")
@@ -138,7 +140,7 @@ public class Insert {
         kitchenAppliances.setBaseAmount(170000.0);
         subCategoryService.save(kitchenAppliances);
 
-        SubCategory laundry =new SubCategory();
+        SubCategory laundry = new SubCategory();
         //laundry.setMainService(MainServices.HOME_APPLIANCES);
         laundry.setCategory(home_appliances);
         laundry.setDescription("we laundry your packet");
@@ -185,15 +187,15 @@ public class Insert {
         homeSpraying.setTitle("homeSpraying");
         homeSpraying.setDescription("Clean the house from any insects");
         homeSpraying.setBaseAmount(110000.0);
-        subCategoryService.save(homeSpraying);*/
+        subCategoryService.save(homeSpraying);
 
         /**
          * update a customer=> add to creditCart
          * change password*/
 //روش اول
 
-        //ابدیت کردن پسورد
-       /* Customer neda_ak = customerService.findCustomerByUseAndPass("neda_ak", "Neda@137");
+       /* //ابدیت کردن پسورد
+        Customer neda_ak = customerService.findCustomerByUseAndPass("neda_ak", "Neda@137");
         customerService.updatePassword("Neda@222",neda_ak.getId());
         //neda_ak.setCreditCart(200000.0);
 
@@ -209,7 +211,7 @@ public class Insert {
         //customerDao.delete(neda_ak);
 //روش دوم
         // ابدیت کردن پسورد و کردیت کارت کاستومر
-       /* Customer neda_ak = customerService.findCustomerByUseAndPass("neda_ak", "Neda@137");
+        Customer neda_ak = customerService.findCustomerByUseAndPass("neda_ak", "Neda@137");
         customerService.updatePassword("Neda@222",neda_ak);
         customerService.updateCreditCart(200000.0,neda_ak);
 
@@ -219,7 +221,7 @@ public class Insert {
         userService.updateCreditCart(300000.00,nima1);
 
         Expert sara1 =  expertService.getById(3);
-        userService.updatePassword("sara_222",sara1);*/
+        userService.updatePassword("sara_222",sara1);
         //دیلیت کردن کاستومر
         //customerDao.delete(neda_ak);
         /**
@@ -228,16 +230,16 @@ public class Insert {
          * find all => expert
          * with all field
          */
-/*        adminService.getAll().forEach(System.out::println);
+        adminService.getAll().forEach(System.out::println);
         System.out.println("**********************");
         customerService.getAll().forEach(System.out::println);
         System.out.println("**************************************");
         expertService.getAll().forEach(System.out::println);
         System.out.println("**************************************");
-        userService.getAll().forEach(System.out::println);*/
+        userService.getAll().forEach(System.out::println);
 
 
-/*
+
 
 //پیدا کردن مین سرویس از طریق اسمش
         Category HOME_APPLIANCES = categoryService.findByTitle("HOME_APPLIANCES".trim());
@@ -249,8 +251,11 @@ public class Insert {
         categoryService.getAll().forEach(System.out::println);
 
         //پیدا کردن ساب سرویس با نامش
-        SubCategory byName = subCategoryService.findByTitle("kitchenAppliances ".trim());
-        System.out.println(byName);
+        SubCategory kitchenAppliance = subCategoryService.findByTitle("kitchenAppliances ".trim());
+        System.out.println(kitchenAppliance);
+
+        SubCategory spray = subCategoryService.findByTitle("homeSpraying ".trim());
+        System.out.println(spray);
 
 //پیدا کردن همه سابسرویس ها
         subCategoryService.getAll().forEach(System.out::println);
@@ -267,13 +272,10 @@ public class Insert {
         System.out.println(sara2);
         //System.out.println(sara2);
 
-*/
-
         /**
          * filter
          */
 
-/*
         //فیلتر با رول
         List<UserDto> allUsersByFilter = userService.findAllUsersByFilter(null,null,null,Role.EXPERT);
         allUsersByFilter.forEach(System.out::println);
@@ -281,24 +283,22 @@ public class Insert {
         List<UserDto> allUsersByFilter2 = userService.findAllUsersByFilter("nima","askari",null,null);
         allUsersByFilter2.forEach(System.out::println);
 
-        SubService laundry = subCategoryService.findByName("laundry");
+        /*SubService laundry = subCategoryService.findByName("laundry");
         userFilter.setSubService(laundry);
-        expertService.findAllUsersByFilter(userFilter).forEach(System.out::println);//todo
-*/
+        expertService.findAllUsersByFilter(userFilter).forEach(System.out::println);//todo*/
 
 
         ////اضافه کردن اکسپرت به زیرتخصص ها
+        Expert naders = expertService.findExpertByUseAndPass("nader_", "nader_22");
+        Expert ashkans = expertService.findExpertByUseAndPass("ashkan_", "ashkan@7");
+        Expert sara_222 = expertService.findExpertByUseAndPass("sara@", "sara_222");
 
-        Expert nader = expertService.findExpertByUseAndPass("nader_", "nader_22");
-        Expert ashkan = expertService.findExpertByUseAndPass("ashkan_", "ashkan@7");
-        Expert sara = expertService.findExpertByUseAndPass("sara@", "sara_222");
-
-        System.out.println(nader);
-        System.out.println(ashkan);
-        System.out.println(sara);
+        System.out.println(naders);
+        System.out.println(ashkans);
+        System.out.println(sara_222);
 
 
-      /*  //1 اول متخصص وارد مین سرویس میشه
+        //1 اول متخصص وارد مین سرویس میشه
         Category home_appliances1 = categoryService.findByTitle("HOME_APPLIANCES");
         System.out.println(home_appliances1);
         //میخواد همه زیر خدمت های این خدمت اصلی رو ببینه
@@ -307,16 +307,45 @@ public class Insert {
         System.out.println("***********************************8888");
         //انتخاب کنه
         //SubCategory byName = subCategoryService.findByTitle("kitchenAppliances ".trim());
-        SubCategory laundry = subCategoryService.getById(2);
-        System.out.println(laundry);
-        System.out.println("***********************************8888");*/
-       /* List<SubCategory> subServiceOfExpert = subCategoryService.findSubServiceOfExpert(nader.getId());
+        SubCategory laundrys = subCategoryService.getById(2);
+        System.out.println(laundrys);
+        System.out.println("**************** subServiceOfExpert *******************8888");
+        List<SubCategory> subServiceOfExpert = subCategoryService.findSubServiceOfExpert(naders.getId());
         System.out.println(subServiceOfExpert);
-
-        List<Expert> expertsOfASubCategory = expertService.findExpertsOfASubCategory(laundry.getId());
-        System.out.println(expertsOfASubCategory);*/
+        System.out.println("***********************************8888");
+        //naders.getSubCategoryList().forEach(System.out::println);
+        System.out.println("************** expertsOfASubCategory *********************8888");
+        List<Expert> expertsOfASubCategory = expertService.findExpertsOfASubCategory(laundrys.getId());
+        System.out.println(expertsOfASubCategory);
 
         //به اکسپرت ها اضافه میشه
+
+        System.out.println("***********************************8888");
+        expertService.addSubCategoryToExpertList(nader,laundry);
+        expertService.addSubCategoryToExpertList(sara,laundry);
+        expertService.addSubCategoryToExpertList(ashkan,laundry);
+        //expertService.addSubCategoryToExpertList(nader,spray);
+        expertService.addSubCategoryToExpertList(sana,spray);
+
+
+        /*Set<SubCategory> naderList = naders.getSubCategoryList();
+        naderList.add(laundrys);
+        naders.setSubCategoryList(naderList);
+        expertService.updateExpert(naders);*/
+
+        //expertService.addSubCategoryToExpertList(nader,laundry);
+
+     /*   List<Expert> expertsOfASubCategory1 = expertService.findExpertsOfASubCategory(laundry.getId());
+
+        Set<Expert> experts = new HashSet<>();
+        for (Expert e : expertsOfASubCategory1) {
+            experts.add(e);
+        }
+        expertsOfASubCategory1.add(nader);
+        laundry.setExperts(experts);
+
+        subCategoryService.update(laundry);*/
+
         // subCategoryService.addExpertToSubCategory(nader,laundry);
         // subCategoryService.addExpertToSubCategory(sara,laundry);=>exception
         // subCategoryService.removeExpertFromCategory(nader,laundry);==>collection was evicted; nested exception is org.hibernate.HibernateException: collection was evicted
@@ -345,7 +374,7 @@ public class Insert {
 
         //میخوام ببینم نادر چه خدمت هایی داره
         //nader.getSubServiceList().forEach(System.out::println);//no session نمیخوام ایگر کنمش
-       // subCategoryService.findSubServiceOfExpert(nader.getId()).forEach(System.out::println);
+        // subCategoryService.findSubServiceOfExpert(nader.getId()).forEach(System.out::println);
 /*
         List<Expert> expertsOfASubCategory = expertService.findExpertsOfASubCategory(laundry.getId());
         System.out.println(expertsOfASubCategory);*/
@@ -399,7 +428,7 @@ public class Insert {
         Date date = DateUtil.convertStringToDate("2022-01-09");
         orders.setDoWorkDate(date);
         orderService.save(orders);*/
-
+/*
         Orders orders2 = new Orders();
         orders2.setCustomer(neda);
         orders2.setProposePrice(150000.0);
@@ -408,13 +437,13 @@ public class Insert {
         orders2.setAddress(address);
         Date date = DateUtil.convertStringToDate("2022-01-09");
         orders2.setDoWorkDate(date);
-        orderService.save(orders2);
+        orderService.save(orders2);*/
 
 /**
  *متخصص بره لیست سفارش ها رو ببینه و اگر توی تخصصش بود بتونه پیشنهاد بده و کمتر از پایه هم پیشنهاد نده
  */
 //از این خدمات کدومش؟
-        categoryService.getAll().forEach(System.out::println);
+     /*   categoryService.getAll().forEach(System.out::println);
         Category main = categoryService.findById(5);
         System.out.println("************** ");
         //از کدوم خدمت؟
@@ -425,7 +454,7 @@ public class Insert {
         orderService.findOrdersOfSubService(homeSpray.getId()).forEach(System.out::println);
         System.out.println("*******************************************888");
         Orders orderByID = orderService.getById(1L);
-
+*/
 
      /*   Offer offer = new Offer();
         offer.setExpert(nader);
@@ -467,7 +496,7 @@ public class Insert {
         /**
          * الان کاستومر میخواد بیاد ببینه چه پیشنهادهایی برای سفارشش ثبت شده
          */
-        Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
+       /* Customer neda = customerService.findCustomerByUseAndPass("neda_ak", "Neda@222");
         System.out.println(neda);
         //neda.getOrdersList();//این باید فچ تایپش رو تغییر بدم
         orderService.findOrderOfCustomer(neda).forEach(System.out::println);//بدون ترتیب
@@ -480,7 +509,7 @@ public class Insert {
         System.out.println("************* sortByScore ********************88");
         offerService.sortByScore(orderByID1).forEach(System.out::println);
         System.out.println("**************** sortByPrice *****************88");
-        offerService.sortByPrice(orderByID1).forEach(System.out::println);
+        offerService.sortByPrice(orderByID1).forEach(System.out::println);*/
 /**
  *یکی از اینا رو انتخاب میکنه
  */

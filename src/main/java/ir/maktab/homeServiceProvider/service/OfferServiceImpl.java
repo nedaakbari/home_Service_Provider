@@ -41,8 +41,8 @@ public class OfferServiceImpl/* implements OfferService */{
         Expert expert = offer.getExpert();
         List<SubCategory> subServiceOfExpert = service.findSubServiceOfExpert(expert.getId());
         SubCategory orderSubCategory = orders.getSubCategory();
-       /* boolean isExist = subServiceOfExpert.stream().allMatch(subCategory -> subCategory.getTitle().
-                equalsIgnoreCase(orderSubCategory.getTitle()));*/
+        boolean isExist = subServiceOfExpert.stream().allMatch(subCategory -> subCategory.getTitle().
+                equalsIgnoreCase(orderSubCategory.getTitle()));
         if (subServiceOfExpert.contains(orderSubCategory)) {
             Double baseAmount = orders.getSubCategory().getBaseAmount();
             Double offerPrice = offer.getProposedPrice();
@@ -77,7 +77,7 @@ public class OfferServiceImpl/* implements OfferService */{
         }
     }
 
-    public void acceptedOffer(Orders orders, Offer offer) {
+    /*public void acceptedOffer(Orders orders, Offer offer) {
         orders.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);
         offer.setStatus(OfferStatus.ACCEPTED);
         offerService.updateOfferStatus(OfferStatus.REJECTED, offer.getId());
@@ -85,7 +85,7 @@ public class OfferServiceImpl/* implements OfferService */{
         orders.setAgreedPrice(offer.getProposedPrice());
         orderDao.save(orders);//این درسته که دوباره سیوش کنم؟؟؟؟؟؟؟؟؟؟؟
         offerService.save(offer);
-    }
+    }*/
 
 
 
@@ -139,9 +139,5 @@ public class OfferServiceImpl/* implements OfferService */{
         return offer.get();
        // return offer.orElseThrow(() -> new EntityNotExistException("offer not found!"));
     }
-
-
-
-
 
 }

@@ -26,32 +26,20 @@ public class Expert extends User implements Comparable<Expert>{
 
     private Double score;
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "experts")//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد//fetch = FetchType.LAZY
-    //@EqualsAndHashCode.Include
+    @ManyToMany(fetch = FetchType.LAZY)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
+    //@EqualsAndHashCode.Include//,mappedBy = "experts"
+    @JoinTable(
+            joinColumns = {@JoinColumn(name = "expert_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subCategory_id")}
+    )
     private Set<SubCategory> subCategoryList = new HashSet<>();
 
-    @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)
+   /* @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)
-    private Set<Offer> offerList = new HashSet<>();
+    private Set<Offer> offerList = new HashSet<>();*/
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Expert expert = (Expert) o;
-        return Arrays.equals(image, expert.image) && Objects.equals(score, expert.score) && Objects.equals(subCategoryList, expert.subCategoryList);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(super.hashCode(), score, subCategoryList);
-        result = 31 * result + Arrays.hashCode(image);
-        return result;
-    }
 
     @Override
     public int compareTo(Expert o) {

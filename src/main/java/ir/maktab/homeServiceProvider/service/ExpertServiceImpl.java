@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -75,7 +76,11 @@ public class ExpertServiceImpl /*implements ExpertService*/ {
     }
 
     public void addSubCategoryToExpertList(Expert expert, SubCategory subCategory) {
-        Set<SubCategory> subCategoryList = expert.getSubCategoryList();
+        //Set<SubCategory> subCategoryList = expert.getSubCategoryList();
+        /*Set<SubCategory> subCategoryList=new HashSet<>();
+         expertDao.findSubCategoryOfExpert(expert.getId()).stream()
+                 .forEach(category-> subCategoryList.add(category) );*/
+        Set<SubCategory> subCategoryList = expertDao.findSubCategoryOfExpert(expert.getId());
         subCategoryList.add(subCategory);
         expert.setSubCategoryList(subCategoryList);
         expertDao.save(expert);

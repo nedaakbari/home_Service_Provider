@@ -36,6 +36,10 @@ public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
         subCategoryDao.delete(subCategory);
     }
 
+    public void update(SubCategory subCategory) {
+        subCategoryDao.save(subCategory);
+    }
+
     public List<SubCategoryDto> getAll() {
         return subCategoryDao.findAll().stream()
                 .map(subCategory -> mapper.map(subCategory, SubCategoryDto.class))
@@ -75,7 +79,7 @@ public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
                 .collect(Collectors.toSet());
     }
 
-    public void addExpertToSubCategory(Expert expert, SubCategory subCategory) {
+/*    public void addExpertToSubCategory(Expert expert, SubCategory subCategory) {
         Set<Expert> experts = subCategoryDao.findExpertsOfASubCategory(subCategory.getId());
         experts.add(expert);
         subCategory.setExperts(experts);
@@ -94,6 +98,6 @@ public class SubCategoryServiceImpl /*implements SubCategoryService*/ {
         Set<Expert> experts = subCategory.getExperts();
         return experts.stream()
                 .map(item -> mapper.map(item, ExpertDto.class)).collect(Collectors.toList());
-    }
+    }*/
 
 }
