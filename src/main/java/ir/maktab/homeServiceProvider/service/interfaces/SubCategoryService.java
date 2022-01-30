@@ -1,31 +1,28 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.data.dao.SubCategoryDao;
-import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.entity.service.Category;
+import ir.maktab.homeServiceProvider.dto.CategoryDto;
+import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
-import ir.maktab.homeServiceProvider.exception.DuplicateData;
-import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public interface SubCategoryService {
-    void save(SubCategory subCategory);
+    void save(SubCategoryDto subCategoryDto, CategoryDto categoryDto);
 
-    void delete(SubCategory subCategory);
+    void delete(SubCategoryDto subCategoryDto);
 
     List<SubCategoryDto> getAll();
 
-    public SubCategory getById(Integer theId);
+    SubCategoryDto getById(Integer theId);
 
-    SubCategory findByTitle(String title);
+    SubCategoryDto findByTitle(String title);
 
-    List<SubCategory> findSubservienceFromCategory(int categoryId);
+    void update(SubCategoryDto subCategoryDto);
 
-    List<SubCategory> findSubServiceOfExpert(int expertId);
+    Set<SubCategoryDto> findSubCategoryOfAnExpert(ExpertDto expertDto);
+
+    List<SubCategoryDto> findAllSubCategoryOfACategory(Category category);
 
 }

@@ -1,32 +1,37 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.data.dao.UserDao;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.User;
+import ir.maktab.homeServiceProvider.entity.Person.User;
+import ir.maktab.homeServiceProvider.enums.Role;
 import ir.maktab.homeServiceProvider.dto.UserDto;
-import ir.maktab.homeServiceProvider.exception.DuplicateData;
-import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ir.maktab.homeServiceProvider.dto.UserFilterDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
-    void save(User user);
+    void register(UserDto userDto);
 
-    void delete(User user);
+    UserDto login(UserDto userDto);
+
+    void delete(UserDto userDto);
+
+    void updateUser(UserDto userDto);
+
+    void updateCreditCart(double amount, UserDto userDto);
+
+    void updatePassword(String newPassword, UserDto userDto);
 
     List<UserDto> getAll();
 
-    User getById(Integer theId);
+    UserDto getById(Integer theId);
 
-    void updatePassword(String newPassword, int id);
+    User getByEmail(String email);
 
-    User findUserByUseAndPass(String userName, String password);
+    UserDto findUserByUseAndPass(String userName, String password);
 
     boolean isDuplicateEmail(String email);
 
+    List<UserDto> findAllUsersByFilter(UserFilterDto userFilterDto);
+
+    List<UserDto> findByPagination(int firstPage, int pageSize, String firstname, String lastname, String email, Role role);
 
 }

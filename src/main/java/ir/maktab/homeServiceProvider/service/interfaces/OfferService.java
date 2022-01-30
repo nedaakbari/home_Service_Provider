@@ -1,37 +1,36 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.data.dao.OfferDao;
-import ir.maktab.homeServiceProvider.data.dao.OrderDao;
-import ir.maktab.homeServiceProvider.data.model.entity.Offer;
-import ir.maktab.homeServiceProvider.data.model.entity.Orders;
-import ir.maktab.homeServiceProvider.data.model.entity.service.SubCategory;
-import ir.maktab.homeServiceProvider.data.model.enumeration.OrderState;
+import ir.maktab.homeServiceProvider.entity.Offer;
+import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.OfferDto;
-import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
+import ir.maktab.homeServiceProvider.dto.OrdersDto;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 public interface OfferService {
 
-    void save(Offer offer);
+    void saveOffer(OfferDto offerDto, OrdersDto ordersDto);
 
-    void saveOffer(Offer offer, Orders orders);
+    void delete(OfferDto offerDto);
 
-    void delete(Offer offer);
+    void update(OfferDto offerDto);
 
     List<OfferDto> getAll();
 
-    Offer getById(Long theId);
+    OfferDto getById(Long theId);
 
-    List<OfferDto> findAllOfferOfAnOrder(Long OrderId);
+    OfferDto findByOrderAndExpert(OrdersDto ordersDto, ExpertDto expertDto);
 
-    List<OfferDto> findAllOfferOfOrder(Orders order);
+    List<OfferDto> sortByScore(OrdersDto ordersDto);
+
+    List<OfferDto> sortByPrice(OrdersDto ordersDto);
+
+    List<OfferDto> findAllOfferOfAnOrder(OrdersDto ordersDto);
+
+    void acceptedOffer(OrdersDto ordersDto, OfferDto choiceOfferDto);
+
+    Offer findByUUID(String uuid);
+
 
 }

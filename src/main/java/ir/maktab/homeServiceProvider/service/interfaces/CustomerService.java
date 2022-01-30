@@ -1,36 +1,30 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.data.dao.CustomerDao;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
-import ir.maktab.homeServiceProvider.exception.DuplicateData;
-import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ir.maktab.homeServiceProvider.service.exception.CustomerNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public interface CustomerService {
 
+    CustomerDto register(CustomerDto customerDto);
 
-    void save(Customer customer);
+    Customer login(CustomerDto customerDto) throws CustomerNotFoundException;
 
-    void delete(Customer customer);
+    void delete(CustomerDto customerDto);
 
     List<CustomerDto> getAll();
 
-    Customer getById(Integer theId);
+    CustomerDto getById(Integer theId);
 
-    void UpdatePassword(String newPassword, int id);
+    CustomerDto getByEmail(String email);
 
-    Customer findCustomerByUseAndPass(String username, String password);
+   // void updatePassword(String newPassword, String oldPassword, String email);
+    void updatePassword(String newPassword, String oldPassword, CustomerDto customerDto);
 
-    Long getCountOfRecords();
+    CustomerDto findCustomerByUseAndPass(String username, String password);
+
+    void updateCreditCart(double amount, CustomerDto customerDto);
 
 }

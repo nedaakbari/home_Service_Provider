@@ -1,29 +1,38 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.data.dao.ExpertDao;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.model.enumeration.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
-import ir.maktab.homeServiceProvider.exception.DuplicateData;
-import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
+import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public interface ExpertService {
 
-    void save(Expert expert);
+    ExpertDto register(ExpertDto expertDto, CommonsMultipartFile image);
 
-    void delete(Expert expert);
+    ExpertDto login(ExpertDto expertDto);
+
+    void delete(ExpertDto expertDto);
 
     List<ExpertDto> getAll();
 
-    Expert getById(Integer theId);
+    ExpertDto getById(Integer theId);
 
-    Expert findExpertByUseAndPass(String username, String password);
+    ExpertDto findExpertByUseAndPass(String username, String password);
 
+    void updateCreditCart(double amount, ExpertDto expertDto);
+
+    void updatePassword(String newPassword, String oldPassword, ExpertDto expertDto);
+
+    void updateScore(ExpertDto expertDto, double getScore);
+
+    void removeSubCategoryFromExpertList(ExpertDto expertDto, SubCategoryDto subCategoryDto);
+
+    void addSubCategoryToExpertList(ExpertDto expertDto, SubCategoryDto subCategoryDto);
+
+    ExpertDto findByEmail(String email);
+
+    ExpertDto findByEmailAndPassWord(ExpertDto expertDto);
+
+    List<ExpertDto> findAllExpertOfSubCategory(String subCategoryTitle);
 }

@@ -1,10 +1,11 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.dao.CategoryDao;
-import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
+import ir.maktab.homeServiceProvider.entity.service.Category;
+import ir.maktab.homeServiceProvider.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.repository.CategoryRepository;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
-import ir.maktab.homeServiceProvider.exception.DuplicateData;
-import ir.maktab.homeServiceProvider.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
+import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -12,15 +13,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    private ModelMapper mapper = new ModelMapper();
-    private final CategoryDao categoryDao;
+    private final ModelMapper mapper;
+    private final CategoryRepository categoryDao;
 
-    public void save(Category category) {
+    @Override
+    public void save(CategoryDto categoryDto) {
+        Category category = mapper.map(categoryDto, Category.class);
         Optional<Category> foundMainService = categoryDao.findByTitle(category.getTitle());
         if (foundMainService.isPresent()) {
             throw new DuplicateData("❌❌❌ this main service is already exist ❌❌❌");
@@ -29,10 +33,13 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
-    public void delete(Category category) {
-        categoryDao.delete(category);
+    @Override
+    public void delete(CategoryDto categoryDto) {
+        categoryDao.deleteByTitle(categoryDto.getTitle());
+
     }
 
+    @Override
     public List<CategoryDto> getAll() {
         List<Category> all = categoryDao.findAll();
         if (all.size() != 0) {
@@ -43,22 +50,27 @@ public class CategoryServiceImpl implements CategoryService {
             throw new NotFoundDta("❌❌❌ no mainService Exist  ❌❌❌");
     }
 
-    public Category findById(int theId) {
-        Optional<Category> main = categoryDao.findById(theId);
-        if (main.isPresent()) {
-            return main.get();
+    @Override
+    public CategoryDto findById(int theId) {
+        Optional<Category> category = categoryDao.findById(theId);
+        if (category.isPresent()) {
+            return mapper.map(category.get(), CategoryDto.class);
         } else
             throw new NotFoundDta("there is no Category With this id");
     }
 
-
-    public Category findByTitle(String title) {
-        Optional<Category> main = categoryDao.findByTitle(title);
-        if (main.isPresent()) {
-            return main.get();
+    @Override
+    public CategoryDto findByTitle(String title) {
+        Optional<Category> category = categoryDao.findByTitle(title);
+        if (category.isPresent()) {
+            return mapper.map(category.get(), CategoryDto.class);
         } else
             throw new NotFoundDta("there is no Category With this title");
     }
 
+    // @Transactional
+    public void updateSubCategory(CategoryDto categoryDto, Set<SubCategory> subCategorySet) {
+        categoryDao.updateSubCategory(categoryDto.getTitle(), subCategorySet);
+    }
 
 }

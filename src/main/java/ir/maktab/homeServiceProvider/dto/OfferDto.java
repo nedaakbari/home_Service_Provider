@@ -1,12 +1,10 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.data.model.entity.Orders;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.model.enumeration.OfferStatus;
+import ir.maktab.homeServiceProvider.enums.OfferStatus;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -14,25 +12,18 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
+@ToString
 public class OfferDto {
 
     private OfferStatus status;
     private Double proposedPrice;
     private String description;
     private Double duringTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "nou null")
     private Date startWorkTime;
     private ExpertDto expert;
+    private String codeNumber;
 
-    @Override
-    public String toString() {
-        return "OfferDto{" +
-                "status=" + status +
-                ", proposedPrice=" + proposedPrice +
-                ", description='" + description + '\'' +
-                ", duringTime=" + duringTime +
-                ", startWorkTime=" + startWorkTime +
-                ", expert=" + expert.getFirstName() + expert.getLastName()+expert.getScore()+
-                '}';
-    }
 }

@@ -1,34 +1,27 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.data.dao.AdminDao;
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.dto.AdminDto;
-import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 public interface AdminService {
 
-    void save(Admin admin);
+    void save(AdminDto adminDto);
 
-    void delete(Admin admin);
+    void delete(AdminDto adminDto);
 
-    public List<AdminDto> getAll();
+    List<AdminDto> getAll();
 
-    Admin getById(Integer theId);
+    AdminDto getById(Integer theId);
 
-    Admin findAminByUseAndPass(String username, String password);
+    AdminDto findAminByUseAndPass(String username, String password);
 
-    void UpdatePassword(String newPassword, int id);
+    void updatePassword(String oldPassword, String newPassword, AdminDto adminDto);
 
     boolean isExist(String username, String password);
 
+    Admin findAminByEmail(String email);
 
 }

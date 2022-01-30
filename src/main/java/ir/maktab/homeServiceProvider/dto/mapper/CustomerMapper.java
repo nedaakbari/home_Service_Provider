@@ -1,30 +1,31 @@
-/*
 package ir.maktab.homeServiceProvider.dto.mapper;
 
-import ir.maktab.homeServiceProvider.data.model.entity.Person.Customer;
+
+import ir.maktab.homeServiceProvider.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper
 @Component
-public interface CustomerMapper {
-    CustomerDto entityToDto(Customer customer);
-
-    Customer dtoToEntity(CustomerDto customerDto);
-}
-@Component
-class CustomerMapperImpl implements CustomerMapper{
-
-    @Override
-    public CustomerDto entityToDto(Customer customer) {
-        return null;
+public class CustomerMapper {
+    public Customer toCustomer(CustomerDto customerDto) {
+        return Customer.builder()
+                .firstName(customerDto.getFirstName())
+                .lastName(customerDto.getLastName())
+                .username(customerDto.getUsername())
+                .password(customerDto.getPassword())
+                .email(customerDto.getEmail())
+                .build();
     }
 
-    @Override
-    public Customer dtoToEntity(CustomerDto customerDto) {
-        return null;
+    public CustomerDto toCustomerDto(Customer customer) {
+        return CustomerDto.builder()
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .username(customer.getUsername())
+                .password(customer.getPassword())
+                .email(customer.getEmail())
+                .build();
+
+
     }
 }
-
-*/

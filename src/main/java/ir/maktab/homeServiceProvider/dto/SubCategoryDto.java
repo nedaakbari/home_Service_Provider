@@ -1,6 +1,5 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
 import lombok.*;
 
 @Getter
@@ -13,5 +12,5 @@ public class SubCategoryDto {
     private String title;
     private Double basePrice;
     private String description;
-    private Category category;
+    private CategoryDto category;
 }

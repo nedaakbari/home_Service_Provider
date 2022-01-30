@@ -1,29 +1,24 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.data.dao.CategoryDao;
-import ir.maktab.homeServiceProvider.data.model.entity.service.Category;
+import ir.maktab.homeServiceProvider.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
-import ir.maktab.homeServiceProvider.exception.DuplicateData;
-import ir.maktab.homeServiceProvider.exception.NotFoundDta;
-import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 
 public interface CategoryService {
 
-    void save(Category category);
+    void save(CategoryDto categoryDto);
 
-    void delete(Category category);
+    void delete(CategoryDto categoryDto);
 
     List<CategoryDto> getAll();
 
-    Category findByTitle(String title);
+    CategoryDto findByTitle(String title);
 
-    Category findById(int theId);
+    CategoryDto findById(int theId);
+
+    void updateSubCategory(CategoryDto categoryDto, Set<SubCategory> subCategorySet);
 
 }
