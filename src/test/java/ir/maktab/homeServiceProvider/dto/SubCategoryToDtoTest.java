@@ -41,7 +41,7 @@ public class SubCategoryToDtoTest {
         HOME_CLEANING_AND_HYGIENE.setTitle("HOME_CLEANING_AND_HYGIENE");
 
         SubCategoryDto dto = SubCategoryDto.builder()
-                .category(HOME_CLEANING_AND_HYGIENE).title("homeSpraying")
+                .category(mapper.map(HOME_CLEANING_AND_HYGIENE,CategoryDto.class)).title("homeSpraying")
                 .description("Clean the house from any insects").basePrice(110000.0)
                 .build();
 
