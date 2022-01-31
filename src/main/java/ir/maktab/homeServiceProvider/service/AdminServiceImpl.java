@@ -25,13 +25,36 @@ public class AdminServiceImpl implements AdminService {
         Admin admin = mapper.map(adminDto, Admin.class);
         adminDao.save(admin);
     }
+    
+    @Override
+    public ExpertDto register(ExpertDto expertDto, CommonsMultipartFile image) {
+        Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expertDto.getUsername(), expertDto.getPassword());
+        if (foundExpert.isPresent()) {
+            throw new DuplicateData("this expert is already exist");
+        } else {
+            boolean duplicateEmail = userService.isDuplicateEmail(expertDto.getEmail());
+            if (!duplicateEmail) {
+                Expert expert = mapper.map(expertDto, Expert.class);
+                //  Expert expert = mapper.toExpert(expertDto);
+                expert.setStatus(UserRegistrationStatus.NEW);
+                expert.setRole(Role.EXPERT);
+                Expert saved = expertDao.save(expert);
+                imageFileService.uploadImageFile(image, saved);
+                return mapper.map(saved, ExpertDto.class);
+            } else
+                throw new DuplicateData("this email is already exist");
+        }
 
-    public AdminDto login(AdminDto adminDto) {
-        Optional<Admin> admin = adminDao.findByUserNameAndPassWord(adminDto.getUserName(), adminDto.getPassWord());
-        if (admin.isPresent()) {
-            return mapper.map(admin.get(), AdminDto.class);
-        } else
-            throw new NotFoundDta("no admin found with these use and pass");
+    }
+
+    @Override
+    public ExpertDto login(ExpertDto expertDto) {
+        Optional<Expert> expert = expertDao.findByEmailAndPassword
+                (expertDto.getEmail(), expertDto.getPassword());
+        if (expert.isEmpty())
+            throw new UserNotFoundException();
+        //throw new ExpertNotFoundException("not.found");
+        return mapper.map(expert.get(),ExpertDto.class);
     }
 
     @Override
@@ -41,7 +64,6 @@ public class AdminServiceImpl implements AdminService {
             adminDao.delete(admin.get());
         else throw new NotFoundDta("no admin found to delete");
     }
-
 
     @Override
     public List<AdminDto> getAll() {
@@ -84,7 +106,6 @@ public class AdminServiceImpl implements AdminService {
             adminDao.save(admin);
         } else
             throw new IncorrectInformation("incorrect passWord");
-
     }
 
     public void update(AdminDto adminDto) {
