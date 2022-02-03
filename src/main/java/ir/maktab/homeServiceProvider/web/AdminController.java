@@ -5,8 +5,10 @@ import ir.maktab.homeServiceProvider.dto.AdminDto;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
 import ir.maktab.homeServiceProvider.service.AdminServiceImpl;
 import ir.maktab.homeServiceProvider.service.CategoryServiceImpl;
+import ir.maktab.homeServiceProvider.service.ExpertServiceImpl;
 import ir.maktab.homeServiceProvider.service.UserServiceImpl;
 
+import ir.maktab.homeServiceProvider.service.interfaces.SubCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@RestController
-//@RequestMapping("/admin")
 @RequiredArgsConstructor
 @Controller
 public class AdminController {
-    private final UserServiceImpl service;
+    private final UserServiceImpl userService;
     private final AdminServiceImpl adminService;
     private final CategoryServiceImpl categoryService;
+    private final SubCategoryService subCategoryService;
+    private final ExpertServiceImpl expertService;
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView showAdminLoginPage() {
