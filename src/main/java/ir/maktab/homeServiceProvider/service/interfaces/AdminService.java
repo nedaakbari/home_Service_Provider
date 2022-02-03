@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.data.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.dto.AdminDto;
 
 import java.util.List;
@@ -11,6 +11,10 @@ public interface AdminService {
     void save(AdminDto adminDto);
 
     void delete(AdminDto adminDto);
+
+    void update(AdminDto adminDto);
+
+    AdminDto login(AdminDto adminDto);
 
     List<AdminDto> getAll();
 

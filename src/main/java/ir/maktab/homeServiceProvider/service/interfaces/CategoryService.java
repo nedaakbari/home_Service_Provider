@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
 
 import java.util.List;

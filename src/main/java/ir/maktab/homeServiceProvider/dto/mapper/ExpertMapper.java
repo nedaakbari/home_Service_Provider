@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.dto.mapper;
 
-import ir.maktab.homeServiceProvider.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,6 @@ public class ExpertMapper {
                 .firstName(expert.getFirstName())
                 .lastName(expert.getLastName())
                 .email(expert.getEmail())
-                //.status(expert.getStatus())
                 .registerDate(expert.getRegisterDate())
                 .creditCart(expert.getCreditCart())
                 .score(expert.getScore())

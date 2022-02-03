@@ -1,9 +1,9 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.entity.Person.User;
-import ir.maktab.homeServiceProvider.enums.Role;
-import ir.maktab.homeServiceProvider.repository.UserRepository;
-import ir.maktab.homeServiceProvider.repository.specification.UserSpecifications;
+import ir.maktab.homeServiceProvider.data.entity.Person.User;
+import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.data.repository.UserRepository;
+import ir.maktab.homeServiceProvider.data.repository.specification.UserSpecifications;
 import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.dto.UserFilterDto;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
@@ -12,7 +12,6 @@ import ir.maktab.homeServiceProvider.service.exception.UserNotFoundException;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,12 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto login(UserDto userDto) {//can't private because of implement interface and have no body
+    public UserDto login(UserDto userDto) {
         Optional<User> user = userDao.findByEmailAndPassword
                 (userDto.getEmail(), userDto.getPassword());
         if (user.isEmpty())
             throw new UserNotFoundException();
-        //throw new ExpertNotFoundException("not.found");
         return mapper.map(user.get(), UserDto.class);
     }
 
@@ -63,6 +61,11 @@ public class UserServiceImpl implements UserService {
         return userDao.findAll().stream()
                 .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
+    public List<UserDto> findAllUserForVerify() {
+        return userDao.findAllUserForVerify().stream()
+                .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
+    }
+
 
     @Override
     public UserDto getById(Integer theId) {
@@ -101,6 +104,10 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
     }
 
+    public void updateStatus(String userEmail) {
+        userDao.updateStatus(userEmail, UserRegistrationStatus.CONFIRMED);
+    }
+
     @Override
     public UserDto findUserByUseAndPass(String userName, String password) {
         Optional<User> foundUser = userDao.findByUsernameAndPassword(userName, password);
@@ -121,111 +128,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAllUsersByFilter(UserFilterDto dto) {//String firstname, String lastname, String email, Role role
-        Specification<User> userSpecification = UserSpecifications.selectByFilter(dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getRole());
+        Specification<User> userSpecification = UserSpecifications.filterUsers(dto);
         return userDao.findAll(userSpecification).stream()
                 .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<UserDto> findByPagination(int firstPage, int pageSize, String firstname, String lastname, String email, Role role) {
-        Specification<User> userSpecification = UserSpecifications.selectByFilter(firstname, lastname, email, role);
-        Page<User> pu = userDao.findAll((userSpecification), PageRequest.of(firstPage, pageSize, Sort.by("score").ascending()));
-        return pu.stream()
-                .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
-    }
-
     public List<UserDto> searchUsers(UserFilterDto dto) {
-        Sort sort = Sort.by("firstname").descending();
+        Sort sort = Sort.by("lastName").ascending();
         Pageable pageable = PageRequest.of(dto.getPageNumber(), dto.getPageSize(), sort);//برای پیجینیشنه هست
-
-        //Specification<Offer> specification
         Specification<User> specification = UserSpecifications.filterUsers(dto);
-        //میتونیم یه اسپیسیفیکشن دیگه هم داشته باشیم که اینا رو با هم اند کنیم بعدش
-        // Specification<Expert> specification2 = ExpertSpecifications.filterProducts(dto);
-        // List<ExpertDto> experts = expertService.findAllExpertOfSubCategory(dto.getSubCategoryTitle());
         return userDao
                 .findAll(Specification.where(specification), pageable)
                 .stream()
                 .map(user -> mapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
     }
-
-
-
-  /*  public List<UserDto> findUserFilteringAndPagination(UserFilterDto filterDto) {
-        PageRequest.of(filterDto.getPageNumber(),filterDto.getPageSize()
-        ,Sort.by(""))
-
-        Specification<User> userSpecification = UserDao.selectByFilter(firstname, lastname, email, role);
-        return userDao.findAll(userSpecification).stream()
-                .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
-    }
-
-
-    @Override
-    public List<ProductDto> filterProducts(ProductCategoryDto dto) {
-        Sort sort = Sort.by("price").descending().and(Sort.by("name"));
-        Pageable pageable = PageRequest.of(dto.getPageNumber(), dto.getPageSize(), sort);
-
-
-        Specification<Product> specification = ProductSpecifications.filterProducts(dto);
-//        Specification<Product> specification2 = ProductSpecifications.filterProducts(dto);
-        return productRepository
-                .findAll(specification, pageable)
-                .stream()
-                .map(product -> productMapper.toProductDto(product))
-                .collect(Collectors.toList());
-    }
-*/
-
-  /*  @Transactional
-    public List<CourseDto> findMaxMatch(CourseDto courseDto, int offset, int limit) {
-        Pageable pageable = PageRequest.of(offset, limit, Sort.Direction.ASC, "category");
-        Category category = categoryService.findCategoryByName(courseDto.getCategory());
-        LocalDate startDate = courseDtoConverter.stringToLocalDate(courseDto.getStartDate());
-        LocalDate endDate = courseDtoConverter.stringToLocalDate(courseDto.getEndDate());
-        int duration = courseDtoConverter.stringToIntConverter(courseDto.getDuration());
-        int capacity = courseDtoConverter.stringToIntConverter(courseDto.getCapacity());
-        Page<Course> matchedCourses = courseRepository.findAll(
-                CourseSpecifications.findMaxMatch(category, courseDto.getTitle(), duration, capacity,
-                        startDate, endDate), pageable);
-        return courseDtoConverter.convertCourseListToDtoList(matchedCourses.getContent());
-    }*/
-
- /* @Transactional
-  public int getNumberOfPages() {
-      int totalCourses = courseRepository.countAll();
-      int rowsNumberInPage = Integer.parseInt(env.getProperty("Page.Rows"));
-      double pages = (double) totalCourses / rowsNumberInPage;
-      return (int) Math.ceil(pages);
-  }
-
-    @Transactional
-    public int getNumberOfCourses() {
-        return courseRepository.countAll();
-    }*/
-
-/*    @Transactional
-    public long getNumberOfMatchedPages(CourseDto courseDto) {
-        Category category = categoryService.findCategoryByName(courseDto.getCategory());
-        LocalDate startDate = courseDtoConverter.stringToLocalDate(courseDto.getStartDate());
-        LocalDate endDate = courseDtoConverter.stringToLocalDate(courseDto.getEndDate());
-        int capacity = courseDtoConverter.stringToIntConverter(courseDto.getCapacity());
-        int duration = courseDtoConverter.stringToIntConverter(courseDto.getDuration());
-        long totalMatched = courseRepository.count(CourseSpecifications.findMaxMatch(category, courseDto.getTitle(),
-                duration, capacity, startDate, endDate));
-        int rowsNumberInPage = Integer.parseInt(env.getProperty("Page.Rows"));
-        double pages = (double) totalMatched / rowsNumberInPage;
-        return (int) Math.ceil(pages);
-    }*/
-
-/*@Transactional
-public long getNumberOfTeacherCoursesPage(UserDto teacherDto) {
-    User teacher = userService.findUserByEmail(teacherDto.getEmail());
-    long totalCourses = courseRepository.countByParticipantsContains(teacher);
-    int rowsNumberInPage = Integer.parseInt(env.getProperty("Page.Rows"));
-    double pages = (double) totalCourses / rowsNumberInPage;
-    return (int) Math.ceil(pages);
-}*/
 
 }

@@ -1,8 +1,8 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.entity.ImageFile;
-import ir.maktab.homeServiceProvider.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.repository.ImageFileRepository;
+import ir.maktab.homeServiceProvider.data.entity.ImageFile;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.repository.ImageFileRepository;
 import ir.maktab.homeServiceProvider.service.interfaces.ImageFileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

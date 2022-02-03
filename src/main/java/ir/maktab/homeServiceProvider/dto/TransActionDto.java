@@ -10,10 +10,10 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class TransActionDto {
-  //  private CustomerDto customer;
-   // private ExpertDto expert;
+    private CustomerDto customer;
+    private ExpertDto expert;
     private long amount;
     private long trackingNumber;
     private Date transferDate;
-   // private OrdersDto orders;
+    private OrdersDto orders;
 }

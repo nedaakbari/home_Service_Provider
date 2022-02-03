@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.entity.Address;
-import ir.maktab.homeServiceProvider.repository.AddressRepository;
+import ir.maktab.homeServiceProvider.data.entity.Address;
+import ir.maktab.homeServiceProvider.data.repository.AddressRepository;
 import ir.maktab.homeServiceProvider.dto.AddressDto;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.AddressService;
@@ -27,7 +27,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void delete(AddressDto addressDto) {
-        Address address = getByZipCode(addressDto.getZipCode());
+        Address address = addressDao.findAddressesByZipCode(addressDto.getZipCode()).get();
         addressDao.delete(address);
     }
 
@@ -47,10 +47,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address getByZipCode(String zipCode) {
+    public AddressDto getByZipCode(String zipCode) {
         Optional<Address> found = addressDao.findAddressesByZipCode(zipCode);
         if (found.isPresent())
-            return found.get();
+            return mapper.map(found.get(),AddressDto.class);
         else throw new NotFoundDta("not address found");
     }
 

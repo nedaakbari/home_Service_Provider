@@ -1,9 +1,8 @@
 package ir.maktab.homeServiceProvider.service;
 
-
+import ir.maktab.homeServiceProvider.data.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.data.repository.AdminRepository;
 import ir.maktab.homeServiceProvider.dto.AdminDto;
-import ir.maktab.homeServiceProvider.entity.Person.Admin;
-import ir.maktab.homeServiceProvider.repository.AdminRepository;
 import ir.maktab.homeServiceProvider.service.exception.IncorrectInformation;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.AdminService;
@@ -27,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
         adminDao.save(admin);
     }
 
+    @Override
     public AdminDto login(AdminDto adminDto) {
         Optional<Admin> admin = adminDao.findByUserNameAndPassWord(adminDto.getUserName(), adminDto.getPassWord());
         if (admin.isPresent()) {
@@ -88,6 +88,7 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
+    @Override
     public void update(AdminDto adminDto) {
         Optional<Admin> admin = adminDao.findByEmail(adminDto.getEmail());
         adminDao.save(admin.get());
