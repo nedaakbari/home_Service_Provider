@@ -2,15 +2,13 @@ package ir.maktab.homeServiceProvider.web;
 
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import ir.maktab.homeServiceProvider.service.interfaces.*;
+import ir.maktab.homeServiceProvider.service.validation.OnLogin;
 import ir.maktab.homeServiceProvider.service.validation.OnRegister;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,5 +68,34 @@ public class CustomerController {
             return "customerPages/customerProfile";
         }
     }
+
+
+    @GetMapping("/customerLogin")
+    public ModelAndView showLoginPage() {
+        return new ModelAndView("customerPages/login", "customer", new CustomerDto());
+    }
+
+    @RequestMapping(value = "/customerLogin", method = RequestMethod.POST)
+    public String showPanelPage(@ModelAttribute("customer") @Validated(OnLogin.class) CustomerDto dto,
+                                Model model, HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        CustomerDto customer = service.login(dto);
+        map.put("name", customer.getFirstName());
+        map.put("lastName", customer.getLastName());
+        map.put("role", customer.getRole());
+        map.put("creditCart", customer.getCreditCart());
+        map.put("userName", customer.getUsername());
+        map.put("password", customer.getPassword());
+        model.addAttribute("customer", customer);
+        model.addAllAttributes(map);
+        request.getSession().setAttribute("customerDto", customer);
+        return "customerPages/customerProfile";
+    }
+
+    @GetMapping(value = "/customerEditPass")
+    public String editPass() {
+        return "customerPages/editPass";
+    }
+
 
 }
