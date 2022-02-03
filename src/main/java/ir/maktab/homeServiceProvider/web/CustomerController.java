@@ -1,6 +1,8 @@
 package ir.maktab.homeServiceProvider.web;
 
+import ir.maktab.homeServiceProvider.dto.CategoryDto;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
+import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
 import ir.maktab.homeServiceProvider.service.interfaces.*;
 import ir.maktab.homeServiceProvider.service.validation.OnLogin;
 import ir.maktab.homeServiceProvider.service.validation.OnRegister;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -96,6 +99,52 @@ public class CustomerController {
     public String editPass() {
         return "customerPages/editPass";
     }
+    @PostMapping(value = "/customerEditPass")
+    public String editPassword(@ModelAttribute("customerDto") CustomerDto customerDto,
+                               HttpServletRequest request
+            , @RequestParam("newPass") String newPassword
+            , @RequestParam("oldPass") String oldPassword) {
+        if (customerDto.getPassword().equals(oldPassword)) {
+            service.updatePassword(newPassword, oldPassword, customerDto);
+            customerDto.setPassword(newPassword);
+            request.getSession().setAttribute("customerDto", customerDto);
+            return "redirect:/dashboard";//todo how to save this customer with new password
+        } else {
+            return "error";
+        }
+    }
 
+    @GetMapping(value = "/customerEditCredit")
+    public String editCredit(HttpServletRequest request) {
+        CustomerDto customer = (CustomerDto) request.getSession().getAttribute("customerDto");
+        if (customer == null) {
+            return "error";
+        }
+        return "customerPages/editCredit";
+    }
+
+    @PostMapping(value = "/customerEditCredit")
+    public String editCreditCart(@SessionAttribute("customerDto") CustomerDto customerDto,
+                                 @RequestParam("amount") Double amount,
+                                 HttpServletRequest request) {
+        service.updateCreditCart(amount + customerDto.getCreditCart(), customerDto);
+        customerDto.setCreditCart(amount + customerDto.getCreditCart());
+        request.getSession().setAttribute("customerDto",customerDto);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping(value = "/customerCategoryList")
+    public String showCategoryList(Model model) {
+        List<CategoryDto> list = categoryService.getAll();
+        model.addAttribute("list", list);
+        return "customerPages/categoryList";
+    }
+
+    @GetMapping("/customerShowSubCategory/{title}")
+    public String showAllSubCategory(@PathVariable String title, Model model) {
+        List<SubCategoryDto> list = subService.findAllSubCategoryOfACategory(title);
+        model.addAttribute("list", list);
+        return "customerPages/viewSubCategory";
+    }
 
 }
