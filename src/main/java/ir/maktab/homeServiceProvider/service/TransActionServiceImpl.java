@@ -1,10 +1,10 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.entity.Orders;
-import ir.maktab.homeServiceProvider.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.entity.TransActions;
-import ir.maktab.homeServiceProvider.repository.TransActionRepository;
+import ir.maktab.homeServiceProvider.data.entity.Orders;
+import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.entity.TransActions;
+import ir.maktab.homeServiceProvider.data.repository.TransActionRepository;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.TransActionDto;
@@ -43,7 +43,6 @@ public class TransActionServiceImpl implements TransActionService {
         return transActionDao.findById(theId).orElseThrow(() -> new NotFoundDta("no transAction found"));
     }
 
-    // @Transactional()//Propagation=Propagation.REQUIRED
     public boolean paidForOrder(Orders orders) {
         Customer customer = orders.getCustomer();
         Expert expert = orders.getExpert();

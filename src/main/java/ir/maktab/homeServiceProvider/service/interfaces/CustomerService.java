@@ -1,8 +1,6 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
-import ir.maktab.homeServiceProvider.service.exception.CustomerNotFoundException;
 
 import java.util.List;
 
@@ -10,7 +8,7 @@ public interface CustomerService {
 
     CustomerDto register(CustomerDto customerDto);
 
-    Customer login(CustomerDto customerDto) throws CustomerNotFoundException;
+    CustomerDto login(CustomerDto customerDto);
 
     void delete(CustomerDto customerDto);
 

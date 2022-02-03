@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.dto.mapper;
 
 
-import ir.maktab.homeServiceProvider.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import org.springframework.stereotype.Component;
 

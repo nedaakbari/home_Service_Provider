@@ -1,11 +1,11 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.enums.OfferStatus;
+import ir.maktab.homeServiceProvider.data.enums.OfferStatus;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,10 +20,10 @@ public class OfferDto {
     private String description;
     private Double duringTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "nou null")
+    @DateTimeFormat(pattern = "HH:MM:SS")
     private Date startWorkTime;
+    private OrdersDto orders;
     private ExpertDto expert;
-    private String codeNumber;
-
+    private Date submissionDate;
+    private String codeNumber= UUID.randomUUID().toString();
 }

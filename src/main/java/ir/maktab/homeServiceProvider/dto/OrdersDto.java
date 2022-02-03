@@ -1,11 +1,12 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.service.validation.OnRegister;
+import ir.maktab.homeServiceProvider.data.enums.OrderState;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,15 +16,15 @@ import java.util.Date;
 @ToString
 public class OrdersDto {
 
-    private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "not null", groups = OnRegister.class)
-    private Date doWorkDate;//تاریخانجامکار که کاستومر میخواد انجام بشه
-    private Double ProposedPrice;//قیمت پیشنهادی مشتری
+    @NotNull(message = "not null")
+    private Date doWorkDate;
+    private String description;
+    private Double ProposedPrice;
     private AddressDto address;
     private SubCategoryDto subCategory;
-    private CategoryDto category;
     private CustomerDto customer;
-    private ExpertDto expert;// به خاطر نال شدنش باید اینو نذاشت
-    private String codeNumber;
+    private ExpertDto expert;
+    private String codeNumber= UUID.randomUUID().toString();
+    private OrderState state;
 }

@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.enums.Role;
+import ir.maktab.homeServiceProvider.data.enums.Role;
 import lombok.Data;
 import lombok.ToString;
 
@@ -12,9 +12,4 @@ public class UserFilterDto extends BaseDto {
     private String firstName;
     private String lastName;
     private String email;
-    //private String subCategoryTitle;
-    //private UserRegistrationStatus status;
-    //میخوام بگم بین این دوتا تایم ثبت نام کرده باشه
-    //private Date UserRegisterOne;
-    //private Date UserRegisterTow;
 }

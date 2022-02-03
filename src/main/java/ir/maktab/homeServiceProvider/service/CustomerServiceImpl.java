@@ -1,11 +1,14 @@
 package ir.maktab.homeServiceProvider.service;
-import ir.maktab.homeServiceProvider.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.enums.Role;
-import ir.maktab.homeServiceProvider.enums.UserRegistrationStatus;
-import ir.maktab.homeServiceProvider.repository.CustomerRepository;
+
+import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.enums.Role;
+import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.data.repository.CustomerRepository;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
-import ir.maktab.homeServiceProvider.service.exception.*;
-import ir.maktab.service.exception.*;
+import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
+import ir.maktab.homeServiceProvider.service.exception.IncorrectInformation;
+import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.exception.UserNotFoundException;
 import ir.maktab.homeServiceProvider.service.interfaces.CustomerService;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
 import lombok.Getter;
@@ -26,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final ModelMapper mapper;
 
     @Override
-    public CustomerDto register(CustomerDto customerDto) {
+    public CustomerDto register(CustomerDto customerDto) {//register
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword
                 (customerDto.getUsername(), customerDto.getPassword());
         if (foundUser.isPresent()) {
@@ -45,13 +48,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer login(CustomerDto customerDto) throws CustomerNotFoundException {
-        Optional<Customer> customer = customerDao.findByUsernameAndPassword
-                (customerDto.getUsername(), customerDto.getPassword());
-        if (customer.isEmpty())
-            throw new UserNotFoundException();
-        return customer.get();
+    public CustomerDto login(CustomerDto customerDto)  {
+        Optional<Customer> customer = customerDao.findByEmailAndPassword(
+                customerDto.getEmail(),customerDto.getPassword());
+        if (customer.isPresent())
+            return mapper.map(customer.get(),CustomerDto.class);
+        else
+            throw new NotFoundDta("no customer found with these email and pass");
     }
+
 
     @Override
     public void delete(CustomerDto customerDto) {
@@ -62,6 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new UserNotFoundException();
     }
 
+    @Override
     public List<CustomerDto> getAll() {
         return customerDao.findAll().stream()
                 .map(customer -> mapper.map(customer, CustomerDto.class))

@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.dto.mapper;
 
-import ir.maktab.homeServiceProvider.entity.Person.User;
+import ir.maktab.homeServiceProvider.data.entity.Person.User;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.UserDto;

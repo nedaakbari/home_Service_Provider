@@ -12,8 +12,8 @@ public class CommentDto {
 
     private String comment;
     private CustomerDto customer;
-    //private ExpertDto expert;
-    //private OrdersDto order;
+    private ExpertDto expert;
+    private OrdersDto order;
     private String codeNumber;
 
 }

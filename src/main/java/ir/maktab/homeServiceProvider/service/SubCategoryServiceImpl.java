@@ -1,10 +1,9 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.entity.service.Category;
-import ir.maktab.homeServiceProvider.entity.service.SubCategory;
-import ir.maktab.homeServiceProvider.repository.CategoryRepository;
-import ir.maktab.homeServiceProvider.repository.SubCategoryRepository;
-import ir.maktab.homeServiceProvider.dto.CategoryDto;
+import ir.maktab.homeServiceProvider.data.entity.service.Category;
+import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.repository.CategoryRepository;
+import ir.maktab.homeServiceProvider.data.repository.SubCategoryRepository;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
@@ -27,10 +26,10 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     private final CategoryRepository categoryDao;
 
     @Override
-    public void save(SubCategoryDto subCategoryDto, CategoryDto categoryDto) {
+    public void save(SubCategoryDto subCategoryDto,String categoryTitle) {
         SubCategory subCategory = mapper.map(subCategoryDto, SubCategory.class);
         Optional<SubCategory> foundSubService = subCategoryDao.findByTitle(subCategory.getTitle());
-        Optional<Category> category = categoryDao.findByTitle(categoryDto.getTitle());
+        Optional<Category> category = categoryDao.findByTitle(categoryTitle);
         if (category.isPresent()) {
             if (foundSubService.isEmpty()) {
                 subCategory.setCategory(category.get());
@@ -82,18 +81,18 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
-    public List<SubCategoryDto> findAllSubCategoryOfACategory(Category category) {
-        return subCategoryDao.findSubCategoryByCategory(category)
+    public List<SubCategoryDto> findAllSubCategoryOfACategory(String categoryTitle) {
+        Optional<Category> category = categoryDao.findByTitle(categoryTitle);
+        if (category.isPresent())
+        return subCategoryDao.findSubCategoryByCategory(category.get())
                 .stream().map(subCategory -> mapper.map(subCategory, SubCategoryDto.class))
                 .collect(Collectors.toList());
+        else
+            throw  new NotFoundDta("no data has found");
     }
 
     @Override
     public Set<SubCategoryDto> findSubCategoryOfAnExpert(ExpertDto expertDto) {
-        return expertDto.getSubCategoryList().stream()
-                .map(subCategory -> mapper.map(subCategory, SubCategoryDto.class))
-                .collect(Collectors.toSet());
-
+        return expertDto.getSubCategoryList();
     }
-
 }
