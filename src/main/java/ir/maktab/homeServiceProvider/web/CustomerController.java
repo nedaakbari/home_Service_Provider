@@ -51,4 +51,24 @@ public class CustomerController {
         return "customerPages/customerProfile";
     }
 
+    @GetMapping(value = "/dashboard")
+    public String dashboard(HttpServletRequest request,
+                            Model model) {
+        CustomerDto customerLogin = (CustomerDto) request.getSession().getAttribute("customerDto");
+        if (customerLogin == null) {
+            return "error";
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", customerLogin.getFirstName());
+            map.put("lastName", customerLogin.getLastName());
+            map.put("role", customerLogin.getRole());
+            map.put("creditCart", customerLogin.getCreditCart());
+            map.put("userName", customerLogin.getUsername());
+            map.put("password", customerLogin.getPassword());
+            model.addAttribute("customer", customerLogin);
+            model.addAllAttributes(map);
+            return "customerPages/customerProfile";
+        }
+    }
+
 }
