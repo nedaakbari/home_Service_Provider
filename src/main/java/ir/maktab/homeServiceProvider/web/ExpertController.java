@@ -141,5 +141,27 @@ public class ExpertController {
         request.getSession().setAttribute("expertDto", expertDto);
         return "redirect:/expertDashboard";
     }
+    @GetMapping(value = "/expertCategoryList")
+    public String showCategoryList(Model model) {
+        List<CategoryDto> list = categoryService.getAll();
+        model.addAttribute("list", list);
+        return "expertPages/categoryList";
+    }
+
+    @GetMapping("/showSubCategory/{title}")
+    public String showAllSubCategory(@PathVariable String title, Model model) {
+        List<SubCategoryDto> list = subCategoryService.findAllSubCategoryOfACategory(title);
+        model.addAttribute("list", list);
+        return "expertPages/viewSubCategory";
+    }
+
+    @GetMapping(value = "/addingSub/{title}")
+    public String addingSub(@ModelAttribute("expertDto") ExpertDto dto
+            , @PathVariable String title, HttpServletRequest request, Model model) {
+        ExpertDto expert = (ExpertDto) request.getSession().getAttribute("expertDto");
+        service.addSubCategoryToExpertList(expert, title);
+        model.addAttribute("expertDto", expert);
+        return "redirect:/showSpeciality";
+    }
 
 }
