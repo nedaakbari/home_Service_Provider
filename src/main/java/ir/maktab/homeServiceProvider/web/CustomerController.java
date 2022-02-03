@@ -1,8 +1,7 @@
 package ir.maktab.homeServiceProvider.web;
 
-import ir.maktab.homeServiceProvider.dto.CategoryDto;
-import ir.maktab.homeServiceProvider.dto.CustomerDto;
-import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
+import ir.maktab.homeServiceProvider.dto.*;
+import ir.maktab.homeServiceProvider.service.exception.LessAmount;
 import ir.maktab.homeServiceProvider.service.interfaces.*;
 import ir.maktab.homeServiceProvider.service.validation.OnLogin;
 import ir.maktab.homeServiceProvider.service.validation.OnRegister;
@@ -145,6 +144,40 @@ public class CustomerController {
         List<SubCategoryDto> list = subService.findAllSubCategoryOfACategory(title);
         model.addAttribute("list", list);
         return "customerPages/viewSubCategory";
+    }
+    @GetMapping(value = "/order/{title}")
+    public ModelAndView makeOrder(@ModelAttribute("customerDto") CustomerDto dto
+            , @PathVariable String title, HttpServletRequest request) {
+        ModelAndView models = new ModelAndView();
+        SubCategoryDto subForOrder = subService.findByTitle(title);
+        request.getSession().setAttribute("subForOrder", subForOrder);
+        models.addObject("address", new AddressDto());
+        models.addObject("order", new OrdersDto());
+        models.addObject("customerDto", dto);
+        models.addObject("subForOrder", subForOrder);
+        models.setViewName("customerPages/orderForm");
+        return models;
+    }
+
+    @PostMapping(value = "/placeOrder")
+    public String placeOrder(@RequestParam("city") String city,
+                             @RequestParam("zipCode") String zipCode,
+                             @RequestParam("street") String street,
+                             @ModelAttribute("order") OrdersDto ordersDto,
+                             HttpServletRequest request) {
+        CustomerDto customerDto = (CustomerDto) request.getSession().getAttribute("customerDto");
+        AddressDto addressDto = new AddressDto();
+        addressDto.setCity(city);
+        addressDto.setStreet(street);
+        addressDto.setZipCode(zipCode);
+        SubCategoryDto subForOrder = (SubCategoryDto) request.getSession().getAttribute("subForOrder");
+        if (subForOrder.getBasePrice()<=ordersDto.getProposedPrice()){
+            addressService.save(addressDto);
+            orderService.save(ordersDto, customerDto, addressDto, subForOrder.getTitle());
+            request.getSession().setAttribute("addressDto", addressDto);
+        }else
+            throw new LessAmount("amount can not be less than base amount");
+        return "redirect:/orderList";
     }
 
 }
