@@ -3,6 +3,7 @@ package ir.maktab.homeServiceProvider.web;
 
 import ir.maktab.homeServiceProvider.dto.AdminDto;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
+import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
 import ir.maktab.homeServiceProvider.service.AdminServiceImpl;
 import ir.maktab.homeServiceProvider.service.CategoryServiceImpl;
 import ir.maktab.homeServiceProvider.service.ExpertServiceImpl;
@@ -13,11 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,27 +57,37 @@ public class AdminController {
         return "adminPanel/manageCategory";
     }
 
-    @RequestMapping(value = "/admin/addCategory", method = RequestMethod.GET)
-    public String showAddCategory(@ModelAttribute("admin") AdminDto adminDto, Model model) {
-        return "adminPanel/manageCategory";
+    @GetMapping("/categoryForm")
+    public String showCategoryForm(Model m, HttpServletRequest request) {
+        Object admin = request.getSession().getAttribute("admin");
+        if (admin == null)
+            return "error";
+        m.addAttribute("category", new CategoryDto());
+        return "adminPanel/categoryForm";
     }
 
-    @RequestMapping(value = "/admin/addCategory", method = RequestMethod.POST)
-    public String addCategory(@ModelAttribute("category") CategoryDto categoryDto, Model model) {
-        return "adminPanel/manageCategory";
+    @PostMapping("/saveCategory")
+    public String saveNewCategory(CategoryDto categoryDto, HttpServletRequest request) {
+        Object admin = request.getSession().getAttribute("admin");
+        if (admin == null)
+            return "error";
+        categoryService.save(categoryDto);
+        return "redirect:/admin/mangeCategory";
     }
 
-    @RequestMapping(value = "/admin/showAll", method = RequestMethod.GET)
-    public String showAll(@ModelAttribute("admin") AdminDto adminDto, Model model) {
-        List<CategoryDto> allCategory = categoryService.getAll();
-        model.addAttribute("list", allCategory);
-        return "adminPanel/viewCategory";
+    @GetMapping("/admin/addSubCategory/{title}")
+    public String showAddSubServicePage(@PathVariable String title, Model model,
+                                        HttpServletRequest httpServletRequest) {
+        model.addAttribute("subCategoryDto", new SubCategoryDto());
+        httpServletRequest.getSession().setAttribute("mainCategoryName", title);
+        return "adminPanel/saveSubCategory";
     }
 
-    @RequestMapping(value = "/admin/deleteCategory/{title}", method = RequestMethod.GET)
-    public String delete(@ModelAttribute("cat") CategoryDto categoryDto) {
-        categoryService.delete(categoryDto);
-        return "redirect:/viewemp";
+    @PostMapping("addSubCategory/saveSubCategory")
+    public String submitSaveSubServicePage(@ModelAttribute("subCategoryDto") SubCategoryDto subCategoryDto, HttpServletRequest httpServletRequest) {
+        String title = (String) httpServletRequest.getSession().getAttribute("mainCategoryName");
+        subCategoryService.save(subCategoryDto, title);
+        return "redirect:/admin/mangeCategory";
     }
 
     @RequestMapping(value = "/admin/mangeSubCategory", method = RequestMethod.GET)
