@@ -213,5 +213,46 @@ public class ExpertController {
             return modelAndView;
         }
     }
+    @PostMapping(value = "/placeOffer")
+    private String placeOffer(HttpServletRequest request,
+                              @ModelAttribute("offer") OfferDto offerDto,
+                              Model model) {
+        ExpertDto expertDto = (ExpertDto) request.getSession().getAttribute("expertDto");
+        String codeNumber = (String) request.getSession().getAttribute("codeNumber");
+        // String codeNumber = (String) model.getAttribute("codeNumber");//todo why null?
+        offerService.saveOffer(offerDto, expertDto, codeNumber);
+        return "expertPages/allOfferOfExpert";
+    }
+
+    @GetMapping(value = "/listOfOffered")
+    public String showListOfOffered(HttpServletRequest request,
+                                    Model model) {
+        ExpertDto expertDto = (ExpertDto) request.getSession().getAttribute("expertDto");
+        List<OfferDto> allOfferAnExpert = offerService.findAllOfferAnExpert(expertDto);
+        model.addAttribute("allOfferAnExpert", allOfferAnExpert);
+        return "expertPages/listOfOffered";
+    }
+
+    @ExceptionHandler(value = BindException.class)
+    public ModelAndView bindExceptionHandler(BindException ex, HttpServletRequest request) {
+        String lastView = (String) request.getSession().getAttribute(LastViewInterceptor.LAST_VIEW_ATTRIBUTE);
+        return new ModelAndView(lastView, ex.getBindingResult().getModel());//مدلمو از این بایندینگ اکسپنه گرفتم
+    }
+
+    @ExceptionHandler(value = ExpertNotFoundException.class)
+    public ModelAndView loginExceptionHandler(ExpertNotFoundException ex) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("expert", new ExpertDto());
+        model.put("error", ex.getMessage());
+        return new ModelAndView("expertPages/login", model);
+    }
+
+    @ExceptionHandler(value = LessAmount.class)
+    public ModelAndView lessAmountExceptionHandler(LessAmount ex) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("offer", new OfferDto());
+        model.put("error", ex.getMessage());
+        return new ModelAndView("expertPages/offerForm", model);
+    }
 
 }
