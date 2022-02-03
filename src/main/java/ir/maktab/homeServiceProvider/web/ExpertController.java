@@ -164,4 +164,15 @@ public class ExpertController {
         return "redirect:/showSpeciality";
     }
 
+    @GetMapping(value = "/delete/{title}")
+    public String deleteSub(@PathVariable String title,
+                            HttpServletRequest request, Model model) {
+        ExpertDto expert = (ExpertDto) request.getSession().getAttribute("expertDto");
+        service.removeSubCategoryFromExpertList(expert, title);
+        Set<SubCategoryDto> subCategoryOfAnExpert = subCategoryService.findSubCategoryOfAnExpert(expert);
+        System.out.println(subCategoryOfAnExpert);
+        model.addAttribute("expertDto", expert);
+        return "redirect:/showSpeciality";
+    }
+
 }
