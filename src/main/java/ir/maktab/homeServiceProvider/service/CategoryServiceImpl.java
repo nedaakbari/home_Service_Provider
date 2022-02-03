@@ -1,8 +1,8 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.entity.service.Category;
-import ir.maktab.homeServiceProvider.entity.service.SubCategory;
-import ir.maktab.homeServiceProvider.repository.CategoryRepository;
+import ir.maktab.homeServiceProvider.data.entity.service.Category;
+import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.repository.CategoryRepository;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
@@ -69,8 +69,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     // @Transactional
+    @Override
     public void updateSubCategory(CategoryDto categoryDto, Set<SubCategory> subCategorySet) {
         categoryDao.updateSubCategory(categoryDto.getTitle(), subCategorySet);
     }
-
 }

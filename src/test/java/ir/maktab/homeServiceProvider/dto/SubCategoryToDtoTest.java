@@ -1,7 +1,8 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.entity.service.Category;
-import ir.maktab.homeServiceProvider.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.entity.service.Category;
+import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

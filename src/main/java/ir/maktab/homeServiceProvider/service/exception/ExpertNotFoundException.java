@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.service.exception;
 
-public class ExpertNotFoundException extends Exception{
+public class ExpertNotFoundException extends RuntimeException{
     public ExpertNotFoundException() {
     }
 

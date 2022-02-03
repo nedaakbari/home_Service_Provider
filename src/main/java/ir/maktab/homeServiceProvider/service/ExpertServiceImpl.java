@@ -1,21 +1,24 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.entity.service.SubCategory;
-import ir.maktab.homeServiceProvider.enums.Role;
-import ir.maktab.homeServiceProvider.enums.UserRegistrationStatus;
-import ir.maktab.homeServiceProvider.repository.ExpertRepository;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.enums.Role;
+import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.data.repository.ExpertRepository;
+import ir.maktab.homeServiceProvider.data.repository.SubCategoryRepository;
+import ir.maktab.homeServiceProvider.data.repository.specification.ExpertSpecifications;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
-import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
-import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
-import ir.maktab.homeServiceProvider.service.exception.IncorrectInformation;
-import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
-import ir.maktab.homeServiceProvider.service.exception.UserNotFoundException;
+import ir.maktab.homeServiceProvider.dto.ExpertFilterDto;
+import ir.maktab.homeServiceProvider.service.exception.*;
 import ir.maktab.homeServiceProvider.service.interfaces.ExpertService;
 import ir.maktab.homeServiceProvider.service.interfaces.ImageFileService;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -31,6 +34,7 @@ public class ExpertServiceImpl implements ExpertService {
     private final UserService userService;
     private final ImageFileService imageFileService;
     private final ModelMapper mapper;
+    private final SubCategoryRepository subService;
 
     @Override
     public ExpertDto register(ExpertDto expertDto, CommonsMultipartFile image) {
@@ -49,17 +53,16 @@ public class ExpertServiceImpl implements ExpertService {
             } else
                 throw new DuplicateData("this email is already exist");
         }
-
     }
-
 
     @Override
     public ExpertDto login(ExpertDto expertDto) {
-        Optional<Expert> expert = expertDao.findByUsernameAndPassword
-                (expertDto.getUsername(), expertDto.getPassword());
-        if (expert.isEmpty())
-            throw new UserNotFoundException();
-        return mapper.map(expert.get(),ExpertDto.class);
+        Optional<Expert> expert = expertDao.findByEmailAndPassword
+                (expertDto.getEmail(), expertDto.getPassword());
+        if (expert.isPresent())
+            return mapper.map(expert.get(), ExpertDto.class);
+        else
+            throw new ExpertNotFoundException("no expert founded");
     }
 
     @Override
@@ -91,7 +94,6 @@ public class ExpertServiceImpl implements ExpertService {
         if (found.isPresent()) {
             return mapper.map(found.get(), ExpertDto.class);
         } else throw new NotFoundDta("expert not exist!");
-        //return expert.orElseThrow(() -> new NotFoundDta("expert not exist!"));
     }
 
     @Override
@@ -100,7 +102,7 @@ public class ExpertServiceImpl implements ExpertService {
         if (found.isPresent()) {
             return mapper.map(found, ExpertDto.class);
         } else {
-            throw new UserNotFoundException();
+            throw new ExpertNotFoundException("no expert founded");
         }
     }
 
@@ -113,11 +115,10 @@ public class ExpertServiceImpl implements ExpertService {
             throw new NotFoundDta("no expert found with these use and pass");
     }
 
-
     @Override
-    public void removeSubCategoryFromExpertList(ExpertDto expertDto, SubCategoryDto subCategoryDto) {
-        Expert expert = mapper.map(expertDto, Expert.class);
-        SubCategory subCategory = mapper.map(subCategoryDto, SubCategory.class);
+    public void removeSubCategoryFromExpertList(ExpertDto expertDto, String subTitle) {
+        Expert expert = expertDao.findByEmail(expertDto.getEmail()).get();
+        SubCategory subCategory =subService.findByTitle(subTitle).get();
         Set<SubCategory> expertList = expert.getSubCategoryList();
         expertList.remove(subCategory);
         expert.setSubCategoryList(expertList);
@@ -125,13 +126,15 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void addSubCategoryToExpertList(ExpertDto expertDto, SubCategoryDto subCategoryDto) {
-        Expert expert = mapper.map(expertDto, Expert.class);
-        SubCategory subCategory = mapper.map(subCategoryDto, SubCategory.class);
-        Set<SubCategory> expertList = expert.getSubCategoryList();
-        expertList.add(subCategory);
-        expert.setSubCategoryList(expertList);
-        expertDao.save(expert);
+    public void addSubCategoryToExpertList(ExpertDto expertDto, String subCategoryTitle) {
+        Expert expert = expertDao.findByEmail(expertDto.getEmail()).get();
+        Optional<SubCategory> subCategory = subService.findByTitle(subCategoryTitle);
+        if (subCategory.isPresent()) {
+            Set<SubCategory> expertList = expert.getSubCategoryList();
+            expertList.add(subCategory.get());
+            expert.setSubCategoryList(expertList);
+            expertDao.save(expert);
+        } else throw new NotFoundDta("no data found");
     }
 
     @Override
@@ -154,11 +157,31 @@ public class ExpertServiceImpl implements ExpertService {
         expertDao.updateCreditCart(expertDto.getEmail(), amount);
     }
 
+
+    public void updateStatus(String userEmail) {
+        expertDao.updateStatus(userEmail,UserRegistrationStatus.CONFIRMED);
+    }
+
+
+
     @Override
     public List<ExpertDto> findAllExpertOfSubCategory(String subCategoryTitle) {
         List<Expert> experts = expertDao.findExpertsOfASubCategory(subCategoryTitle);
         return experts.stream().map(expert -> mapper.map(expert, ExpertDto.class))
                 .collect(Collectors.toList());
+    }
 
+
+    @Override
+    public List<ExpertDto> searchExperts(ExpertFilterDto dto) {
+        Sort sort = Sort.by("lastName").ascending();
+        Pageable pageable = PageRequest.of(dto.getPageNumber(), dto.getPageSize(), sort);
+        Specification<Expert> specification = ExpertSpecifications.filterExpert(dto);
+
+        return expertDao.
+                findAll(Specification.where(specification), pageable)
+                .stream().map(expert -> mapper.map(expert, ExpertDto.class))
+                .collect(Collectors.toList());
+//todo subcategory
     }
 }

@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
-import ir.maktab.homeServiceProvider.entity.TransActions;
+import ir.maktab.homeServiceProvider.data.entity.TransActions;
 import ir.maktab.homeServiceProvider.dto.TransActionDto;
 
 import java.util.List;

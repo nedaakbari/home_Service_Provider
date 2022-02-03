@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
-import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
+import ir.maktab.homeServiceProvider.dto.ExpertFilterDto;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.List;
@@ -26,11 +26,13 @@ public interface ExpertService {
 
     void updateScore(ExpertDto expertDto, double getScore);
 
-    void removeSubCategoryFromExpertList(ExpertDto expertDto, SubCategoryDto subCategoryDto);
+    void removeSubCategoryFromExpertList(ExpertDto expertDto, String subTitle);
 
-    void addSubCategoryToExpertList(ExpertDto expertDto, SubCategoryDto subCategoryDto);
+    void addSubCategoryToExpertList(ExpertDto expertDto, String subCategoryTitle);
 
     ExpertDto findByEmail(String email);
+
+    List<ExpertDto> searchExperts(ExpertFilterDto dto);
 
     ExpertDto findByEmailAndPassWord(ExpertDto expertDto);
 
