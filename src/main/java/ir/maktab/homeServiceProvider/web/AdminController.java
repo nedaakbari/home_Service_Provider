@@ -50,9 +50,10 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/mangeCategory", method = RequestMethod.GET)
     public String manageCategory(@ModelAttribute("admin") AdminDto adminDto, Model model) {
-        //Object admin = model.getAttribute("admin");
-        model.getAttribute("name");
+        model.getAttribute("name");//todo title
         model.addAttribute("category", new CategoryDto());
+        List<CategoryDto> list = categoryService.getAll();
+        model.addAttribute("list", list);
         return "adminPanel/manageCategory";
     }
 
