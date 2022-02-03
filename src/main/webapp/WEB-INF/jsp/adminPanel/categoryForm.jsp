@@ -1,6 +1,5 @@
-
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -61,7 +60,7 @@
                 </a>
             </li>
             <li>
-               <a href="<c:url value="/manageExperts"/>">
+                <a href="<c:url value="/manageExperts"/>">
                     <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                     <span class="item">ManageExperts</span>
                 </a>
@@ -80,13 +79,13 @@
             </li>
             <li>
                 <a href="<c:url value="/users"/>">
-                    <span class="icon"><i class="fas fa-search"></i></span>
+                    <span class="icon"><i class="fas fa-user-shield"></i></span>
                     <span class="item">searchUsers</span>
                 </a>
             </li>
             <li>
                 <a href="<c:url value="/searchExperts"/>">
-                    <span class="icon"><i class="fas fa-search"></i></span>
+                    <span class="icon"><i class="fas fa-cog"></i></span>
                     <span class="item">searchExperts</span>
                 </a>
             </li>
@@ -104,14 +103,23 @@
             <div class="col-8">
                 <div class="panel-container">
 
-                    <h5 class="small-heading">Which one do you want to do?</h5>
+                    <h1>Add New Category</h1>
+                    <form:form method="post" action="saveCategory" modelAttribute="category">
+                        <table class="table table-bordered table-striped  text-black" style="padding: 100px 100px 0px 100px ;!important;">
+                            <tr>
+                                <td>title :</td>
+                                <td><form:input path="title"/>
+                                <br>
+                                    <form:errors path="title" cssClass="text-danger"/>
+                                </td>
+                            </tr>
 
+                        </table>
 
-                        <a href="<c:url value="/admin/mangeCategory"/>" class="btn btn-outline-dark ">Manage Category</a>
-
-                        <a href="<c:url value="/admin/mangeUser"/>" class="btn btn-outline-dark ">Manage Users</a>
-
-                        <a href="<c:url value="/admin/mangeExpert"/>" class="btn btn-outline-dark ">Manage expert</a>
+                        <div class="">
+                            <input type="submit" value="saveCategory"/>
+                        </div>
+                    </form:form>
 
                 </div>
             </div>
@@ -132,3 +140,4 @@
 </body>
 
 </html>
+

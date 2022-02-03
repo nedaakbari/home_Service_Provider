@@ -12,6 +12,7 @@ import ir.maktab.homeServiceProvider.service.interfaces.SubCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,17 +37,15 @@ public class AdminController {
         modelAndView.addObject("admin", new AdminDto());
         modelAndView.setViewName("adminPanel/adminLogin");
         return modelAndView;
-        // return "adminPanel/adminPanelHome";//
     }
 
-    @RequestMapping(value = "/admin/adminLogin", method = RequestMethod.POST)
-    public String showPanelPage(@ModelAttribute("admin") AdminDto adminDto, Model model) {
+    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
+    public String showPanelPage(@ModelAttribute("admin") @Validated AdminDto adminDto, Model model) {
         Map<String, Object> map = new HashMap<>();
         adminService.login(adminDto);//todo
         map.put("name", adminDto.getUserName());
         model.addAllAttributes(map);
         return "adminPanel/adminPanelHome";
-        // return "adminPanel/adminPanelHome";//adminLogin
     }
 
     @RequestMapping(value = "/admin/mangeCategory", method = RequestMethod.GET)

@@ -34,7 +34,7 @@
 
     <div class="sidebar">
         <div class="profile">
-            <img src=https://ath2.unileverservices.com/wp-content/uploads/sites/4/2020/02/IG-annvmariv-1024x1016.jpg
+            <img src=https://i.pinimg.com/564x/5b/b9/59/5bb95935defd974fa87b44eaa8ed9bcd.jpg"
                  alt="profile_picture">
             <h3> hello ${name}</h3>
             <p>Admin</p>
@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li>
-               <a href="<c:url value="/manageExperts"/>">
+                <a href="<c:url value="/manageExperts"/>">
                     <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                     <span class="item">ManageExperts</span>
                 </a>
@@ -80,13 +80,13 @@
             </li>
             <li>
                 <a href="<c:url value="/users"/>">
-                    <span class="icon"><i class="fas fa-search"></i></span>
+                    <span class="icon"><i class="fas fa-user-shield"></i></span>
                     <span class="item">searchUsers</span>
                 </a>
             </li>
             <li>
                 <a href="<c:url value="/searchExperts"/>">
-                    <span class="icon"><i class="fas fa-search"></i></span>
+                    <span class="icon"><i class="fas fa-cog"></i></span>
                     <span class="item">searchExperts</span>
                 </a>
             </li>
@@ -98,20 +98,35 @@
     <div class="container">
         <div class="row mt-5">
 
-            <div class="col-4">
+            <div class="col-3">
 
             </div>
-            <div class="col-8">
+            <div class="col-9">
                 <div class="panel-container">
 
-                    <h5 class="small-heading">Which one do you want to do?</h5>
+                    <h4 class="text-bold">Add New SubService</h4>
+                    <form:form action="/addSubCategory/saveSubCategory" modelAttribute="subCategoryDto" method="post">
+                        <%-- <p>${subServiceDto.mainServiceName}</p>--%>
+                        <table class="table table-bordered table-striped  text-black" style="padding: 100px 100px 0px 100px ;!important;">
+                            <tr>
+                                <td>Title : </td>
+                                <td><form:input path="title"/></td>
+                            </tr>
+                            <tr>
+                                <td>basePrice : </td>
+                                <td><form:input path="basePrice" type="number"  step="0.01" /></td>
 
+                            </tr>
+                            <tr>
+                                <td>description : </td>
+                                <td><form:input path="description"/></td>
+                            </tr>
 
-                        <a href="<c:url value="/admin/mangeCategory"/>" class="btn btn-outline-dark ">Manage Category</a>
-
-                        <a href="<c:url value="/admin/mangeUser"/>" class="btn btn-outline-dark ">Manage Users</a>
-
-                        <a href="<c:url value="/admin/mangeExpert"/>" class="btn btn-outline-dark ">Manage expert</a>
+                            <tr>
+                                <td><input type="submit" value="Save" class="btn btn-dark " /></td>
+                            </tr>
+                        </table>
+                    </form:form>
 
                 </div>
             </div>
@@ -132,3 +147,10 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
