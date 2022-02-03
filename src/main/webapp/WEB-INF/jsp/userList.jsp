@@ -1,35 +1,21 @@
-
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Access Denied</title>
+    <link rel="stylesheet" href="<c:url value="/static/css/adminPanel.css"/>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>searcgUsers</title>
+    <style>
+
+    </style>
 </head>
-<body>
-<p>Access Denied</p>
-</body>
-</html>
-
-<html>
-<head>
-
-    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <html>
-    <head>
-        <link rel="stylesheet" href="<c:url value="/static/css/adminPanel.css"/>">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>searcgUsers</title>
-        <style>
-
-        </style>
-    </head>
 <body>
 
 <%
@@ -121,6 +107,7 @@
                 <table class="table table-striped  table-hover" style="margin-left: 180px"><%--table-dark--%>
                     <tr>
                         <td>
+                                <%-- <form:input path="firstName" name="firstName" placeHolder="firstName"/>--%>
                             <input name="firstName" placeHolder="firstName"/>
                         </td>
                         <td>
@@ -131,12 +118,12 @@
                         </td>
                         <td>
                                 <%--                <input name="role" placeHolder="role"/>--%>
-                            <label for="roles">Choose a Role:</label>
+                            <label for="role">Choose a Role:</label>
 
-                            <select name="roles" id="roles">
+                            <select name="role" id="role">
+                                <option value="">All</option>
                                 <option value="CUSTOMER">customer</option>
                                 <option value="EXPERT">expert</option>
-
                             </select>
                         </td>
                         <td>
@@ -163,7 +150,6 @@
                     </c:forEach>
                 </table>
             </form:form>
-
         </div>
 
     </div>

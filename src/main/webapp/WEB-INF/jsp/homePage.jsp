@@ -1,4 +1,3 @@
-<%--
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -20,16 +19,16 @@
 </head>
 <body>
 
-&lt;%&ndash; header&ndash;%&gt;
-<div class=" p-3 px-md-4 d-flex flex-column align-items-center text-color-white   border-bottom shadow-sm p-3  flex-md-row"
-     style="background-color : #7ebe00">
+<%-- header--%>
+<div class=" p-3 px-md-4 d-flex flex-column align-items-center text-white   border-bottom shadow-sm p-3  flex-md-row"
+     style="background-color :#8b177a">
     <div class="col row center">
         <div class="col row">
-            <h5 class="my-0 mr-md-auto font-weight-normal">HomeServiceProvider</h5>
+            <h5 class="my-0 mr-md-auto font-weight-bold text-white">HomeServiceProvider</h5>
         </div>
-        <div class="col row">
+        <%--<div class="col row">
             <img src="<c:url value="/static/image/31.png"/>  " width="50">
-        </div>
+        </div>--%>
     </div>
 
     <div class="col">
@@ -39,24 +38,24 @@
         <h2></h2>
     </div>
 
-    <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Features</a>
-        <a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
-        <a class="p-2 text-dark" href="#">Pricing</a>
+    <nav class="my-2 my-md-0 mr-md-3 text-white">
+        <a class="p-2 text-white " href="#">Features</a>
+        <a class="p-2 text-white" href="#">Enterprise</a>
+        <a class="p-2 text-white" href="#">Support</a>
+        <a class="p-2 text-white" href="#">Pricing</a>
     </nav>
-        <a class="btn btn-outline-light" href="register">Order</a>
-
-</div>
-&lt;%&ndash; header&ndash;%&gt;
-
+<%--<a class="btn btn-outline-light" href="customerPages/register.jsp">Order</a>--%>
+    <a href="<c:url value="/customerRegister"/>" class="btn btn-Light ">Order</a>
+    <%-- <a class="btn btn-bd-download d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="https://github.com/twbs/bootstrap/archive/v4.0.0.zip">Download</a>--%>
+ </div>
+ <%-- header--%>
 
 <div>
-    <img src="<c:url value="/static/image/1.png"/> " width="100% " style="position: absolute">
+    <img src="<c:url value="/static/image/10.png"/> " width="100% " style="position: absolute">
     <div class="btn-group mt-3 mx-3">
-        <a href="<c:url value="/expertRegister"/>" class="btn btn-outline-success">Be Expert</a>
+        <a href="<c:url value="/expertRegister"/>" class="btn btn-outline-dark">Be Expert</a>
     </div>
-    &lt;%&ndash;  <a class="btn btn-outline-success" href="expertRegister">Be Expert</a>&ndash;%&gt;
+    <%--  <a class="btn btn-outline-success" href="expertRegister">Be Expert</a>--%>
 </div>
 
 
@@ -124,14 +123,14 @@
 </div>
 
 
-&lt;%&ndash;
+<%--
 <div class="container">
     <div class="pricing  pt-3 pb-2 text-center">
         <h1 class="display-4"></h1>
         <p class="lead"></p>
     </div>
 </div>
-&ndash;%&gt;
+--%>
 
 <div class="container text-center" style="margin-top: 100px ">
     <div class=" row   "  style="padding-left: 30px" >
@@ -281,8 +280,8 @@
 </footer>
 
 
-&lt;%&ndash;<a href="customerform">Add Customer</a>&ndash;%&gt;
-&lt;%&ndash;<a href="viewemp">Be Expert</a>&ndash;%&gt;
+<%--<a href="customerform">Add Customer</a>--%>
+<%--<a href="viewemp">Be Expert</a>--%>
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -295,4 +294,3 @@
 </html>
 
 
---%>

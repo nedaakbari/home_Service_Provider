@@ -1,35 +1,21 @@
-
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Access Denied</title>
+    <link rel="stylesheet" href="<c:url value="/static/css/adminPanel.css"/>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>userForVerify</title>
+    <style>
+
+    </style>
 </head>
-<body>
-<p>Access Denied</p>
-</body>
-</html>
-
-<html>
-<head>
-
-    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <html>
-    <head>
-        <link rel="stylesheet" href="<c:url value="/static/css/adminPanel.css"/>">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>searcgUsers</title>
-        <style>
-
-        </style>
-    </head>
 <body>
 
 <%
@@ -114,63 +100,43 @@
 
 
     <%--body--%>
-    <div class="">
-        <div class="row mt-2">
-            <form:form cssClass="m-5 p-5 text-center" cssStyle="width: 1100px" action="/users/search"
-                       method="get">
-                <table class="table table-striped  table-hover" style="margin-left: 180px"><%--table-dark--%>
-                    <tr>
-                        <td>
-                            <input name="firstName" placeHolder="firstName"/>
-                        </td>
-                        <td>
-                            <input name="lastName" placeHolder="lastName"/>
-                        </td>
-                        <td>
-                            <input name="email" placeHolder="email"/>
-                        </td>
-                        <td>
-                                <%--                <input name="role" placeHolder="role"/>--%>
-                            <label for="roles">Choose a Role:</label>
+    <div class="container row">
+        <div class="col-4">
 
-                            <select name="roles" id="roles">
-                                <option value="CUSTOMER">customer</option>
-                                <option value="EXPERT">expert</option>
-
-                            </select>
-                        </td>
-                        <td>
-                            <input type="submit" value="search"/>
-                        </td>
-                    </tr>
+        </div>
+        <div class="col-8">
+            <div class="row mt-2">
+                <table class=" table table-bordered table-striped ml-5 text-info" >
                     <tr>
-                        <th>firstName</th>
-                        <th>lastName</th>
-                        <th>email</th>
-                        <th>role</th>
-                        <th></th>
+                        <th class="bg-dark text-white">firstName</th>
+                        <th class="bg-dark text-white">lastName</th>
+                        <th class="bg-dark text-white">email</th>
+                        <th class="bg-dark text-white">role</th>
+                        <th class="bg-dark text-white">verification</th>
                     </tr>
-                    <c:forEach items="${userList}" var="user">
+                    <p class="text-danger" style="text-color:red !important;">${error}</p>
+                    <c:forEach items="${allUserForVerify}" var="user">
                         <tr>
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>
                             <td>${user.email}</td>
                             <td>${user.role}</td>
+
                             <td>
-                                <a href="#"> datails</a>
+                                <a href="verify/${user.email}">verify</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
-            </form:form>
 
+            </div>
         </div>
+
 
     </div>
 
 </div>
 
-</div>
 <script>
     var hamburger = document.querySelector(".hamburger");
     hamburger.addEventListener("click", function () {
