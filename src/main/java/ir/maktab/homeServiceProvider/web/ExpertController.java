@@ -175,4 +175,43 @@ public class ExpertController {
         return "redirect:/showSpeciality";
     }
 
+    @GetMapping(value = "/showSpeciality")
+    public String showSpeciality(@ModelAttribute("expertDto") ExpertDto dto,
+                                 HttpServletRequest request, Model model) {
+        ExpertDto expert = (ExpertDto) request.getSession().getAttribute("expertDto");
+        Set<SubCategoryDto> subCategoryOfAnExpert = subCategoryService.findSubCategoryOfAnExpert(expert);
+        System.out.println(subCategoryOfAnExpert);
+        List<SubCategoryDto> subCategory = new ArrayList<>(subCategoryOfAnExpert);
+        request.getSession().setAttribute("subList", subCategory);
+        model.addAttribute("subList", subCategory);
+        return "expertPages/speciality";
+    }
+
+    @GetMapping(value = "/showAllOrders")
+    public String showAllOrders(HttpServletRequest request, Model model) {
+        ExpertDto expertDto = (ExpertDto) request.getSession().getAttribute("expertDto");
+        List<OrdersDto> ordersForExpert = orderService.findOrdersForExpert(expertDto);
+        model.addAttribute("ordersForExpert", ordersForExpert);
+        return "expertPages/showAllOrders";//todo dont let offer again or dont show him those orders that offered
+    }
+
+    @GetMapping(value = "/offer/{codeNumber}")
+    private ModelAndView makeOffer(HttpServletRequest request,
+                                   @PathVariable String codeNumber,
+                                   HttpSession session) {
+        ExpertDto expertDto = (ExpertDto) request.getSession().getAttribute("expertDto");
+        ModelAndView modelAndView = new ModelAndView();
+        if (offerService.isAllowToOffer(expertDto, codeNumber)) {
+            modelAndView.addObject("codeNumber", codeNumber);
+            modelAndView.addObject("offer", new OfferDto());
+            modelAndView.setViewName("expertPages/offerForm");
+            request.getSession().setAttribute("codeNumber", codeNumber);
+            return modelAndView;
+        } else {
+            modelAndView.addObject("notAllowError", new DuplicateData("you offer for this order already"));
+            modelAndView.setViewName("expertPages/showAllOrders");
+            return modelAndView;
+        }
+    }
+
 }
