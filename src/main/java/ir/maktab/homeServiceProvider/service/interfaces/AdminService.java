@@ -20,12 +20,12 @@ public interface AdminService {
 
     AdminDto getById(Integer theId);
 
-    AdminDto findAminByUseAndPass(String username, String password);
-
     void updatePassword(String oldPassword, String newPassword, AdminDto adminDto);
 
     boolean isExist(String username, String password);
 
     Admin findAminByEmail(String email);
+
+    AdminDto findAminByUseAndPass(String username, String password);
 
 }

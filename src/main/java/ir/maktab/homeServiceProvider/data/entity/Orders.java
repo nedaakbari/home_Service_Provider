@@ -25,17 +25,16 @@ public class Orders {
     private Long id;
 
     @CreationTimestamp
-    private Date orderRegistrationDate;
+    private Date orderRegistrationDate;//تایمی که سفارش ثبت میشه
 
     @Column(length = 300)
     private String description;
 
     @Temporal(TemporalType.DATE)
-    private Date doWorkDate;
+    private Date doWorkDate;//تاریخانجامکار که کاستومر میخواد انجام بشه
 
-    private Double proposedPrice;
 
-    @ManyToOne
+    @ManyToOne//(cascade = CascadeType.PERSIST)
     private Address address;
 
     @ManyToOne
@@ -52,9 +51,9 @@ public class Orders {
     private Set<Offer> offers = new HashSet<>();
 
     @ManyToOne
-    private Expert expert;
+    private Expert expert;//اکسپرتی که انتخاب میشه هست
 
-    private Double agreedPrice;
+    private Double agreedPrice;//قیمت پذیرفته شده برای این سفارش
 
     private Double score;
 

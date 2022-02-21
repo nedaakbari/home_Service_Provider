@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.data.enums.OfferStatus;
+import ir.maktab.data.enums.OfferStatus;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,7 +20,9 @@ public class OfferDto {
     private String description;
     private Double duringTime;
 
+   // @DateTimeFormat(pattern = "HH:MM:SS a")//todo
     @DateTimeFormat(pattern = "HH:MM:SS")
+  //  @NotNull(message = "nou null")
     private Date startWorkTime;
     private OrdersDto orders;
     private ExpertDto expert;

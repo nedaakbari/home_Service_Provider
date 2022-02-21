@@ -2,6 +2,8 @@ package ir.maktab.homeServiceProvider.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 @Builder
@@ -9,8 +11,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class SubCategoryDto {
+    @NotBlank(message = "title should not be empty")
     private String title;
+    @NotBlank(message = "basePrice should not be empty")
     private Double basePrice;
     private String description;
-    private CategoryDto category;
+    //private CategoryDto category;
 }

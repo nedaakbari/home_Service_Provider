@@ -12,6 +12,7 @@ import ir.maktab.homeServiceProvider.service.exception.UserNotFoundException;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -40,19 +41,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto login(UserDto userDto) {
+    public UserDto login(UserDto userDto) {//can't private because of implement interface and have no body
         Optional<User> user = userDao.findByEmailAndPassword
                 (userDto.getEmail(), userDto.getPassword());
         if (user.isEmpty())
             throw new UserNotFoundException();
+        //throw new ExpertNotFoundException("not.found");
         return mapper.map(user.get(), UserDto.class);
     }
 
-
     @Override
     public void delete(UserDto userDto) {
-
-        User user = getByEmail(userDto.getEmail());
+        User user = userDao.findByEmail(userDto.getEmail()).get();
         userDao.delete(user);
     }
 
@@ -61,6 +61,12 @@ public class UserServiceImpl implements UserService {
         return userDao.findAll().stream()
                 .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
+
     public List<UserDto> findAllUserForVerify() {
         return userDao.findAllUserForVerify().stream()
                 .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
@@ -77,10 +83,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByEmail(String email) {//todo
+    public UserDto getByEmail(String email) {//todo
         Optional<User> found = userDao.findByEmail(email);
         if (found.isPresent())
-            return found.get();
+            return mapper.map(found.get(),UserDto.class);
         else throw new NotFoundDta("not user found with this email");
     }
 
@@ -100,7 +106,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(UserDto userDto) {
-        User user = getByEmail(userDto.getEmail());
+        User user = userDao.findByEmail(userDto.getEmail()).get();
         userDao.save(user);
     }
 
@@ -133,10 +139,12 @@ public class UserServiceImpl implements UserService {
                 .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
+
     @Override
     public List<UserDto> searchUsers(UserFilterDto dto) {
         Sort sort = Sort.by("lastName").ascending();
         Pageable pageable = PageRequest.of(dto.getPageNumber(), dto.getPageSize(), sort);//برای پیجینیشنه هست
+
         Specification<User> specification = UserSpecifications.filterUsers(dto);
         return userDao
                 .findAll(Specification.where(specification), pageable)
@@ -144,5 +152,14 @@ public class UserServiceImpl implements UserService {
                 .map(user -> mapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
     }
+    @Override
+    public Page<User> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return userDao.findAll(pageable);
+    }
+
 
 }

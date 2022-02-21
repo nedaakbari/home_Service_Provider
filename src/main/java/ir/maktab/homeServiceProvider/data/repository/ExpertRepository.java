@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.data.repository;
 
+
 import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
@@ -30,7 +31,12 @@ public interface ExpertRepository extends JpaRepository<Expert, Integer> , JpaSp
 
     @Modifying
     @Transactional
-    @Query(value = "update Expert e set e.creditCart=:credit where e.email=:email")
+    @Query(value = "update Expert e set e.accNumber=:accNum where e.email=:email")
+    void updateAccNumber(@Param("email") String email, @Param("accNum") long accNum);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update Expert e set e.creditCart=:credit where  e.email=:email")
     void updateCreditCart(@Param("email") String email, @Param("credit") double credit);
 
     @Transactional
@@ -44,7 +50,7 @@ public interface ExpertRepository extends JpaRepository<Expert, Integer> , JpaSp
     void updateScore(@Param("email") String email, @Param("score") double score);
 
     @Modifying
-    @Transactional
+   @Transactional
     @Query(value = "update Expert e set e.status=:status where  e.email=:email")
     void updateStatus(@Param("email") String email, @Param("status") UserRegistrationStatus status);
 

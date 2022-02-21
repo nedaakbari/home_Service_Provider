@@ -22,7 +22,10 @@ import java.util.Optional;
 public interface OfferRepository extends CrudRepository<Offer, Long>, JpaSpecificationExecutor<Offer> {
 
     @Query(value = "from Offer O join fetch O.orders S where S.id=:id ")
-    List<Offer> findAllOfferOfAnOrders(@Param("id") Long id);
+    List<Offer> findAllOfferOfAnOrders(@Param("id") Long id, Sort Sort);
+
+    @Query(value = "from Offer O join fetch O.orders S where S.id=:id ")
+    List<Offer> findAllOfferOfAnOrder(@Param("id") Long id);
 
     List<Offer> findByOrders(Orders order, Sort Sort);
 
@@ -30,8 +33,13 @@ public interface OfferRepository extends CrudRepository<Offer, Long>, JpaSpecifi
 
     Optional<Offer> findOfferByCodeNumber(String uuid);
 
-    @Query(value = "from Offer o where o.expert=:expert")
+    @Query(value = "from Offer o where o.expert=:expert order by o.submissionDate")
     List<Offer> findAllOfferAnExpert(@Param("expert") Expert expert);
+
+
+    @Query(value = "from Offer o where o.expert=:expert and o.status=:status")
+    List<Offer> findAllOfferAnExpertWithStatus(@Param("expert") Expert expert, @Param("status") OfferStatus status);
+
 
     @Modifying
     @Transactional

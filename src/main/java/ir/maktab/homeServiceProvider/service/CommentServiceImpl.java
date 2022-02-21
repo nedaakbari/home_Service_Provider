@@ -1,7 +1,10 @@
 package ir.maktab.homeServiceProvider.service;
 
+
 import ir.maktab.homeServiceProvider.data.entity.Comment;
 import ir.maktab.homeServiceProvider.data.entity.Orders;
+import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.repository.CommentRepository;
 import ir.maktab.homeServiceProvider.dto.CommentDto;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
@@ -21,9 +24,13 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentDao;
 
     @Override
-    public void save(CommentDto commentDto) {
-        Comment comment = mapper.map(commentDto, Comment.class);
-        commentDao.save(comment);
+    public void save(Customer customer, Expert expert, Orders orders, String comment) {
+        Comment comments = new Comment();
+        comments.setCustomer(customer);
+        comments.setExpert(expert);
+        comments.setOrder(orders);
+        comments.setComment(comment);
+        commentDao.save(comments);
     }
 
     @Override

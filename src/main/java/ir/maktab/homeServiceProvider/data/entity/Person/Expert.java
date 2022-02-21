@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity.Person;
 
+
 import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
-import ir.maktab.homeServiceProvider.data.enums.Gender;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +20,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class Expert extends User implements Comparable<Expert> {
 
-   @Enumerated(EnumType.STRING)
-   private Gender gender;
-
+    private long accNumber;
     private Double score;
 
     @ManyToMany(fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد

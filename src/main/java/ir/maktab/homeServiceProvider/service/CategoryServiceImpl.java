@@ -5,6 +5,7 @@ import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.repository.CategoryRepository;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
+import ir.maktab.homeServiceProvider.service.exception.NoCategory;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +23,19 @@ public class CategoryServiceImpl implements CategoryService {
     private final ModelMapper mapper;
     private final CategoryRepository categoryDao;
 
+
     @Override
     public void save(CategoryDto categoryDto) {
-        Category category = mapper.map(categoryDto, Category.class);
-        Optional<Category> foundMainService = categoryDao.findByTitle(category.getTitle());
-        if (foundMainService.isPresent()) {
-            throw new DuplicateData("❌❌❌ this main service is already exist ❌❌❌");
+        if (!categoryDto.getTitle().isBlank()) {
+            Category category = mapper.map(categoryDto, Category.class);
+            Optional<Category> foundMainService = categoryDao.findByTitle(category.getTitle());
+            if (foundMainService.isPresent()) {
+                throw new DuplicateData("❌❌❌ this main service is already exist ❌❌❌");
+            } else {
+                categoryDao.save(category);
+            }
         } else {
-            categoryDao.save(category);
+            throw new NoCategory("❌❌❌ title can not be empty ❌❌❌");
         }
     }
 
@@ -50,6 +56,10 @@ public class CategoryServiceImpl implements CategoryService {
             throw new NotFoundDta("❌❌❌ no mainService Exist  ❌❌❌");
     }
 
+    public List<Category> findAll() {
+        return categoryDao.findAll();
+    }
+
     @Override
     public CategoryDto findById(int theId) {
         Optional<Category> category = categoryDao.findById(theId);
@@ -67,6 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
         } else
             throw new NotFoundDta("there is no Category With this title");
     }
+
 
     // @Transactional
     @Override

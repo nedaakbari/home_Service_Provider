@@ -11,7 +11,6 @@ import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.exception.UserNotFoundException;
 import ir.maktab.homeServiceProvider.service.interfaces.CustomerService;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Getter
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerDao;
@@ -32,15 +30,18 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto register(CustomerDto customerDto) {//register
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword
                 (customerDto.getUsername(), customerDto.getPassword());
+
         if (foundUser.isPresent()) {
             throw new DuplicateData("this customer is already exist");
         } else {
             boolean isDuplicate = userService.isDuplicateEmail(customerDto.getEmail());
             if (!isDuplicate) {
+               // foundUser.get().setConfirmationToken(UUID.randomUUID().toString());
                 Customer customer = mapper.map(customerDto, Customer.class);
                 customer.setStatus(UserRegistrationStatus.NEW);
                 customer.setRole(Role.CUSTOMER);
                 Customer save = customerDao.save(customer);
+                //return customerMapper.toCustomerDto(save);
                 return mapper.map(save, CustomerDto.class);
             } else
                 throw new DuplicateData("this email is already exist");
@@ -54,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer.isPresent())
             return mapper.map(customer.get(),CustomerDto.class);
         else
-            throw new NotFoundDta("no customer found with these email and pass");
+            throw new NotFoundDta("no user found with these info");
     }
 
 
@@ -96,6 +97,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerDao.updatePassword(customerDto.getEmail(), newPassword);
         } else
             throw new IncorrectInformation("incorrect password");
+        //customerDao.updatePassword(email, newPassword);
     }
 
     @Override
