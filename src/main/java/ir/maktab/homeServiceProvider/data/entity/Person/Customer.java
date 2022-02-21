@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity.Person;
 
-import ir.maktab.homeServiceProvider.data.entity.Comment;
-import ir.maktab.homeServiceProvider.data.entity.Orders;
+import ir.maktab.data.entity.Comment;
+import ir.maktab.data.entity.Orders;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +19,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+//@ToString(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)

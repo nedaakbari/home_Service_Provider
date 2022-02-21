@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.data.entity;
 
-import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.data.entity.Person.Customer;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,17 +13,29 @@ public class TransActions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     private Customer customer;
-    @ManyToOne
-    private Expert expert;
 
-    private long amount;
+    private long expertAccNumber;
 
-    private long trackingNumber = makeRandomNumber();
+    //@Size(max = 16)
+    private long accNumber;
+
+
+    private int cvv2;
 
     @CreationTimestamp
     private Date transferDate;
+
+    private double amount;
+
+    //private Date timeOut;
+
+    private long trackingNumber = makeRandomNumber();//کد رهگیری
+
+    @Temporal(TemporalType.DATE)
+    private Date expireDate;
 
     @OneToOne
     private Orders orders;

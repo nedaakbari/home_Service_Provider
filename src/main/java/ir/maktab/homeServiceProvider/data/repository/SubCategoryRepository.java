@@ -1,8 +1,8 @@
 package ir.maktab.homeServiceProvider.data.repository;
 
 
-import ir.maktab.homeServiceProvider.data.entity.service.Category;
-import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
+import ir.maktab.data.entity.service.Category;
+import ir.maktab.data.entity.service.SubCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

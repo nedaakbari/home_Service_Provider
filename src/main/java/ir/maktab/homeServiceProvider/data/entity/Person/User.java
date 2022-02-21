@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity.Person;
 
-import ir.maktab.homeServiceProvider.data.enums.Role;
-import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
+import ir.maktab.data.enums.Role;
+import ir.maktab.data.enums.UserRegistrationStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +20,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -48,6 +49,8 @@ public class User {
     private Date registerDate;
 
     private Double creditCart;
+
+    //private String confirmationToken;
 
     @Override
     public boolean equals(Object o) {

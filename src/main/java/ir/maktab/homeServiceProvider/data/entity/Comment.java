@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity;
 
-import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.data.entity.Person.Customer;
+import ir.maktab.data.entity.Person.Expert;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 150)

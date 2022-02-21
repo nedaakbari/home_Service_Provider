@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.repository;
 
-import ir.maktab.homeServiceProvider.data.entity.Person.User;
-import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
+import ir.maktab.data.entity.Person.User;
+import ir.maktab.data.enums.UserRegistrationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,6 +29,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     @Transactional
     @Query(value = "update User u set u.status=:status where  u.email=:email")
     void updateStatus(@Param("email") String email, @Param("status") UserRegistrationStatus status);
+
 
 }
 

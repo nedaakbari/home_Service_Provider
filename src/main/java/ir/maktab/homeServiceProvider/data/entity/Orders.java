@@ -1,9 +1,9 @@
 package ir.maktab.homeServiceProvider.data.entity;
 
-import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
-import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
-import ir.maktab.homeServiceProvider.data.enums.OrderState;
+import ir.maktab.data.entity.Person.Customer;
+import ir.maktab.data.entity.Person.Expert;
+import ir.maktab.data.entity.service.SubCategory;
+import ir.maktab.data.enums.OrderState;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,17 +25,17 @@ public class Orders {
     private Long id;
 
     @CreationTimestamp
-    private Date orderRegistrationDate;
+    private Date orderRegistrationDate;//تایمی که سفارش ثبت میشه
 
     @Column(length = 300)
     private String description;
 
     @Temporal(TemporalType.DATE)
-    private Date doWorkDate;
+    private Date doWorkDate;//تاریخانجامکار که کاستومر میخواد انجام بشه
 
-    private Double proposedPrice;
+    //private Double proposedPrice;//قیمت پیشنهادی مشتری
 
-    @ManyToOne
+    @ManyToOne//(cascade = CascadeType.PERSIST)
     private Address address;
 
     @ManyToOne
@@ -52,9 +52,9 @@ public class Orders {
     private Set<Offer> offers = new HashSet<>();
 
     @ManyToOne
-    private Expert expert;
+    private Expert expert;//اکسپرتی که انتخاب میشه هست
 
-    private Double agreedPrice;
+    private Double agreedPrice;//قیمت پذیرفته شده برای این سفارش
 
     private Double score;
 

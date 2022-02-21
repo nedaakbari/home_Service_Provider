@@ -1,7 +1,6 @@
 package ir.maktab.homeServiceProvider.data.entity.Person;
 
-import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
-import ir.maktab.homeServiceProvider.data.enums.Gender;
+import ir.maktab.data.entity.service.SubCategory;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +16,11 @@ import java.util.Set;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(callSuper = true)
 public class Expert extends User implements Comparable<Expert> {
 
-   @Enumerated(EnumType.STRING)
-   private Gender gender;
-
+    private long accNumber;
     private Double score;
 
     @ManyToMany(fetch = FetchType.EAGER)//چونکه از زیر خدمات اکسپرت رو حذف نمیکرد
@@ -32,6 +30,8 @@ public class Expert extends User implements Comparable<Expert> {
     )
     private Set<SubCategory> subCategoryList = new HashSet<>();
 
+   /* @OneToMany(mappedBy = "expert")
+    private List<ImageFile> profileImage;*/
 
     @Override
     public int compareTo(Expert o) {

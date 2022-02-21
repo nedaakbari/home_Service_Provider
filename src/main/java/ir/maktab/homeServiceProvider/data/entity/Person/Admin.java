@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.data.entity.Person;
 
+import ir.maktab.data.enums.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,15 +16,12 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String userName;
+    private String username;
 
-    @Column(length = 8)
-    private String passWord;
-
-    private String firstName;
-
-    private String lastName;
+    private String password;
 
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

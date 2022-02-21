@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity;
 
-import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.enums.ImageType;
+import ir.maktab.data.entity.Person.Expert;
+import ir.maktab.data.enums.ImageType;
 import lombok.Data;
 
 import javax.persistence.*;
