@@ -39,11 +39,13 @@ public class ExpertServiceImpl implements ExpertService {
     @Override
     public ExpertDto register(ExpertDto expertDto, CommonsMultipartFile image) {
         Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expertDto.getUsername(), expertDto.getPassword());
+
         if (foundExpert.isPresent()) {
             throw new DuplicateData("this expert is already exist");
         } else {
             boolean duplicateEmail = userService.isDuplicateEmail(expertDto.getEmail());
             if (!duplicateEmail) {
+                // foundExpert.get().setConfirmationToken(UUID.randomUUID().toString());
                 Expert expert = mapper.map(expertDto, Expert.class);
                 expert.setStatus(UserRegistrationStatus.NEW);
                 expert.setRole(Role.EXPERT);
@@ -56,13 +58,14 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public ExpertDto login(ExpertDto expertDto) {
+    public ExpertDto login(ExpertDto expertDto) {//can't private because of implement interface and have no body
         Optional<Expert> expert = expertDao.findByEmailAndPassword
                 (expertDto.getEmail(), expertDto.getPassword());
         if (expert.isPresent())
             return mapper.map(expert.get(), ExpertDto.class);
         else
-            throw new ExpertNotFoundException("no expert founded");
+            throw new NotFoundDta("no user found with these info");
+        //throw new ExpertNotFoundException("not.found");
     }
 
     @Override
@@ -94,6 +97,7 @@ public class ExpertServiceImpl implements ExpertService {
         if (found.isPresent()) {
             return mapper.map(found.get(), ExpertDto.class);
         } else throw new NotFoundDta("expert not exist!");
+        //return expert.orElseThrow(() -> new NotFoundDta("expert not exist!"));
     }
 
     @Override
@@ -115,10 +119,11 @@ public class ExpertServiceImpl implements ExpertService {
             throw new NotFoundDta("no expert found with these use and pass");
     }
 
+
     @Override
     public void removeSubCategoryFromExpertList(ExpertDto expertDto, String subTitle) {
         Expert expert = expertDao.findByEmail(expertDto.getEmail()).get();
-        SubCategory subCategory =subService.findByTitle(subTitle).get();
+        SubCategory subCategory = subService.findByTitle(subTitle).get();
         Set<SubCategory> expertList = expert.getSubCategoryList();
         expertList.remove(subCategory);
         expert.setSubCategoryList(expertList);
@@ -138,10 +143,23 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void updateScore(ExpertDto expertDto, double getScore) {
-        double expertScore = expertDto.getScore();
-        double newScore = (expertScore + getScore) / 2;
-        expertDao.updateScore(expertDto.getEmail(), newScore);
+    public void updateCreditCart(double amount, String expertEmail) {
+        expertDao.updateCreditCart(expertEmail, amount);
+    }
+
+    @Override
+    public void updateScore(Expert expert, double getScore) {
+        double expertScore;
+        double newScore;
+        System.out.println(expert.getScore());
+        if (expert.getScore() == null) {
+            newScore = getScore;
+        } else {
+            expertScore = expert.getScore();
+            newScore = expertScore + ((expertScore + getScore) / 2);
+        }
+
+        expertDao.updateScore(expert.getEmail(), newScore);
     }
 
     @Override
@@ -153,15 +171,13 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public void updateCreditCart(double amount, ExpertDto expertDto) {
-        expertDao.updateCreditCart(expertDto.getEmail(), amount);
+    public void updateAccNumber(long accNumber, ExpertDto expertDto) {
+        expertDao.updateAccNumber(expertDto.getEmail(), accNumber);
     }
-
 
     public void updateStatus(String userEmail) {
-        expertDao.updateStatus(userEmail,UserRegistrationStatus.CONFIRMED);
+        expertDao.updateStatus(userEmail, UserRegistrationStatus.CONFIRMED);
     }
-
 
 
     @Override
@@ -182,6 +198,5 @@ public class ExpertServiceImpl implements ExpertService {
                 findAll(Specification.where(specification), pageable)
                 .stream().map(expert -> mapper.map(expert, ExpertDto.class))
                 .collect(Collectors.toList());
-//todo subcategory
     }
 }

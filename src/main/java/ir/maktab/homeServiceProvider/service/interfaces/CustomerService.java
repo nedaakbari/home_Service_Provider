@@ -18,7 +18,7 @@ public interface CustomerService {
 
     CustomerDto getByEmail(String email);
 
-   // void updatePassword(String newPassword, String oldPassword, String email);
+    // void updatePassword(String newPassword, String oldPassword, String email);
     void updatePassword(String newPassword, String oldPassword, CustomerDto customerDto);
 
     CustomerDto findCustomerByUseAndPass(String username, String password);

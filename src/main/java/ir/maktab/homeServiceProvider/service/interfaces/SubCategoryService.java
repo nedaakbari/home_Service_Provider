@@ -19,8 +19,12 @@ public interface SubCategoryService {
 
     void update(SubCategoryDto subCategoryDto);
 
+    void update(String title,double basePrice,String description);
+
     Set<SubCategoryDto> findSubCategoryOfAnExpert(ExpertDto expertDto);
 
     List<SubCategoryDto> findAllSubCategoryOfACategory(String categoryTitle);
+
+
 
 }

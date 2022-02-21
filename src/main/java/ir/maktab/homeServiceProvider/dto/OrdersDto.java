@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.homeServiceProvider.data.enums.OrderState;
+import ir.maktab.data.enums.OrderState;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,11 +20,14 @@ public class OrdersDto {
     @NotNull(message = "not null")
     private Date doWorkDate;
     private String description;
-    private Double ProposedPrice;
     private AddressDto address;
     private SubCategoryDto subCategory;
     private CustomerDto customer;
     private ExpertDto expert;
     private String codeNumber= UUID.randomUUID().toString();
     private OrderState state;
+    private Double score;
+    private String comment;
+    private Double agreedPrice;
+    private Date orderRegistrationDate;
 }

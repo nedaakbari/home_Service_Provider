@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.dto;
 
+import ir.maktab.homeServiceProvider.data.enums.Role;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -12,11 +13,16 @@ import javax.validation.constraints.NotBlank;
 @ToString
 public class AdminDto {
     private int id;
-    private String firstName;
-    private String lastName;
-    @NotBlank(message = "should not be empty")
-    private String passWord;
+
+
+    private String username;
+
+    @NotBlank(message = "field empty")
+    private String password;
+
+    @NotBlank(message = "field empty")
     private String email;
-    @NotBlank(message = "should not be empty")
-    private String userName;
+
+    private Role role;
+
 }

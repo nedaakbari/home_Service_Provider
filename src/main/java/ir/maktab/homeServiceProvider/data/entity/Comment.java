@@ -15,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 150)

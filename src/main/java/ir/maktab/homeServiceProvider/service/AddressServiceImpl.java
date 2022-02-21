@@ -21,7 +21,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void save(AddressDto addressDto) {
-        Address address = mapper.map(addressDto,Address.class);
+        Address address = mapper.map(addressDto, Address.class);
         addressDao.save(address);
     }
 

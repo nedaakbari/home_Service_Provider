@@ -30,6 +30,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
     @Query(value = "update User u set u.status=:status where  u.email=:email")
     void updateStatus(@Param("email") String email, @Param("status") UserRegistrationStatus status);
 
+
 }
 
 

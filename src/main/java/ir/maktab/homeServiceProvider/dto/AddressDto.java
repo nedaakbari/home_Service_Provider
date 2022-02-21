@@ -8,9 +8,16 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+
 public class AddressDto {
     private String city;
     private String street;
     private String zipCode;
+
+    @Override
+    public String toString() {
+        return " city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", zipCode='" + zipCode ;
+    }
 }
