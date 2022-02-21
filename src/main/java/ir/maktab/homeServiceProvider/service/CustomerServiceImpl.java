@@ -5,11 +5,11 @@ import ir.maktab.homeServiceProvider.data.enums.Role;
 import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.data.repository.CustomerRepository;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
+import ir.maktab.homeServiceProvider.service.interfaces.CustomerService;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.service.exception.IncorrectInformation;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.exception.UserNotFoundException;
-import ir.maktab.homeServiceProvider.service.interfaces.CustomerService;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,21 +23,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerDao;
-    //private final CustomerMapper customerMapper;
     private final UserService userService;
     private final ModelMapper mapper;
 
     @Override
-    public CustomerDto register(CustomerDto customerDto) {//register
+    public CustomerDto register(CustomerDto customerDto) {
         Optional<Customer> foundUser = customerDao.findByUsernameAndPassword
                 (customerDto.getUsername(), customerDto.getPassword());
-
         if (foundUser.isPresent()) {
             throw new DuplicateData("this customer is already exist");
         } else {
             boolean isDuplicate = userService.isDuplicateEmail(customerDto.getEmail());
             if (!isDuplicate) {
-               // foundUser.get().setConfirmationToken(UUID.randomUUID().toString());
+                // Customer customer = customerMapper.toCustomer(customerDto);
                 Customer customer = mapper.map(customerDto, Customer.class);
                 customer.setStatus(UserRegistrationStatus.NEW);
                 customer.setRole(Role.CUSTOMER);
@@ -58,7 +56,6 @@ public class CustomerServiceImpl implements CustomerService {
         else
             throw new NotFoundDta("no user found with these info");
     }
-
 
     @Override
     public void delete(CustomerDto customerDto) {

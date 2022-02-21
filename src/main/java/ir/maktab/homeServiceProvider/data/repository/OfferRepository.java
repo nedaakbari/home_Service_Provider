@@ -4,6 +4,8 @@ import ir.maktab.homeServiceProvider.data.entity.Offer;
 import ir.maktab.homeServiceProvider.data.entity.Orders;
 import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.enums.OfferStatus;
+import ir.maktab.homeServiceProvider.data.entity.Orders;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -38,7 +40,7 @@ public interface OfferRepository extends CrudRepository<Offer, Long>, JpaSpecifi
 
 
     @Query(value = "from Offer o where o.expert=:expert and o.status=:status")
-    List<Offer> findAllOfferAnExpertWithStatus(@Param("expert") Expert expert, @Param("status") OfferStatus status);
+    List<Offer> findAllOfferAnExpertWithStatus(@Param("expert") Expert expert,@Param("status") OfferStatus status);
 
 
     @Modifying

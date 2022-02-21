@@ -25,7 +25,6 @@ public interface AdminService {
     boolean isExist(String username, String password);
 
     Admin findAminByEmail(String email);
-
     AdminDto findAminByUseAndPass(String username, String password);
 
 }

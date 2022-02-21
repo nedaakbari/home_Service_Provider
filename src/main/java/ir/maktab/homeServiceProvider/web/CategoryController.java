@@ -3,10 +3,11 @@ package ir.maktab.homeServiceProvider.web;
 
 
 import ir.maktab.homeServiceProvider.configuration.LastViewInterceptor;
+import ir.maktab.homeServiceProvider.dto.AdminDto;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
+import ir.maktab.homeServiceProvider.service.exception.NoCategory;
 import ir.maktab.homeServiceProvider.service.CategoryServiceImpl;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
-import ir.maktab.homeServiceProvider.service.exception.NoCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,12 +27,14 @@ public class CategoryController {
     private final CategoryServiceImpl categoryService;
 
     @PostMapping("/admin/saveCategory")
-    public String saveNewCategory(CategoryDto categoryDto, HttpServletRequest request, Model model) {
-        Object admin = request.getSession().getAttribute("admin");
+    public String saveNewCategory(CategoryDto categoryDto, HttpServletRequest request) {
+        AdminDto admin = (AdminDto) request.getSession().getAttribute("admin");
         if (admin == null)
             return "error";
-        categoryService.save(categoryDto);
-        return "redirect:/admin/mangeCategory";
+        else {
+            categoryService.save(categoryDto);
+            return "redirect:/admin/mangeCategory";
+        }
     }
 
     @GetMapping("/admin/categoryForm")
@@ -39,8 +42,10 @@ public class CategoryController {
         Object admin = request.getSession().getAttribute("admin");
         if (admin == null)
             return "error";
-        m.addAttribute("category", new CategoryDto());
-        return "adminPanel/categoryForm";
+        else {
+            m.addAttribute("category", new CategoryDto());
+            return "adminPanel/categoryForm";
+        }
     }
 
     @ExceptionHandler(value = BindException.class)
@@ -49,7 +54,7 @@ public class CategoryController {
         return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
 
-   @ExceptionHandler(value = NoCategory.class)
+    @ExceptionHandler(value = NoCategory.class)
     public ModelAndView NoTitleExceptionHandler(NoCategory ex) {
         Map<String, Object> model = new HashMap<>();
         model.put("category", new CategoryDto());

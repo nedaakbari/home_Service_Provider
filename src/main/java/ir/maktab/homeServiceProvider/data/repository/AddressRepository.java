@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.data.repository;
 
 import ir.maktab.homeServiceProvider.data.entity.Address;
+import ir.maktab.homeServiceProvider.data.entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

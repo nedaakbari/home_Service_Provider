@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.dto;
 
-import ir.maktab.data.enums.OrderState;
+import ir.maktab.homeServiceProvider.data.enums.OrderState;
+import ir.maktab.homeServiceProvider.data.enums.OrderState;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;

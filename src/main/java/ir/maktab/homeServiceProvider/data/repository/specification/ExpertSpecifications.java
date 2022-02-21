@@ -3,6 +3,9 @@ package ir.maktab.homeServiceProvider.data.repository.specification;
 import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.dto.ExpertFilterDto;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.dto.ExpertFilterDto;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaQuery;

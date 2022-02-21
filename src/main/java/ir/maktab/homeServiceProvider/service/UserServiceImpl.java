@@ -6,10 +6,10 @@ import ir.maktab.homeServiceProvider.data.repository.UserRepository;
 import ir.maktab.homeServiceProvider.data.repository.specification.UserSpecifications;
 import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.dto.UserFilterDto;
-import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.exception.UserNotFoundException;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
+import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -41,12 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto login(UserDto userDto) {//can't private because of implement interface and have no body
+    public UserDto login(UserDto userDto) {
         Optional<User> user = userDao.findByEmailAndPassword
                 (userDto.getEmail(), userDto.getPassword());
         if (user.isEmpty())
             throw new UserNotFoundException();
-        //throw new ExpertNotFoundException("not.found");
         return mapper.map(user.get(), UserDto.class);
     }
 
@@ -110,8 +109,9 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
     }
 
-    public void updateStatus(String userEmail) {
-        userDao.updateStatus(userEmail, UserRegistrationStatus.CONFIRMED);
+    @Override
+    public void updateStatus(String userEmail,UserRegistrationStatus status) {
+        userDao.updateStatus(userEmail, status);
     }
 
     @Override
@@ -139,12 +139,10 @@ public class UserServiceImpl implements UserService {
                 .map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
-
     @Override
     public List<UserDto> searchUsers(UserFilterDto dto) {
         Sort sort = Sort.by("lastName").ascending();
         Pageable pageable = PageRequest.of(dto.getPageNumber(), dto.getPageSize(), sort);//برای پیجینیشنه هست
-
         Specification<User> specification = UserSpecifications.filterUsers(dto);
         return userDao
                 .findAll(Specification.where(specification), pageable)
@@ -152,6 +150,7 @@ public class UserServiceImpl implements UserService {
                 .map(user -> mapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
     }
+
     @Override
     public Page<User> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :

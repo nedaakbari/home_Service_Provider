@@ -14,6 +14,13 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
     }
 
     @Override
@@ -33,4 +40,6 @@ public class WebConfiguration implements WebMvcConfigurer {
         resolver.setSuffix(".jsp");
         return resolver;
     }
+
+
 }

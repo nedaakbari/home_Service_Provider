@@ -1,21 +1,19 @@
 package ir.maktab.homeServiceProvider.configuration;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @ComponentScan("ir.maktab")
 @PropertySource("classpath:database.properties")
+@Import({ MailConfig.class})
 @EnableWebMvc
 public class AppConfiguration {
 
     @Bean
-    public ModelMapper mapper() {
+    public ModelMapper mapper(){
         return new ModelMapper();
     }
 

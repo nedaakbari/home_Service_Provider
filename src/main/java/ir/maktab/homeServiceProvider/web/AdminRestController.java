@@ -1,10 +1,11 @@
 package ir.maktab.homeServiceProvider.web;
 
+import io.swagger.annotations.Api;
 import ir.maktab.homeServiceProvider.data.enums.Role;
+import ir.maktab.homeServiceProvider.dto.ApiErrorDto;
 import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
 import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.dto.UserFilterDto;
-import ir.maktab.homeServiceProvider.service.ApiErrorDto;
 import ir.maktab.homeServiceProvider.service.interfaces.CategoryService;
 import ir.maktab.homeServiceProvider.service.interfaces.ExpertService;
 import ir.maktab.homeServiceProvider.service.interfaces.SubCategoryService;
@@ -24,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest")
 @RequiredArgsConstructor
+@Api(value = "AdminRestController")
 public class AdminRestController {
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;

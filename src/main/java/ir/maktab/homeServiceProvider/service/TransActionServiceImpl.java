@@ -12,8 +12,8 @@ import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import ir.maktab.homeServiceProvider.dto.OrdersDto;
 import ir.maktab.homeServiceProvider.dto.TransActionDto;
 import ir.maktab.homeServiceProvider.service.exception.NotEnoughMoney;
-import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.OrderService;
+import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.TransActionService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -33,7 +33,7 @@ public class TransActionServiceImpl implements TransActionService {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
 
-    public void save(TransActionDto transActionDto, OrdersDto ordersDto) {
+    public void save(TransActionDto transActionDto,OrdersDto ordersDto) {
         TransActions transActions = mapper.map(transActionDto, TransActions.class);
         transActions.setExpertAccNumber(ordersDto.getExpert().getAccNumber());
         transActions.setAmount(ordersDto.getAgreedPrice());

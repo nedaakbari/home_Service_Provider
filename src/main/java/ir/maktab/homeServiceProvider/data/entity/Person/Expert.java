@@ -30,6 +30,8 @@ public class Expert extends User implements Comparable<Expert> {
     )
     private Set<SubCategory> subCategoryList = new HashSet<>();
 
+   /* @OneToMany(mappedBy = "expert")
+    private List<ImageFile> profileImage;*/
 
     @Override
     public int compareTo(Expert o) {

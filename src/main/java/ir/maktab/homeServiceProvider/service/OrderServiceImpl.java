@@ -10,6 +10,8 @@ import ir.maktab.homeServiceProvider.data.repository.AddressRepository;
 import ir.maktab.homeServiceProvider.data.repository.CustomerRepository;
 import ir.maktab.homeServiceProvider.data.repository.OrderRepository;
 import ir.maktab.homeServiceProvider.data.repository.SubCategoryRepository;
+import ir.maktab.homeServiceProvider.data.repository.specification.OrderSpecifications;
+import ir.maktab.dto.*;
 import ir.maktab.homeServiceProvider.dto.*;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
@@ -18,6 +20,10 @@ import ir.maktab.homeServiceProvider.service.interfaces.ExpertService;
 import ir.maktab.homeServiceProvider.service.interfaces.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,7 +46,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void save(OrdersDto ordersDto, CustomerDto customerDto, AddressDto addressDto, String subCategoryDto) {
         SubCategory subCategory = subRepository.findByTitle(subCategoryDto).get();
-        // if (ordersDto.getProposedPrice() >= subCategory.getBasePrice()) {
         Customer customer = customerRepository.findByEmail(customerDto.getEmail()).get();
         Address address = addressRepository.findAddressesByZipCode(addressDto.getZipCode()).get();
         Orders orders = mapper.map(ordersDto, Orders.class);
@@ -50,7 +55,6 @@ public class OrderServiceImpl implements OrderService {
         orders.setSubCategory(subCategory);
         orders.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
         orderDao.save(orders);
-        // } else throw new LessAmount("amount can not be less than base amount");
     }
 
     @Override
@@ -63,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeScore(String orderCodeNumber, String comment, double score) {
-        Orders orders = orderDao.findByCodeNumber(orderCodeNumber).get();// ّبین اردر رو نداری که نخوای دوباره پیداش کنی
+        Orders orders = orderDao.findByCodeNumber(orderCodeNumber).get();
         if (orders.getComment() != null) {
             throw new DuplicateData("you comment for this before");
         } else {
@@ -90,21 +94,17 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
     }
 
-
-
     @Override
     public Orders getById(Long theId) {
         Optional<Orders> foundOrder = orderDao.findById(theId);
         return foundOrder.orElseThrow(() -> new NotFoundDta("❌❌❌ Error, no order found ❌❌❌ "));
     }
 
-
     @Override
     public Orders findByUUID(String uuid) {
         Optional<Orders> foundOrder = orderDao.findByCodeNumber(uuid);
         return foundOrder.orElseThrow(() -> new NotFoundDta("❌❌❌ Error, no order found ❌❌❌ "));
     }
-
 
     @Override
     public OrdersDto findOrderByCodeNumber(String CodeNumber) {
@@ -138,7 +138,6 @@ public class OrderServiceImpl implements OrderService {
         return orderOfCustomer.stream().map(item -> mapper.map(item, OrdersDto.class)).collect(Collectors.toList());
     }
 
-
     @Override
     public List<OrdersDto> findOrdersForExpert(ExpertDto expertDto) {
         Set<SubCategoryDto> subCategoryList = expertDto.getSubCategoryList();
@@ -152,7 +151,16 @@ public class OrderServiceImpl implements OrderService {
         return ordersForExpert.stream().map(item -> mapper.map(item, OrdersDto.class)).collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrdersDto> searchOrders(OrderFilterDto dto) {
+        Sort sort = Sort.by("orderRegistrationDate");
+        Pageable pageable = PageRequest.of(dto.getPageNumber(), dto.getPageSize(), sort);
+        Specification<Orders> specification = OrderSpecifications.orderFilter(dto);
+
+        return orderDao.
+                findAll(Specification.where(specification), pageable)
+                .stream().map(Orders -> mapper.map(Orders, OrdersDto.class))
+                .collect(Collectors.toList());
+    }
 
 }
-
-

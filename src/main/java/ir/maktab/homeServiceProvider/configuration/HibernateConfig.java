@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.configuration;
 
+import ir.maktab.data.entity.*;
 import ir.maktab.homeServiceProvider.data.entity.*;
 import ir.maktab.homeServiceProvider.data.entity.Person.Admin;
 import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
@@ -7,6 +8,11 @@ import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.entity.Person.User;
 import ir.maktab.homeServiceProvider.data.entity.service.Category;
 import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.entity.Person.User;
+import ir.maktab.homeServiceProvider.data.entity.service.Category;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;

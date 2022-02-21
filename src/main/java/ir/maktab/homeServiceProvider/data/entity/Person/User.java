@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.data.entity.Person;
 
 import ir.maktab.homeServiceProvider.data.enums.Role;
 import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.data.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,8 +50,6 @@ public class User {
     private Date registerDate;
 
     private Double creditCart;
-
-    //private String confirmationToken;
 
     @Override
     public boolean equals(Object o) {

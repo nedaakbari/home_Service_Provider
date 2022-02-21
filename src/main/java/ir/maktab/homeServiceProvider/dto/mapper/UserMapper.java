@@ -5,6 +5,8 @@ import ir.maktab.homeServiceProvider.dto.AdminDto;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.UserDto;
+import ir.maktab.homeServiceProvider.data.entity.Person.User;
+import ir.maktab.homeServiceProvider.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.dto.mapper;
 
 import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,3 @@
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -24,9 +23,10 @@
     <div class="section">
         <div class="top_navbar">
             <div class="hamburger">
-                <a href="#">
+                <a href="/logout">
                     <i class="fas fa-bars"></i>
                 </a>
+
             </div>
         </div>
 
@@ -49,7 +49,7 @@
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/adminDashboard"/>">
+                <a href="<c:url value="/admin/dashboard"/>">
                     <span class="icon"><i class="fas fa-desktop"></i></span>
                     <span class="item">My Dashboard</span>
                 </a>
@@ -61,31 +61,31 @@
                 </a>
             </li>
             <li>
-               <a href="<c:url value="/manageExperts"/>">
+               <a href="<c:url value="/admin/manageExperts"/>">
                     <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                     <span class="item">ManageExperts</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/verifyUsers"/>">
+                <a href="<c:url value="/admin/verifyUsers"/>">
                     <span class="icon"><i class="fas fa-database"></i></span>
                     <span class="item">verifyUsers</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/admin/mangeUser"/>">
+                <a href="<c:url value="/admin/reportUsers"/>">
                     <span class="icon"><i class="fas fa-chart-line"></i></span>
                     <span class="item">ReportsUser</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/users"/>">
+                <a href="<c:url value="/admin/users"/>">
                     <span class="icon"><i class="fas fa-search"></i></span>
                     <span class="item">searchUsers</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/searchExperts"/>">
+                <a href="<c:url value="/admin/searchExperts"/>">
                     <span class="icon"><i class="fas fa-search"></i></span>
                     <span class="item">searchExperts</span>
                 </a>
@@ -106,12 +106,13 @@
 
                     <h5 class="small-heading">Which one do you want to do?</h5>
 
+                        <a href="<c:url value="/admin/list"/>" class="btn btn-outline-dark ">addingSubCategory</a>
+                        <a href="<c:url value="/admin/showingSubCategory"/>" class="btn btn-outline-dark ">show all subCategory</a>
 
-                        <a href="<c:url value="/admin/mangeCategory"/>" class="btn btn-outline-dark ">Manage Category</a>
+                        <a href="<c:url value="/admin/historyForUsers"/>" class="btn btn-outline-dark ">user history</a>
+                        <a href="<c:url value="/admin/historyForOrders"/>" class="btn btn-outline-dark ">orders filter</a>
 
-                        <a href="<c:url value="/admin/mangeUser"/>" class="btn btn-outline-dark ">Manage Users</a>
 
-                        <a href="<c:url value="/admin/mangeExpert"/>" class="btn btn-outline-dark ">Manage expert</a>
 
                 </div>
             </div>

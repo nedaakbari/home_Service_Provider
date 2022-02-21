@@ -1,4 +1,3 @@
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -27,6 +26,8 @@
                 <a href="#">
                     <i class="fas fa-bars"></i>
                 </a>
+                <button href="<c:url value="/logout"/>" class="btn btn-outline-light" type="button"
+                        style="margin-left: 970px">Logout</button>
             </div>
         </div>
 
@@ -49,7 +50,7 @@
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/adminDashboard"/>">
+                <a href="<c:url value="/admin/dashboard"/>">
                     <span class="icon"><i class="fas fa-desktop"></i></span>
                     <span class="item">My Dashboard</span>
                 </a>
@@ -61,32 +62,32 @@
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/manageExperts"/>">
+                <a href="<c:url value="/admin/manageExperts"/>">
                     <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                     <span class="item">ManageExperts</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/verifyUsers"/>">
+                <a href="<c:url value="/admin/verifyUsers"/>">
                     <span class="icon"><i class="fas fa-database"></i></span>
                     <span class="item">verifyUsers</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/admin/mangeUser"/>">
+                <a href="<c:url value="/admin/reportUsers"/>">
                     <span class="icon"><i class="fas fa-chart-line"></i></span>
                     <span class="item">ReportsUser</span>
                 </a>
             </li>
             <li>
                 <a href="<c:url value="/users"/>">
-                    <span class="icon"><i class="fas fa-user-shield"></i></span>
+                    <span class="icon"><i class="fas fa-search"></i></span>
                     <span class="item">searchUsers</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/searchExperts"/>">
-                    <span class="icon"><i class="fas fa-cog"></i></span>
+                <a href="<c:url value="/admin/searchExperts"/>">
+                    <span class="icon"><i class="fas fa-search"></i></span>
                     <span class="item">searchExperts</span>
                 </a>
             </li>
@@ -104,25 +105,37 @@
             <div class="col-9">
                 <div class="panel-container">
 
-                    <h4 class="text-bold">Add New SubService</h4>
-                    <form:form action="/addSubCategory/saveSubCategory" modelAttribute="subCategoryDto" method="post">
+                    <div class="row">
+                        <div class="col-6" >
+                            <h3>Add New SubService</h3>
+                        </div>
+                        <div class="col-6" >
+                            <a href="<c:url value="/admin/mangeCategory"/>" class="btn btn-dark">back</a>
+                        </div>
+                    </div>
+                    <form:form action="/admin/addSubCategory/saveSubCategory" modelAttribute="subCategoryDto" method="post">
                         <%-- <p>${subServiceDto.mainServiceName}</p>--%>
+                        <p class="text-danger">${error}</p>
+                        <p class="text-success">${message}</p>
                         <table class="table table-bordered table-striped  text-black" style="padding: 100px 100px 0px 100px ;!important;">
                             <tr>
                                 <td>Title : </td>
                                 <td><form:input path="title"/></td>
+                                <br>
+                                <form:errors path="title" cssClass="text-danger"/>
                             </tr>
                             <tr>
                                 <td>basePrice : </td>
                                 <td><form:input path="basePrice" type="number"  step="0.01" /></td>
-
+                                <br>
+                                <form:errors path="basePrice" cssClass="text-danger"/>
                             </tr>
                             <tr>
                                 <td>description : </td>
                                 <td><form:input path="description"/></td>
-                            </tr>
+                            </tr >
 
-                            <tr>
+                            <tr  >
                                 <td><input type="submit" value="Save" class="btn btn-dark " /></td>
                             </tr>
                         </table>

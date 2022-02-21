@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
 import ir.maktab.homeServiceProvider.data.entity.Person.User;
+import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.dto.UserDto;
 import ir.maktab.homeServiceProvider.dto.UserFilterDto;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,7 @@ public interface UserService {
 
     List<UserDto> getAll();
 
-    List<User> findAll();;
+    List<User> findAll();
 
     UserDto getById(Integer theId);
 
@@ -34,9 +35,16 @@ public interface UserService {
 
     List<UserDto> findAllUsersByFilter(UserFilterDto userFilterDto);
 
-
     List<UserDto> searchUsers(UserFilterDto dto);
 
-    void updateStatus(String userEmail);
+    void updateStatus(String userEmail, UserRegistrationStatus status);
+
     Page<User> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 }
+
+
+
+
+
+
+//List<UserDto> findByPagination(int firstPage, int pageSize, String firstname, String lastname, String email, Role role);

@@ -3,9 +3,12 @@ package ir.maktab.homeServiceProvider.web;
 
 import ir.maktab.homeServiceProvider.configuration.LastViewInterceptor;
 import ir.maktab.homeServiceProvider.data.enums.OrderState;
+import ir.maktab.dto.*;
 import ir.maktab.homeServiceProvider.dto.*;
 import ir.maktab.homeServiceProvider.service.exception.*;
 import ir.maktab.homeServiceProvider.service.interfaces.*;
+import ir.maktab.service.exception.*;
+import ir.maktab.service.interfaces.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 
 public class CustomerController {
 
+
     private final CustomerService service;
     private final CategoryService categoryService;
     private final SubCategoryService subService;
@@ -36,9 +39,9 @@ public class CustomerController {
 
 
     @GetMapping(value = "/customer/dashboard")
-    public String dashboard(Principal principal,
+    public String dashboard(HttpServletRequest request,
                             Model model) {
-        CustomerDto customerLogin = service.getByEmail(principal.getName());
+        CustomerDto customerLogin = (CustomerDto) request.getSession().getAttribute("customerDto");
         Map<String, Object> map = new HashMap<>();
         map.put("name", customerLogin.getFirstName());
         map.put("lastName", customerLogin.getLastName());
@@ -77,18 +80,25 @@ public class CustomerController {
     @GetMapping(value = "/customer/editCredit")
     public String editCredit(HttpServletRequest request) {
         CustomerDto customer = (CustomerDto) request.getSession().getAttribute("customerDto");
-
-        return "customerPanel/editCredit";
+        if (customer != null)
+            return "customerPanel/editCredit";
+        else
+            return "error";
     }
 
     @PostMapping(value = "/customer/editCredit")
     public String editCreditCart(@SessionAttribute("customerDto") CustomerDto customerDto,
                                  @RequestParam("amount") Double amount,
                                  HttpServletRequest request) {
-        service.updateCreditCart(amount + customerDto.getCreditCart(), customerDto);
-        customerDto.setCreditCart(amount + customerDto.getCreditCart());
-        request.getSession().setAttribute("customerDto", customerDto);
-        return "redirect:/customer/dashboard";
+        CustomerDto customer = (CustomerDto) request.getSession().getAttribute("customerDto");
+        if (customer == null)
+            return "error";
+        else {
+            service.updateCreditCart(amount + customerDto.getCreditCart(), customerDto);
+            customerDto.setCreditCart(amount + customerDto.getCreditCart());
+            request.getSession().setAttribute("customerDto", customerDto);
+            return "redirect:/customer/dashboard";
+        }
     }
 
     @GetMapping(value = "/customer/categoryList")
@@ -103,23 +113,34 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/showSubCategory/{title}")
-    public String showAllSubCategory(@PathVariable String title, Model model) {
-        List<SubCategoryDto> list = subService.findAllSubCategoryOfACategory(title);
-        model.addAttribute("list", list);
-        return "customerPanel/viewSubCategory";
+    public String showAllSubCategory(@PathVariable String title, Model model, HttpServletRequest request) {
+        CustomerDto customer = (CustomerDto) request.getSession().getAttribute("customerDto");
+        if (customer == null)
+            return "error";
+        else {
+            List<SubCategoryDto> list = subService.findAllSubCategoryOfACategory(title);
+            model.addAttribute("list", list);
+            return "customerPanel/viewSubCategory";
+        }
     }
 
     @GetMapping(value = "/customer/order/{title}")
     public ModelAndView makeOrder(@ModelAttribute("customerDto") CustomerDto dto
             , @PathVariable String title, HttpServletRequest request) {
         ModelAndView models = new ModelAndView();
-        SubCategoryDto subForOrder = subService.findByTitle(title);
-        request.getSession().setAttribute("subForOrder", subForOrder);
-        models.addObject("address", new AddressDto());
-        models.addObject("order", new OrdersDto());
-        models.addObject("customerDto", dto);
-        models.addObject("subForOrder", subForOrder);
-        models.setViewName("customerPanel/orderForm");
+        CustomerDto customer = (CustomerDto) request.getSession().getAttribute("customerDto");
+        if (customer == null)
+            models.setViewName("customerPanel/orderForm");
+        else {
+
+            SubCategoryDto subForOrder = subService.findByTitle(title);
+            request.getSession().setAttribute("subForOrder", subForOrder);
+            models.addObject("address", new AddressDto());
+            models.addObject("order", new OrdersDto());
+            models.addObject("customerDto", dto);
+            models.addObject("subForOrder", subForOrder);
+            models.setViewName("customerPanel/orderForm");
+        }
         return models;
     }
 
@@ -217,6 +238,18 @@ public class CustomerController {
             return "customerPanel/ratingPage";
         }
     }
+
+   /* @GetMapping("/pay/{orderCodeNumber}")
+    public String payOrder(@PathVariable String orderCodeNumber,
+                                 HttpServletRequest request) {
+        System.out.println(orderCodeNumber);
+        //ModelAndView modelAndView = new ModelAndView();
+        // modelAndView.addObject("orderCodeNumber", orderCodeNumber);
+        request.getSession().setAttribute("orderCodeNumber", orderCodeNumber);
+        // modelAndView.setViewName("customerPages/pay-with");
+        // return modelAndView;
+        return "customerPages/pay-with";
+    }*/
 
     @GetMapping(value = "/customer/payOnline/{orderCodeNumber}")
     public ModelAndView payOnline(@PathVariable String orderCodeNumber) {

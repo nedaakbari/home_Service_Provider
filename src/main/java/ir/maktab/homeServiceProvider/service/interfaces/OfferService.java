@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface OfferService {
 
-    void saveOffer(OfferDto offerDto, String email, String codeNumber);
+    void saveOffer(OfferDto offerDto, ExpertDto expertDto, String codeNumber);
 
     void delete(OfferDto offerDto);
 
@@ -25,6 +25,10 @@ public interface OfferService {
     OfferDto findByOrderAndExpert(OrdersDto ordersDto, ExpertDto expertDto);
 
     List<OfferDto> findAllOffersAnExpert(ExpertDto expertDto, OfferStatus status);
+
+    //List<OfferDto> sortByScore(OrdersDto ordersDto);
+
+    //List<OfferDto> sortByPrice(OrdersDto ordersDto);
 
     void acceptedOffer(String choiceOfferCode);
 

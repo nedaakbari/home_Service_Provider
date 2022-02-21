@@ -26,6 +26,8 @@
                 <a href="#">
                     <i class="fas fa-bars"></i>
                 </a>
+                <button href="<c:url value="/signOut"/>" class="btn btn-outline-light" type="button"
+                        style="margin-left: 970px">Logout</button>
             </div>
         </div>
 
@@ -48,7 +50,7 @@
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/adminDashboard"/>">
+                <a href="<c:url value="/admin/dashboard"/>">
                     <span class="icon"><i class="fas fa-desktop"></i></span>
                     <span class="item">My Dashboard</span>
                 </a>
@@ -60,31 +62,31 @@
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/manageExperts"/>">
+                <a href="<c:url value="/admin/manageExperts"/>">
                     <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                     <span class="item">ManageExperts</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/verifyUsers"/>">
+                <a href="<c:url value="/admin/verifyUsers"/>">
                     <span class="icon"><i class="fas fa-database"></i></span>
                     <span class="item">verifyUsers</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/admin/mangeUser"/>">
+                <a href="<c:url value="/admin/reportUsers"/>">
                     <span class="icon"><i class="fas fa-chart-line"></i></span>
                     <span class="item">ReportsUser</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/users"/>">
+                <a href="<c:url value="/admin/users"/>">
                     <span class="icon"><i class="fas fa-user-shield"></i></span>
                     <span class="item">searchUsers</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/searchExperts"/>">
+                <a href="<c:url value="/admin/searchExperts"/>">
                     <span class="icon"><i class="fas fa-cog"></i></span>
                     <span class="item">searchExperts</span>
                 </a>
@@ -104,7 +106,8 @@
                 <div class="panel-container">
 
                     <h1>Add New Category</h1>
-                    <form:form method="post" action="saveCategory" modelAttribute="category">
+                    <p class="text-danger">${error}</p>
+                    <form:form method="post" action="/admin/saveCategory" modelAttribute="category">
                         <table class="table table-bordered table-striped  text-black" style="padding: 100px 100px 0px 100px ;!important;">
                             <tr>
                                 <td>title :</td>

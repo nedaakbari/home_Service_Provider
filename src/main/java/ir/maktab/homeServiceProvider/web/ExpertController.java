@@ -3,23 +3,27 @@ package ir.maktab.homeServiceProvider.web;
 import ir.maktab.homeServiceProvider.configuration.LastViewInterceptor;
 import ir.maktab.homeServiceProvider.data.enums.OfferStatus;
 import ir.maktab.homeServiceProvider.data.enums.OrderState;
+import ir.maktab.dto.*;
 import ir.maktab.homeServiceProvider.dto.*;
+import ir.maktab.homeServiceProvider.service.interfaces.*;
+import ir.maktab.homeServiceProvider.service.validation.OnRegister;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.service.exception.LessAmount;
-import ir.maktab.homeServiceProvider.service.interfaces.*;
-import lombok.AllArgsConstructor;
+import ir.maktab.service.interfaces.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.*;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 @SessionAttributes(value = {"expert", "expertDto", "subList"})
 public class ExpertController {
 
@@ -29,29 +33,55 @@ public class ExpertController {
     private final OrderService orderService;
     private final OfferService offerService;
 
+    @GetMapping("/expert/register")
+    public ModelAndView showRegisterPage() {
+        return new ModelAndView("registers", "expert", new ExpertDto());
+    }
 
-    @GetMapping(value = "/expert/dashboard")
-    public String dashboard(Principal principal, Model model, HttpSession httpSession, HttpServletRequest request) {
-        ExpertDto expertLogin = service.findByEmail(principal.getName());
-        request.getSession().setAttribute("email", expertLogin.getEmail());
-        //ImageFile imageFile = expertLogin.getProfileImage().get(1);
-        httpSession.setAttribute("expert", expertLogin);
+    @PostMapping("/expert/register")
+    public String registerCustomer(@ModelAttribute("expert") @Validated(OnRegister.class) ExpertDto dto,
+                                   @RequestParam(value = "image", required = true) CommonsMultipartFile image,
+                                   // @RequestParam("image") CommonsMultipartFile image,
+                                   HttpSession session, Model model) {
+        service.register(dto, image);
         Map<String, Object> map = new HashMap<>();
-        map.put("name", expertLogin.getFirstName());
-        map.put("lastName", expertLogin.getLastName());
-        map.put("role", expertLogin.getRole());
-        map.put("creditCart", expertLogin.getCreditCart());
-        map.put("userName", expertLogin.getUsername());
-        map.put("password", expertLogin.getPassword());
-        map.put("accNum", expertLogin.getAccNumber());
-        //  map.put("image",imageFile);
-        model.addAttribute("expert", expertLogin);
+        map.put("name", dto.getFirstName());
+        map.put("lastName", dto.getLastName());
+        map.put("role", dto.getRole());
+        map.put("creditCart", dto.getCreditCart());
+        map.put("userName", dto.getUsername());
+        map.put("password", dto.getPassword());
+        map.put("accNum", dto.getAccNumber());
         model.addAllAttributes(map);
+        session.setAttribute("expertDto", dto);
         return "expertPanel/profile";
     }
 
+    @GetMapping(value = "/expert/dashboard")
+    public String dashboard(HttpServletRequest request,
+                            Model model) {
+        ExpertDto expertLogin = (ExpertDto) request.getSession().getAttribute("expertDto");
+
+            //ImageFile imageFile = expertLogin.getProfileImage().get(1);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", expertLogin.getFirstName());
+            map.put("lastName", expertLogin.getLastName());
+            map.put("role", expertLogin.getRole());
+            map.put("creditCart", expertLogin.getCreditCart());
+            map.put("userName", expertLogin.getUsername());
+            map.put("password", expertLogin.getPassword());
+            map.put("accNum", expertLogin.getAccNumber());
+            //  map.put("image",imageFile);
+            model.addAttribute("expert", expertLogin);
+            model.addAllAttributes(map);
+            return "expertPanel/profile";
+
+    }
+
     @GetMapping(value = "/expert/registerAccNumber")
-    public String registerAccNumber() {
+    public String registerAccNumber(HttpServletRequest request) {
+        ExpertDto expert = (ExpertDto) request.getSession().getAttribute("expertDto");
         return "expertPanel/editAccNumber";
     }
 
@@ -66,6 +96,7 @@ public class ExpertController {
         request.getSession().setAttribute("expertDto", expertDto);
         return "redirect:/expert/dashboard";
     }
+
 
     @GetMapping(value = "/expert/editPass")
     public String editPass() {
@@ -138,52 +169,53 @@ public class ExpertController {
     public String showAllOrders(HttpServletRequest request, Model model) {
         ExpertDto expertDto = (ExpertDto) request.getSession().getAttribute("expertDto");
         List<OrdersDto> ordersForExpert = orderService.findOrdersForExpert(expertDto);
+        //if (ordersForExpert.isEmpty())//todo
+        //return new ModelAndView("message", "message", env.getProperty("No.Category.Found"));
+
         model.addAttribute("ordersForExpert", ordersForExpert);
         return "expertPanel/showAllOrders";//todo dont let offer again or dont show him those orders that offered
     }
 
     @GetMapping(value = "/expert/offer/{codeNumber}")
-    private ModelAndView makeOffer(@PathVariable String codeNumber, Model model,
-                                   HttpServletRequest request) {
-        ExpertDto expert = (ExpertDto) request.getSession().getAttribute("expertDto");
+    private ModelAndView makeOffer(HttpServletRequest request,
+                                   @PathVariable String codeNumber,
+                                   HttpSession session) {
+        ExpertDto expertDto = (ExpertDto) request.getSession().getAttribute("expertDto");
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println(codeNumber);
-        if (offerService.isAllowToOffer(expert, codeNumber)) {
-        System.out.println(codeNumber);
-        modelAndView.addObject("codeNumber", codeNumber);
-        request.getSession().setAttribute("codeNumber", codeNumber);
-        modelAndView.addObject("offer", new OfferDto());
-        modelAndView.setViewName("expertPanel/offerForm");
+        if (offerService.isAllowToOffer(expertDto, codeNumber)) {
+            modelAndView.addObject("codeNumber", codeNumber);
+            modelAndView.addObject("offer", new OfferDto());
+            modelAndView.setViewName("expertPanel/offerForm");
+            request.getSession().setAttribute("codeNumber", codeNumber);
+            return modelAndView;
         } else {
-            model.addAttribute("notAllowError", new DuplicateData("you offer for this order already"));
+            modelAndView.addObject("notAllowError", new DuplicateData("you offer for this order already"));
             modelAndView.setViewName("expertPanel/showAllOrders");
+            return modelAndView;
         }
-        return modelAndView;
     }
 
     @PostMapping(value = "/expert/placeOffer")
     private String placeOffer(HttpServletRequest request,
                               @ModelAttribute("offer") OfferDto offerDto,
                               Model model) {
-        String email = (String) request.getSession().getAttribute("email");
-        System.out.println(offerDto.getCodeNumber());
-          ExpertDto expertDto = (ExpertDto) request.getSession().getAttribute("expertDto");
+        ExpertDto expertDto = (ExpertDto) request.getSession().getAttribute("expertDto");
         String codeNumber = (String) request.getSession().getAttribute("codeNumber");
         // String codeNumber = (String) model.getAttribute("codeNumber");//todo why null?
         try {
-            offerService.saveOffer(offerDto, email, codeNumber);
-            ExpertDto expert = service.findByEmail(expertDto.getEmail());
-            request.setAttribute("expertDto", expert);
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", expert.getFirstName());
-            map.put("lastName", expert.getLastName());
-            map.put("role", expert.getRole());
-            map.put("creditCart", expert.getCreditCart());
-            map.put("userName", expert.getUsername());
-            map.put("password", expert.getPassword());
-            model.addAttribute("expert", expert);
-            model.addAllAttributes(map);
-        } catch (RuntimeException runtimeException) {
+        offerService.saveOffer(offerDto, expertDto, codeNumber);
+        ExpertDto expert = service.findByEmail(expertDto.getEmail());
+        request.setAttribute("expertDto", expert);
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", expert.getFirstName());
+        map.put("lastName", expert.getLastName());
+        map.put("role", expert.getRole());
+        map.put("creditCart", expert.getCreditCart());
+        map.put("userName", expert.getUsername());
+        map.put("password", expert.getPassword());
+        model.addAttribute("expert", expert);
+        model.addAllAttributes(map);}
+        catch (RuntimeException runtimeException){
             model.addAttribute("error", "field cant be empty");
         }
         return "expertPanel/profile";
@@ -285,6 +317,8 @@ public class ExpertController {
         model.addAllAttributes(orderDetailInfo);
         return "expertPanel/detail-form";
     }
+
+
 
     @ExceptionHandler(value = DuplicateData.class)
     public ModelAndView duplicateEmailExceptionHandler(DuplicateData ex, HttpServletRequest request) {

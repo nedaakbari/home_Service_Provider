@@ -4,10 +4,10 @@ import ir.maktab.homeServiceProvider.data.entity.service.Category;
 import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.repository.CategoryRepository;
 import ir.maktab.homeServiceProvider.dto.CategoryDto;
-import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
 import ir.maktab.homeServiceProvider.service.exception.NoCategory;
-import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.CategoryService;
+import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
+import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
     private final ModelMapper mapper;
     private final CategoryRepository categoryDao;
-
 
     @Override
     public void save(CategoryDto categoryDto) {

@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.dto;
 
 import ir.maktab.homeServiceProvider.data.enums.Role;
+import ir.maktab.homeServiceProvider.data.enums.Role;
 import ir.maktab.homeServiceProvider.service.validation.OnLogin;
 import lombok.*;
 

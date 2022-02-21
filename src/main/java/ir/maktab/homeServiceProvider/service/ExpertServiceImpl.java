@@ -10,8 +10,9 @@ import ir.maktab.homeServiceProvider.data.repository.specification.ExpertSpecifi
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.ExpertFilterDto;
 import ir.maktab.homeServiceProvider.service.exception.*;
-import ir.maktab.homeServiceProvider.service.interfaces.ExpertService;
 import ir.maktab.homeServiceProvider.service.interfaces.ImageFileService;
+import ir.maktab.service.exception.*;
+import ir.maktab.homeServiceProvider.service.interfaces.ExpertService;
 import ir.maktab.homeServiceProvider.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -36,17 +37,14 @@ public class ExpertServiceImpl implements ExpertService {
     private final ModelMapper mapper;
     private final SubCategoryRepository subService;
 
-
     @Override
     public ExpertDto register(ExpertDto expertDto, CommonsMultipartFile image) {
         Optional<Expert> foundExpert = expertDao.findByUsernameAndPassword(expertDto.getUsername(), expertDto.getPassword());
-
         if (foundExpert.isPresent()) {
             throw new DuplicateData("this expert is already exist");
         } else {
             boolean duplicateEmail = userService.isDuplicateEmail(expertDto.getEmail());
             if (!duplicateEmail) {
-               // foundExpert.get().setConfirmationToken(UUID.randomUUID().toString());
                 Expert expert = mapper.map(expertDto, Expert.class);
                 expert.setStatus(UserRegistrationStatus.NEW);
                 expert.setRole(Role.EXPERT);
@@ -59,7 +57,7 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     @Override
-    public ExpertDto login(ExpertDto expertDto) {//can't private because of implement interface and have no body
+    public ExpertDto login(ExpertDto expertDto) {
         Optional<Expert> expert = expertDao.findByEmailAndPassword
                 (expertDto.getEmail(), expertDto.getPassword());
         if (expert.isPresent())
@@ -119,7 +117,6 @@ public class ExpertServiceImpl implements ExpertService {
         } else
             throw new NotFoundDta("no expert found with these use and pass");
     }
-
 
     @Override
     public void removeSubCategoryFromExpertList(ExpertDto expertDto, String subTitle) {
@@ -187,7 +184,6 @@ public class ExpertServiceImpl implements ExpertService {
         return experts.stream().map(expert -> mapper.map(expert, ExpertDto.class))
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public List<ExpertDto> searchExperts(ExpertFilterDto dto) {

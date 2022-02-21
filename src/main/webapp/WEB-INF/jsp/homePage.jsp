@@ -44,8 +44,8 @@
         <a class="p-2 text-white" href="#">Support</a>
         <a class="p-2 text-white" href="#">Pricing</a>
     </nav>
-<%--<a class="btn btn-outline-light" href="customerPages/register.jsp">Order</a>--%>
-    <a href="<c:url value="/customerRegister"/>" class="btn btn-Light ">Order</a>
+<%--<a class="btn btn-outline-light" href="customerPages/registers.jsp">Order</a>--%>
+    <a href="<c:url value="/register"/>" class="btn btn-Light ">register</a>
     <%-- <a class="btn btn-bd-download d-none d-lg-inline-block mb-3 mb-md-0 ml-md-3" href="https://github.com/twbs/bootstrap/archive/v4.0.0.zip">Download</a>--%>
  </div>
  <%-- header--%>
@@ -53,7 +53,7 @@
 <div>
     <img src="<c:url value="/static/image/10.png"/> " width="100% " style="position: absolute">
     <div class="btn-group mt-3 mx-3">
-        <a href="<c:url value="/expertRegister"/>" class="btn btn-outline-dark">Be Expert</a>
+        <a href="<c:url value="/login"/>" class="btn btn-outline-dark">Login</a>
     </div>
     <%--  <a class="btn btn-outline-success" href="expertRegister">Be Expert</a>--%>
 </div>

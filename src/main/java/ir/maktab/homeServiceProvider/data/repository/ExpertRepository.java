@@ -4,6 +4,9 @@ import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
 import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
 import ir.maktab.homeServiceProvider.dto.ExpertProjectionDto;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.dto.ExpertProjectionDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,7 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface ExpertRepository extends JpaRepository<Expert, Integer>, JpaSpecificationExecutor<Expert> {
+public interface ExpertRepository extends JpaRepository<Expert, Integer> , JpaSpecificationExecutor<Expert> {
 
     Optional<Expert> findByEmail(String email);
 
@@ -41,7 +44,7 @@ public interface ExpertRepository extends JpaRepository<Expert, Integer>, JpaSpe
     @Transactional
     @Modifying
     @Query(value = "update Expert e set e.password=:password where e.email=:email")
-    void updatePassword(@Param("password") String password, @Param("email") String email);
+    void updatePassword(@Param("password") String password,@Param("email") String email);
 
     @Modifying
     @Transactional
@@ -49,7 +52,7 @@ public interface ExpertRepository extends JpaRepository<Expert, Integer>, JpaSpe
     void updateScore(@Param("email") String email, @Param("score") double score);
 
     @Modifying
-    @Transactional
+   @Transactional
     @Query(value = "update Expert e set e.status=:status where  e.email=:email")
     void updateStatus(@Param("email") String email, @Param("status") UserRegistrationStatus status);
 

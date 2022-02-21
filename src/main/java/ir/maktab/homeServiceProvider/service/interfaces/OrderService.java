@@ -2,6 +2,7 @@ package ir.maktab.homeServiceProvider.service.interfaces;
 
 import ir.maktab.homeServiceProvider.data.entity.Orders;
 import ir.maktab.homeServiceProvider.data.enums.OrderState;
+import ir.maktab.dto.*;
 import ir.maktab.homeServiceProvider.dto.*;
 
 import java.util.List;
@@ -33,4 +34,5 @@ public interface OrderService {
 
     void placeScore(String orderCodeNumber, String comment, double score);
 
+    List<OrdersDto> searchOrders(OrderFilterDto dto);
 }

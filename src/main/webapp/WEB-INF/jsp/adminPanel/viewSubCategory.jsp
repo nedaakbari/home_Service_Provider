@@ -1,4 +1,3 @@
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -27,6 +26,8 @@
                 <a href="#">
                     <i class="fas fa-bars"></i>
                 </a>
+                <button href="<c:url value="/logout"/>" class="btn btn-outline-light" type="button"
+                        style="margin-left: 970px">Logout</button>
             </div>
         </div>
 
@@ -49,7 +50,7 @@
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/adminDashboard"/>">
+                <a href="<c:url value="/admin/dashboard"/>">
                     <span class="icon"><i class="fas fa-desktop"></i></span>
                     <span class="item">My Dashboard</span>
                 </a>
@@ -61,38 +62,37 @@
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/manageExperts"/>">
+                <a href="<c:url value="/admin/manageExperts"/>">
                     <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                     <span class="item">ManageExperts</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/verifyUsers"/>">
+                <a href="<c:url value="/admin/verifyUsers"/>">
                     <span class="icon"><i class="fas fa-database"></i></span>
                     <span class="item">verifyUsers</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/admin/mangeUser"/>">
+                <a href="<c:url value="/admin/reportUsers"/>">
                     <span class="icon"><i class="fas fa-chart-line"></i></span>
                     <span class="item">ReportsUser</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/users"/>">
-                    <span class="icon"><i class="fas fa-user-shield"></i></span>
+                <a href="<c:url value="/admin/users"/>">
+                    <span class="icon"><i class="fas fa-search"></i></span>
                     <span class="item">searchUsers</span>
                 </a>
             </li>
             <li>
-                <a href="<c:url value="/searchExperts"/>">
-                    <span class="icon"><i class="fas fa-cog"></i></span>
+                <a href="<c:url value="/admin/searchExperts"/>">
+                    <span class="icon"><i class="fas fa-search"></i></span>
                     <span class="item">searchExperts</span>
                 </a>
             </li>
         </ul>
     </div>
-
 
     <%--body--%>
     <div class="container">
@@ -103,15 +103,21 @@
             </div>
             <div class="col-9">
                 <div class="panel-container">
-
-
-                    <h4 class="text-bold">SubService List</h4>
-                    <table class="table table-bordered table-striped  text-black" style="padding: 100px 100px 0px 100px ;!important;">
+                    <%--<h4 class="text-bold">SubService List</h4>--%>
+                        <div class="row">
+                            <div class="col-6" >
+                                <h3>SubService List</h3>
+                            </div>
+                            <div class="col-6" >
+                                <a href="<c:url value="/admin/mangeCategory"/>" class="btn btn-dark ">back</a>
+                            </div>
+                    <table class="table table-bordered table-striped  text-black text-center" style="padding: 100px 100px 0px 100px ;!important;">
                     <thead>
                         <tr>
                             <th scope="col">Title</th>
                             <th scope="col">basePrice</th>
                             <th scope="col">description</th>
+                            <th scope="col">action</th>
                             <%--        <th scope="col">mainServiceName</th>--%>
                         </tr>
                         </thead>
@@ -121,6 +127,8 @@
                                 <td>${sub.title}</td>
                                 <td>${sub.basePrice}</td>
                                 <td>${sub.description}</td>
+                                <td>
+                                    <a href="<c:url value="/admin/edit-subcategory/${sub.title}" />" class="btn btn-dark">edit</a></td>
                             </tr>
                         </c:forEach>
                         </tbody>
