@@ -7,6 +7,7 @@ import ir.maktab.homeServiceProvider.data.repository.SubCategoryRepository;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.SubCategoryDto;
 import ir.maktab.homeServiceProvider.service.exception.DuplicateData;
+import ir.maktab.homeServiceProvider.service.exception.NoSubCategory;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
 import ir.maktab.homeServiceProvider.service.interfaces.SubCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -26,17 +27,21 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     private final CategoryRepository categoryDao;
 
     @Override
-    public void save(SubCategoryDto subCategoryDto,String categoryTitle) {
-        SubCategory subCategory = mapper.map(subCategoryDto, SubCategory.class);
-        Optional<SubCategory> foundSubService = subCategoryDao.findByTitle(subCategory.getTitle());
-        Optional<Category> category = categoryDao.findByTitle(categoryTitle);
-        if (category.isPresent()) {
-            if (foundSubService.isEmpty()) {
-                subCategory.setCategory(category.get());
-                subCategoryDao.save(subCategory);
-            } else throw new DuplicateData("❌❌❌ this subService is already exist ❌❌❌");
-        } else
-            throw new NotFoundDta("❌❌❌ no category exist for this subtitle ❌❌❌");//todo این نیاز هست؟ چون باید حتما کتگوری باشه که بشه بهش اضافه کرد
+    public void save(SubCategoryDto subCategoryDto, String categoryTitle) {
+        if (subCategoryDto.getTitle().isBlank())
+            throw new NoSubCategory("title can not be blank");
+        else {
+            SubCategory subCategory = mapper.map(subCategoryDto, SubCategory.class);
+            Optional<SubCategory> foundSubService = subCategoryDao.findByTitle(subCategory.getTitle());
+            Optional<Category> category = categoryDao.findByTitle(categoryTitle);
+            if (category.isPresent()) {
+                if (foundSubService.isEmpty()) {
+                    subCategory.setCategory(category.get());
+                    subCategoryDao.save(subCategory);
+                } else throw new DuplicateData("❌❌❌ this subService is already exist ❌❌❌");
+            } else
+                throw new NotFoundDta("❌❌❌ no category exist for this subtitle ❌❌❌");//todo این نیاز هست؟ چون باید حتما کتگوری باشه که بشه بهش اضافه کرد
+        }
     }
 
     @Override
@@ -51,6 +56,17 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         SubCategory subCategory = mapper.map(subCategoryDao.findByTitle(subCategoryDto.getTitle()),
                 SubCategory.class);
         subCategoryDao.save(subCategory);
+    }
+
+    @Override
+    public void update(String title, double basePrice, String description) {
+        SubCategoryDto subCategoryDto = new SubCategoryDto();
+        subCategoryDto.setTitle(title);
+        if (basePrice != 0)
+            subCategoryDto.setBasePrice(basePrice);
+        if (description != null || !description.isBlank())
+            subCategoryDto.setDescription(description);
+        update(subCategoryDto);
     }
 
     @Override
@@ -84,11 +100,11 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     public List<SubCategoryDto> findAllSubCategoryOfACategory(String categoryTitle) {
         Optional<Category> category = categoryDao.findByTitle(categoryTitle);
         if (category.isPresent())
-        return subCategoryDao.findSubCategoryByCategory(category.get())
-                .stream().map(subCategory -> mapper.map(subCategory, SubCategoryDto.class))
-                .collect(Collectors.toList());
+            return subCategoryDao.findSubCategoryByCategory(category.get())
+                    .stream().map(subCategory -> mapper.map(subCategory, SubCategoryDto.class))
+                    .collect(Collectors.toList());
         else
-            throw  new NotFoundDta("no data has found");
+            throw new NotFoundDta("no data has found");
     }
 
     @Override

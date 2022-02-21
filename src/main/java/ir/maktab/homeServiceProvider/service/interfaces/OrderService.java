@@ -1,10 +1,8 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
 import ir.maktab.homeServiceProvider.data.entity.Orders;
-import ir.maktab.homeServiceProvider.dto.AddressDto;
-import ir.maktab.homeServiceProvider.dto.CustomerDto;
-import ir.maktab.homeServiceProvider.dto.ExpertDto;
-import ir.maktab.homeServiceProvider.dto.OrdersDto;
+import ir.maktab.homeServiceProvider.data.enums.OrderState;
+import ir.maktab.homeServiceProvider.dto.*;
 
 import java.util.List;
 
@@ -14,7 +12,7 @@ public interface OrderService {
 
     void delete(OrdersDto ordersDto);
 
-    void update(OrdersDto ordersDto);
+    void updateState(OrdersDto ordersDto, OrderState state);
 
     List<OrdersDto> getAll();
 
@@ -22,12 +20,17 @@ public interface OrderService {
 
     List<OrdersDto> findOrdersOfSubService(int subServiceId);
 
+    List<OrdersDto> findOrdersOfSubServices(String subServiceTitle);
+
     List<OrdersDto> findOrderOfCustomer(CustomerDto customerDto);
 
     Orders findByUUID(String uuid);
 
+    OrdersDto findOrderByCodeNumber(String CodeNumber);
+    //OrdersDto findByCodeNumber(String CodeNumber);
+
     List<OrdersDto> findOrdersForExpert(ExpertDto expertDto);
 
-    void updateState(Orders orders);
+    void placeScore(String orderCodeNumber, String comment, double score);
 
 }

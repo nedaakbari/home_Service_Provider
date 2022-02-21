@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.data.entity.Person;
 
-import ir.maktab.data.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,6 @@ public class Expert extends User implements Comparable<Expert> {
     )
     private Set<SubCategory> subCategoryList = new HashSet<>();
 
-   /* @OneToMany(mappedBy = "expert")
-    private List<ImageFile> profileImage;*/
 
     @Override
     public int compareTo(Expert o) {

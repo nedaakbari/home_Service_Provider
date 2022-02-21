@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.dto.mapper;
 
 import ir.maktab.homeServiceProvider.data.entity.Person.User;
+import ir.maktab.homeServiceProvider.dto.AdminDto;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.UserDto;
@@ -32,7 +33,13 @@ public class UserMapper {
                 .password(userDto.getPassword())
                 .build();
     }
-
+    public AdminDto toAdminDto(UserDto userDto){
+        return AdminDto.builder()
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .username(userDto.getUsername())
+                .build();
+    }
     public ExpertDto toExpertDto(UserDto userDto){
         return ExpertDto.builder()
                 .email(userDto.getEmail())

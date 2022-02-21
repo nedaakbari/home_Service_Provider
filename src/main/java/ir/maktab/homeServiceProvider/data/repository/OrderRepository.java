@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.data.repository;
 
-import ir.maktab.data.entity.Orders;
+import ir.maktab.homeServiceProvider.data.entity.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

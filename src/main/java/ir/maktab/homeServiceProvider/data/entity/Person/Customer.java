@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity.Person;
 
-import ir.maktab.data.entity.Comment;
-import ir.maktab.data.entity.Orders;
+import ir.maktab.homeServiceProvider.data.entity.Comment;
+import ir.maktab.homeServiceProvider.data.entity.Orders;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

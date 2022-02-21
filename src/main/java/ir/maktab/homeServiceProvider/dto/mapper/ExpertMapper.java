@@ -12,6 +12,7 @@ public class ExpertMapper {
                 .firstName(expert.getFirstName())
                 .lastName(expert.getLastName())
                 .email(expert.getEmail())
+                //.status(expert.getStatus())
                 .registerDate(expert.getRegisterDate())
                 .creditCart(expert.getCreditCart())
                 .score(expert.getScore())

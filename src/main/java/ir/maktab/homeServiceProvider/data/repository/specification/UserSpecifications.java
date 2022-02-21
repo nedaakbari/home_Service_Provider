@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.repository.specification;
 
-import ir.maktab.data.entity.Person.User;
-import ir.maktab.dto.UserFilterDto;
+import ir.maktab.homeServiceProvider.data.entity.Person.User;
+import ir.maktab.homeServiceProvider.dto.UserFilterDto;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;

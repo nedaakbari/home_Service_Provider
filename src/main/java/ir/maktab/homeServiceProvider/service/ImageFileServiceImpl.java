@@ -16,10 +16,15 @@ public class ImageFileServiceImpl implements ImageFileService {
 
     @Override
     public void uploadImageFile(CommonsMultipartFile image, Expert expert) {
-        ImageFile imageFile = new ImageFile();
-        imageFile.setName(image.getOriginalFilename());
-        imageFile.setData(image.getBytes());
-        imageFile.setExpert(expert);
-        imageFileRepository.save(imageFile);
+       // if (image.getName().contains(".jpg")) {
+            ImageFile imageFile = new ImageFile();
+            imageFile.setName(image.getOriginalFilename());
+            imageFile.setData(image.getBytes());
+            imageFile.setExpert(expert);
+            imageFileRepository.save(imageFile);
+        /*} else
+            throw new RuntimeException("pic file must be .jpg");*/
     }
+
+
 }

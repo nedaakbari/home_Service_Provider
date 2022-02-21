@@ -1,21 +1,21 @@
 package ir.maktab.homeServiceProvider.service;
 
-import ir.maktab.homeServiceProvider.data.entity.Offer;
-import ir.maktab.homeServiceProvider.data.entity.Orders;
-import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
-import ir.maktab.homeServiceProvider.data.enums.OfferStatus;
-import ir.maktab.homeServiceProvider.data.enums.OrderState;
-import ir.maktab.homeServiceProvider.data.repository.ExpertRepository;
-import ir.maktab.homeServiceProvider.data.repository.OfferRepository;
-import ir.maktab.homeServiceProvider.data.repository.OrderRepository;
-import ir.maktab.homeServiceProvider.dto.ExpertDto;
-import ir.maktab.homeServiceProvider.dto.OfferDto;
-import ir.maktab.homeServiceProvider.dto.OrdersDto;
-import ir.maktab.homeServiceProvider.service.exception.LessAmount;
-import ir.maktab.homeServiceProvider.service.exception.NoOffer;
-import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
-import ir.maktab.homeServiceProvider.service.interfaces.OfferService;
-import ir.maktab.homeServiceProvider.service.interfaces.OrderService;
+import ir.maktab.data.entity.Offer;
+import ir.maktab.data.entity.Orders;
+import ir.maktab.data.entity.Person.Expert;
+import ir.maktab.data.enums.OfferStatus;
+import ir.maktab.data.enums.OrderState;
+import ir.maktab.data.repository.ExpertRepository;
+import ir.maktab.data.repository.OfferRepository;
+import ir.maktab.data.repository.OrderRepository;
+import ir.maktab.dto.ExpertDto;
+import ir.maktab.dto.OfferDto;
+import ir.maktab.dto.OrdersDto;
+import ir.maktab.service.exception.LessAmount;
+import ir.maktab.service.exception.NoOffer;
+import ir.maktab.service.exception.NotFoundDta;
+import ir.maktab.service.interfaces.OfferService;
+import ir.maktab.service.interfaces.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
@@ -45,9 +45,9 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void saveOffer(OfferDto offerDto, ExpertDto expertDto, String codeNumber) {
+    public void saveOffer(OfferDto offerDto, String email, String codeNumber) {
         Orders orders = orderService.findByUUID(codeNumber);
-        Expert expert = expertRepository.findByEmail(expertDto.getEmail()).get();
+        Expert expert = expertRepository.findByEmail(email).get();
         Offer offer = mapper.map(offerDto, Offer.class);
 
         List<String> subTitle = new ArrayList<>();
@@ -57,10 +57,10 @@ public class OfferServiceImpl implements OfferService {
             Double baseAmount = orders.getSubCategory().getBasePrice();
             Double offerPrice = offerDto.getProposedPrice();
             if (offerPrice > baseAmount) {
-                List<Offer> list = offerDao.findAllOfferOfAnOrders(orders.getId());
+                List<Offer> list = offerDao.findAllOfferOfAnOrder(orders.getId());
                 if (list.size() == 0) {
-                    orders.setState(OrderState.WAITING_FOR_SELECT_AN_EXPERT);
-                    orderService.updateState(orders);
+                    // orders.setState(OrderState.WAITING_FOR_SELECT_AN_EXPERT);
+                    orderService.updateState(mapper.map(orders, OrdersDto.class), OrderState.WAITING_FOR_SELECT_AN_EXPERT);
                 }
                 offer.setStatus(OfferStatus.SUSPENDED);
                 offer.setExpert(expert);
@@ -74,7 +74,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void delete(OfferDto offerDto) {
-        Offer offer = findByUUID(offerDto.getCodeNumber());
+        Offer offer = offerDao.findOfferByCodeNumber(offerDto.getCodeNumber()).get();
         offerDao.delete(offer);
     }
 
@@ -101,22 +101,23 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void acceptedOffer( String choiceOfferCode) {
-        Offer choiceOffer = findByUUID(choiceOfferCode);
+    public void acceptedOffer(String choiceOfferCode) {
+        Offer choiceOffer = offerDao.findOfferByCodeNumber(choiceOfferCode).get();
         Expert expert = expertRepository.findByEmail(choiceOffer.getExpert().getEmail()).get();//expertbyId
-        Orders order = orderService.findByUUID(choiceOffer.getOrders().getCodeNumber());//order by id
+        Orders order = orderRepository.findByCodeNumber(choiceOffer.getOrders().getCodeNumber()).get();//order by id
 
         order.setExpert(expert);
-        order.setState(OrderState.WAITING_FOR_EXPERT_SUGGESTION);
+        order.setState(OrderState.WAITING_FOR_EXPERT_TO_COMING_TO_YOUR_PLACE);
         order.setAgreedPrice(choiceOffer.getProposedPrice());
 
-        OrdersDto dto = mapper.map(order, OrdersDto.class);
-        orderService.update(dto);
+        // OrdersDto dto = mapper.map(order, OrdersDto.class);
+        orderRepository.save(order);
 
+        //افرهای این ارد رو پیدا کنیم
         List<Offer> allOfferOfAnOrder = findAllOfferOfAnOrders(order);//todo اینو بپرس که چیکارش کنی الن تو دی تی او داری مجبوری یکی بگیری که افر برگردونه خیلی شلخته کاریه
 
         allOfferOfAnOrder.forEach(offer -> {
-            if (offer.equals(choiceOffer)) {
+            if (offer.getCodeNumber().equals(choiceOffer.getCodeNumber())) {
                 offer.setStatus(OfferStatus.ACCEPTED);
                 offerDao.save(offer);
             } else {
@@ -127,31 +128,39 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Offer findByUUID(String uuid) {
+    public OfferDto findByUUID(String uuid) {
         Optional<Offer> offer = offerDao.findOfferByCodeNumber(uuid);
-        return offer.orElseThrow(() -> new NotFoundDta("no offer found"));
+        if (offer.isPresent())
+            return mapper.map(offer.get(), OfferDto.class);
+        else throw new NotFoundDta("no offer found");
+        // return offer.orElseThrow(() -> new NotFoundDta("no offer found"));
     }
 
     @Override
-    public List<OfferDto> findAllOfferOfAnOrder(String ordersCode) {
+    public List<OfferDto> findAllOfferOfAnOrder(String ordersCode, String sort) {//proposedPrice  ,expert.score
         Orders order = orderService.findByUUID(ordersCode);
-        List<Offer> all = offerDao.findAllOfferOfAnOrders(order.getId());
-        if (all.size() != 0) {
-            return all.stream()
+        List<OfferDto> all = null;
+        if (sort.equals("proposedPrice"))
+            all = offerDao.findAllOfferOfAnOrders(order.getId(), Sort.by(sort).ascending()).stream()
                     .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
+        if (sort.equals("expert.score"))
+            all = offerDao.findAllOfferOfAnOrders(order.getId(), Sort.by(sort).descending()).stream()
+                    .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
+        if (all != null) {
+            return all;
         } else
             throw new NoOffer("no offer for this order Exist yet ");
     }
 
-
     @Override
     public List<Offer> findAllOfferOfAnOrders(Orders order) {
-        List<Offer> all = offerDao.findAllOfferOfAnOrders(order.getId());
+        List<Offer> all = offerDao.findAllOfferOfAnOrder(order.getId());
         if (all.size() != 0) {
             return all;
         } else
             throw new NoOffer("no offer for this order Exist yet ");
     }
+
     @Override
     public OfferDto findByOrderAndExpert(OrdersDto ordersDto, ExpertDto expertDto) {
         Orders order = orderRepository.findByCodeNumber(ordersDto.getCodeNumber()).get();
@@ -167,6 +176,17 @@ public class OfferServiceImpl implements OfferService {
     public List<OfferDto> findAllOfferAnExpert(ExpertDto expertDto) {
         Expert expert = expertRepository.findByEmail(expertDto.getEmail()).get();
         List<Offer> allOfferAnExpert = offerDao.findAllOfferAnExpert(expert);
+        if (allOfferAnExpert.size() != 0) {
+            return allOfferAnExpert.stream()
+                    .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
+        } else
+            throw new NoOffer("no offer!");
+    }
+
+    @Override
+    public List<OfferDto> findAllOffersAnExpert(ExpertDto expertDto, OfferStatus status) {
+        Expert expert = expertRepository.findByEmail(expertDto.getEmail()).get();
+        List<Offer> allOfferAnExpert = offerDao.findAllOfferAnExpertWithStatus(expert, status);
         if (allOfferAnExpert.size() != 0) {
             return allOfferAnExpert.stream()
                     .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
@@ -192,21 +212,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<OfferDto> sortByPrice(OrdersDto ordersDto) {
-        Orders order = mapper.map(ordersDto, Orders.class);
-        return offerDao.findByOrders(order, Sort.by("proposedPrice").ascending()).stream()
-                .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OfferDto> sortByScore(OrdersDto ordersDto) {
-        Orders order = mapper.map(ordersDto, Orders.class);
-        return offerDao.findByOrders(order, Sort.by("expert.score").descending()).stream()
-                .map(offer -> mapper.map(offer, OfferDto.class)).collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean isAllowToOffer(ExpertDto expertDto,String orderCode){
+    public boolean isAllowToOffer(ExpertDto expertDto, String orderCode) {
         Expert expert = expertRepository.findByEmail(expertDto.getEmail()).get();
         Orders orders = orderRepository.findByCodeNumber(orderCode).get();
         Optional<Offer> byOrdersAndExpert = offerDao.findByOrdersAndExpert(orders, expert);

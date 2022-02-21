@@ -1,9 +1,9 @@
 package ir.maktab.homeServiceProvider.data.entity;
 
-import ir.maktab.data.entity.Person.Customer;
-import ir.maktab.data.entity.Person.Expert;
-import ir.maktab.data.entity.service.SubCategory;
-import ir.maktab.data.enums.OrderState;
+import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.entity.service.SubCategory;
+import ir.maktab.homeServiceProvider.data.enums.OrderState;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

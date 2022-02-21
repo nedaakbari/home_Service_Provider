@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity;
 
-import ir.maktab.data.entity.Person.Expert;
-import ir.maktab.data.enums.OfferStatus;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.enums.OfferStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,7 +44,7 @@ public class Offer {
     @JoinColumn(nullable = false)
     private Orders orders;
 
-    private String codeNumber ;
+    private String codeNumber;
     ;//کد رهگیری
 
     @Override

@@ -1,6 +1,6 @@
 package ir.maktab.homeServiceProvider.data.entity;
 
-import ir.maktab.data.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 

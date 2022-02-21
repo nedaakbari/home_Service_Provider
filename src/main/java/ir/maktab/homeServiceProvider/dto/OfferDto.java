@@ -20,7 +20,9 @@ public class OfferDto {
     private String description;
     private Double duringTime;
 
+   // @DateTimeFormat(pattern = "HH:MM:SS a")//todo
     @DateTimeFormat(pattern = "HH:MM:SS")
+  //  @NotNull(message = "nou null")
     private Date startWorkTime;
     private OrdersDto orders;
     private ExpertDto expert;

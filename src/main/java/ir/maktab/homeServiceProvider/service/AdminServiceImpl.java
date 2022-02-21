@@ -1,6 +1,7 @@
 package ir.maktab.homeServiceProvider.service;
 
 import ir.maktab.homeServiceProvider.data.entity.Person.Admin;
+import ir.maktab.homeServiceProvider.data.enums.Role;
 import ir.maktab.homeServiceProvider.data.repository.AdminRepository;
 import ir.maktab.homeServiceProvider.dto.AdminDto;
 import ir.maktab.homeServiceProvider.service.exception.IncorrectInformation;
@@ -23,16 +24,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void save(AdminDto adminDto) {
         Admin admin = mapper.map(adminDto, Admin.class);
+        adminDto.setRole(Role.ADMIN);
         adminDao.save(admin);
     }
 
     @Override
     public AdminDto login(AdminDto adminDto) {
-        Optional<Admin> admin = adminDao.findByUserNameAndPassWord(adminDto.getUserName(), adminDto.getPassWord());
+        Optional<Admin> admin = adminDao.findByEmail(adminDto.getEmail());
         if (admin.isPresent()) {
             return mapper.map(admin.get(), AdminDto.class);
         } else
-            throw new NotFoundDta("no admin found with these use and pass");
+            throw new NotFoundDta("no user found with these info");
     }
 
     @Override
@@ -42,7 +44,6 @@ public class AdminServiceImpl implements AdminService {
             adminDao.delete(admin.get());
         else throw new NotFoundDta("no admin found to delete");
     }
-
 
     @Override
     public List<AdminDto> getAll() {
@@ -61,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminDto findAminByUseAndPass(String username, String password) {
-        Optional<Admin> admin = adminDao.findByUserNameAndPassWord(username, password);
+        Optional<Admin> admin = adminDao.findByUsernameAndPassword(username, password);
         if (admin.isPresent()) {
             return mapper.map(admin.get(), AdminDto.class);
         } else
@@ -80,8 +81,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updatePassword(String oldPassword, String newPassword, AdminDto adminDto) {
         Admin admin = mapper.map(adminDto, Admin.class);
-        if (oldPassword.equals(admin.getPassWord())) {
-            admin.setPassWord(newPassword);
+        if (oldPassword.equals(admin.getPassword())) {
+            admin.setPassword(newPassword);
             adminDao.save(admin);
         } else
             throw new IncorrectInformation("incorrect passWord");
@@ -96,7 +97,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean isExist(String username, String password) {
-        Optional<Admin> found = adminDao.findByUserNameAndPassWord(username, password);
+        Optional<Admin> found = adminDao.findByUsernameAndPassword(username, password);
         if (found.isPresent())
             return true;
         else return false;

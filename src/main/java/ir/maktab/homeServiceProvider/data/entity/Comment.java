@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity;
 
-import ir.maktab.data.entity.Person.Customer;
-import ir.maktab.data.entity.Person.Expert;
+import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import lombok.*;
 
 import javax.persistence.*;

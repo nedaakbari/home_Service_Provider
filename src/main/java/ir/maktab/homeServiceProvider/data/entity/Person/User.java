@@ -1,7 +1,7 @@
 package ir.maktab.homeServiceProvider.data.entity.Person;
 
-import ir.maktab.data.enums.Role;
-import ir.maktab.data.enums.UserRegistrationStatus;
+import ir.maktab.homeServiceProvider.data.enums.Role;
+import ir.maktab.homeServiceProvider.data.enums.UserRegistrationStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

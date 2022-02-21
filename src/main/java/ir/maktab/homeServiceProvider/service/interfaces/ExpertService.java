@@ -1,5 +1,6 @@
 package ir.maktab.homeServiceProvider.service.interfaces;
 
+import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.dto.ExpertDto;
 import ir.maktab.homeServiceProvider.dto.ExpertFilterDto;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -20,11 +21,13 @@ public interface ExpertService {
 
     ExpertDto findExpertByUseAndPass(String username, String password);
 
-    void updateCreditCart(double amount, ExpertDto expertDto);
+    void updateAccNumber(long accNumber, ExpertDto expertDto);
+
+    void updateCreditCart(double amount, String expertEmail);
 
     void updatePassword(String newPassword, String oldPassword, ExpertDto expertDto);
 
-    void updateScore(ExpertDto expertDto, double getScore);
+    void updateScore(Expert expert, double getScore);
 
     void removeSubCategoryFromExpertList(ExpertDto expertDto, String subTitle);
 

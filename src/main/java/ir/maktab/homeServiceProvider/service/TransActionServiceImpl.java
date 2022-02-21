@@ -4,12 +4,16 @@ import ir.maktab.homeServiceProvider.data.entity.Orders;
 import ir.maktab.homeServiceProvider.data.entity.Person.Customer;
 import ir.maktab.homeServiceProvider.data.entity.Person.Expert;
 import ir.maktab.homeServiceProvider.data.entity.TransActions;
+import ir.maktab.homeServiceProvider.data.enums.OrderState;
+import ir.maktab.homeServiceProvider.data.repository.CustomerRepository;
+import ir.maktab.homeServiceProvider.data.repository.OrderRepository;
 import ir.maktab.homeServiceProvider.data.repository.TransActionRepository;
 import ir.maktab.homeServiceProvider.dto.CustomerDto;
-import ir.maktab.homeServiceProvider.dto.ExpertDto;
+import ir.maktab.homeServiceProvider.dto.OrdersDto;
 import ir.maktab.homeServiceProvider.dto.TransActionDto;
 import ir.maktab.homeServiceProvider.service.exception.NotEnoughMoney;
 import ir.maktab.homeServiceProvider.service.exception.NotFoundDta;
+import ir.maktab.homeServiceProvider.service.interfaces.OrderService;
 import ir.maktab.homeServiceProvider.service.interfaces.TransActionService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,9 +28,18 @@ public class TransActionServiceImpl implements TransActionService {
     private final ModelMapper mapper;
     private final TransActionRepository transActionDao;
     private final CustomerServiceImpl customerService;
+    private final CustomerRepository customerRepository;
     private final ExpertServiceImpl expertService;
+    private final OrderService orderService;
+    private final OrderRepository orderRepository;
 
-    public void save(TransActions transActions) {
+    public void save(TransActionDto transActionDto, OrdersDto ordersDto) {
+        TransActions transActions = mapper.map(transActionDto, TransActions.class);
+        transActions.setExpertAccNumber(ordersDto.getExpert().getAccNumber());
+        transActions.setAmount(ordersDto.getAgreedPrice());
+        transActions.setCustomer(customerRepository.findByEmail(ordersDto.getCustomer().getEmail()).get());
+        transActionDto.setAmount(ordersDto.getAgreedPrice());
+        orderService.updateState(ordersDto, OrderState.PAID);
         transActionDao.save(transActions);
     }
 
@@ -43,19 +56,25 @@ public class TransActionServiceImpl implements TransActionService {
         return transActionDao.findById(theId).orElseThrow(() -> new NotFoundDta("no transAction found"));
     }
 
-    public boolean paidForOrder(Orders orders) {
+    // @Transactional()//Propagation=Propagation.REQUIRED
+    @Override
+    public void paidForOrder(String ordersDto) {
+        TransActions transActions = new TransActions();
+        Orders orders = orderRepository.findByCodeNumber(ordersDto).get();
         Customer customer = orders.getCustomer();
         Expert expert = orders.getExpert();
         Double customerCurt = customer.getCreditCart();
         Double orderPrice = orders.getAgreedPrice();
-
-        if (customerCurt > orderPrice) {
+        if (customerCurt >= orderPrice) {
+            transActions.setAmount(orderPrice);
+            transActions.setCustomer(customer);
+            transActions.setOrders(orders);
+            transActions.setExpertAccNumber(expert.getAccNumber());
             CustomerDto cDto = mapper.map(customer, CustomerDto.class);
-            ExpertDto eDto = mapper.map(expert, ExpertDto.class);
-
-            customerService.updateCreditCart(orderPrice, cDto);
-            expertService.updateCreditCart(orderPrice, eDto);
-            return true;
+            transActionDao.save(transActions);
+            customerService.updateCreditCart(customer.getCreditCart()-orderPrice, cDto);
+            expertService.updateCreditCart(expert.getCreditCart()+(orderPrice*.7), expert.getEmail());
+            orderService.updateState(mapper.map(orders,OrdersDto.class), OrderState.PAID);
         } else {
             throw new NotEnoughMoney("you dont have enough money in your creditCart");
         }
